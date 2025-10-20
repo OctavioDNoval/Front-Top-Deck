@@ -1,3 +1,79 @@
 :root{
     --primary-color: #FF7A00;
+    --header-height: 56px;
+}
+
+/* === RESET DE ESTILOS UNIVERSAL === */
+
+/* 1. Elimina márgenes, paddings y usa box-sizing consistente */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. Tipografía base y suavizado */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  line-height: 1.5;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  color: #000;
+}
+
+/* 3. Asegura que los medios se comporten correctamente */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 4. Elimina decoraciones innecesarias en enlaces */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 5. Listas sin estilo por defecto */
+ul,
+ol {
+  list-style: none;
+}
+
+/* 6. Formularios coherentes */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* 7. Cursor y comportamiento de botones */
+button {
+  cursor: pointer;
+}
+
+/* 8. Tablas sin espacios extra */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 9. Quita el subrayado de los enlaces en hover si se desea */
+a:hover {
+  text-decoration: underline;
 }

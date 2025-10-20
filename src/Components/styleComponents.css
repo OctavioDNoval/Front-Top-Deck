@@ -1,0 +1,29 @@
+/*---------------------HEADER COMPONENT---------------------*/
+.header{
+    width: 100vw;
+    background-color: var(--primary-color);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: var(--header-height);
+    position:sticky;
+    top: 0;
+}
+
+.logo-container{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header-list{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    padding-right: 8%;
+}
+
+.header-list-item{
+    color: white;
+    font-weight: bold;
+}

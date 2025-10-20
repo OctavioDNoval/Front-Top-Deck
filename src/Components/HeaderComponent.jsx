@@ -1,7 +1,11 @@
+import { Volleyball } from "lucide-react";
+
 export const HeaderComponent = () => {
 	return (
 		<header className="header">
-			<div className="logo-container"></div>
+			<div className="logo-container">
+				<Volleyball />
+			</div>
 			<ul className="header-list">
 				<li className="header-list-item">Inicio</li>
 				<li className="header-list-item">Sobres</li>
