@@ -28,3 +28,9 @@
     color: white;
     font-weight: bold;
 }
+
+/*---------------------HEADER COMPONENT---------------------*/
+footer{
+    height: var(--footer-height);
+    background-color: black;
+}

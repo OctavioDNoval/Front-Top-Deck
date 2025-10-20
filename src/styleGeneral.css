@@ -1,6 +1,7 @@
 :root{
     --primary-color: #FF7A00;
     --header-height: 56px;
+    --footer-height:35vh;
 }
 
 /* === RESET DE ESTILOS UNIVERSAL === */

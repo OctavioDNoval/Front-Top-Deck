@@ -1,4 +1,5 @@
-import { Volleyball } from "lucide-react";
+import { ShoppingCart, Volleyball } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const HeaderComponent = () => {
 	return (
@@ -7,11 +8,12 @@ export const HeaderComponent = () => {
 				<Volleyball />
 			</div>
 			<ul className="header-list">
-				<li className="header-list-item">Inicio</li>
-				<li className="header-list-item">Sobres</li>
-				<li className="header-list-item">Collection</li>
-				<li className="header-list-item">Promos</li>
-				<li className="header-list-item">Contacto</li>
+				<Link to="/">Inicio</Link>
+				<Link to="/productos">Productos</Link>
+				<Link to="/contacto">Contacto</Link>
+				<Link to="/carrito">
+					<ShoppingCart color="white" />{" "}
+				</Link>
 			</ul>
 		</header>
 	);
