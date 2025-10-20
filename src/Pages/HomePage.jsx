@@ -16,17 +16,12 @@ export const HomePage = () => {
 
 	useEffect(() => {
 		if (carruselImg.length === 0) return;
+		const interval = setInterval(() => {
+			setIndex((prevIndex) => (prevIndex + 1) % carruselImg.length);
+		}, 4000);
 
-		const intervalo = setInterval(() => {
-			let nextIndex = index + 1;
-			if (nextIndex >= carruselImg.length) {
-				nextIndex = 0;
-			}
-			setIndex(nextIndex);
-		}, 3000);
-
-		return () => clearInterval(intervalo);
-	}, []);
+		return () => clearInterval(interval);
+	}, [carruselImg]);
 
 	return (
 		<>
@@ -42,8 +37,11 @@ export const HomePage = () => {
 					))}
 				</section>
 				<section className="categorias">
-					<CategoryCard category="Sobres" />
-					<CategoryCard category="Extras" />
+					<CategoryCard category="Sobres" img="/img/categorias/sobres.jpg" />
+					<CategoryCard
+						category="Extras"
+						img="/img/categorias/Collection.webp"
+					/>
 				</section>
 			</main>
 		</>

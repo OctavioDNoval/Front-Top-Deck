@@ -1,0 +1,33 @@
+/*-------------------------CATEGORY CARD-------------------------*/
+.category-card{
+    flex: 1;
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+}
+
+.category-title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    color: white;
+    z-index: 2;
+}
+
+.category-card-image{
+    filter: brightness(0.4);
+    width: 100%;
+    transition: all 0.4s ease-in-out;
+    object-fit: cover;
+    height: 100%;
+}
+
+.category-card:hover{
+    flex-grow: 2;
+}
+
+.category-card:hover .category-card-image{
+    filter: brightness(1);
+}
