@@ -5,7 +5,7 @@ export const FooterComponent = () => {
 		<footer>
 			<div className="footer-personal-info">
 				<div className="logo-container">
-					<img src="" alt="" />
+					<img src="#" alt="" />
 				</div>
 				<div className="footer-desc">
 					<p className="desc"></p>

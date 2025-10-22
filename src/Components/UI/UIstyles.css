@@ -31,3 +31,55 @@
 .category-card:hover .category-card-image{
     filter: brightness(1);
 }
+
+/*-----------------------PRODUCT CARD-----------------------*/
+
+.product-card{
+    flex: 1 1 calc(33.333% - 24px);
+    border: 1px solid black;
+}
+
+/*-----------------------LOADING CARTEL-----------------------*/
+
+.loading-container{
+    height: 280px;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+}
+
+.loading-img-container{
+    flex-grow: 1;
+}
+
+.loading-img{
+    height: 100%;
+    animation: spinEase 2.4s infinite;
+}
+
+.loading{
+    flex-grow: 1;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.error{
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/*------------------------KEYFRAMES------------------------*/
+
+@keyframes spinEase {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.7, 0, 1, 0.5); /* acelera */
+  }
+  50% {
+    transform: rotate(360deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.3, 1); /* empieza a frenar */
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}

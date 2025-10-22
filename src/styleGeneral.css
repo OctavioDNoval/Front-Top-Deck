@@ -83,7 +83,7 @@ a:hover {
 
 /*-----------------------------HOME PAGE-----------------------------*/
 
-main{
+.home-main{
     background-color: #000;
 }
 
@@ -115,4 +115,49 @@ main{
     display: flex;
     width: 100vw;
     height: 80vh;
+}
+
+/*--------------------PRODUCT PAGE------------------------*/
+.product-page{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.product-page-title{
+  padding: 32px;
+}
+
+.product-container-wrapper{
+  /*border: 1px solid black;*/
+  display: flex;
+  width: 64%;
+  height: 64vh;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.product-filter-container{
+  /*border: 1px solid black;*/
+  width: 16%;
+  box-shadow: 8px 0 16px -6px rgba(0, 0, 0, 0.25);
+}
+
+.product-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px;
+}
+
+.wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

@@ -29,7 +29,7 @@
     font-weight: bold;
 }
 
-/*---------------------HEADER COMPONENT---------------------*/
+/*---------------------FOOTER COMPONENT---------------------*/
 footer{
     height: var(--footer-height);
     background-color: black;

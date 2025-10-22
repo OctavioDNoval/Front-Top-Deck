@@ -25,7 +25,7 @@ export const HomePage = () => {
 
 	return (
 		<>
-			<main>
+			<main className="home-main">
 				<section className="promo-carrusel">
 					{carruselImg.map((img, i) => (
 						<img
