@@ -3,9 +3,13 @@ import { data } from "react-router-dom";
 import { ProductCard } from "../Components/UI/ProductCard";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
+import { SortSelectComponent } from "../Components/SortSelectComponent";
 
 export const ProductPage = () => {
 	const [products, setProducts] = useState([]);
+	const [filteredProducts, setfilteredProducts] = useState([]);
+	const [selectedCategories, setSelectedCategories] = useState([]);
+	const [sort, setSort] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
@@ -13,6 +17,47 @@ export const ProductPage = () => {
 	const [categories, setCategories] = useState([]);
 	const [isErrorCategory, setIsErrorCategory] = useState(false);
 	const [isLoadingCategory, setIsLoadingCategory] = useState(false);
+
+	const handleOnChangeSort = (option) => {
+		setSort(option);
+	};
+
+	const handleCategoryChange = (category) => {
+		setSelectedCategories((prev) =>
+			prev.includes(category)
+				? prev.filter((id) => id !== category)
+				: [...prev, category]
+		);
+	};
+
+	/*UseEffect que se va a encargar de filtrar 
+	los productos por categoria y ordenarlos a su vez*/
+
+	useEffect(() => {
+		let result = [...products];
+
+		if (selectedCategories.length > 0) {
+			result = result.filter((p) =>
+				selectedCategories.includes(p.categoria.idCategoria)
+			);
+		}
+
+		switch (sort) {
+			case "prec-des":
+				result.sort((a, b) => b.precio - a.precio);
+				break;
+			case "prec-acs":
+				result.sort((a, b) => a.precio - b.precio);
+				break;
+			case "alfabetico":
+				result.sort((a, b) => a.nombre.localeCompare(b.nombre));
+				break;
+			default:
+				break;
+		}
+
+		setfilteredProducts(result);
+	}, [products, selectedCategories, sort]);
 
 	/*
 	 *UseEffect para traer los productos
@@ -33,6 +78,7 @@ export const ProductPage = () => {
 				}
 				const data = await res.json();
 				setProducts(data);
+				setfilteredProducts(data);
 			} catch (err) {
 				console.error(err);
 				setIsError(true);
@@ -76,8 +122,8 @@ export const ProductPage = () => {
 			<h2 className="product-page-title">Productos</h2>
 			<div className="product-container-wrapper">
 				<aside className="product-filter-container">
-					<div className="filter-by-category-container">
-						<h3 className="filter-by-category-title">Categoria</h3>
+					<div className="filter-by-category-container filter">
+						<h3 className="filter-title">Categoria</h3>
 						<div className="category-checkbox-container">
 							{isLoadingCategory ? (
 								<p>...</p>
@@ -85,17 +131,32 @@ export const ProductPage = () => {
 								<p>error</p>
 							) : (
 								categories.map((c) => (
-									<label key={c.idCategoria}>
-										<input type="checkbox" value={c.idCategoria} />
+									<label
+										key={c.idCategoria}
+										className="category-checkbox-label"
+									>
+										<input
+											type="checkbox"
+											value={c.idCategoria}
+											checked={selectedCategories.includes(c.idCategoria)}
+											onChange={() => handleCategoryChange(c.idCategoria)}
+											className="category-checkbox"
+										/>
 										{c.nombre}
 									</label>
 								))
 							)}
 						</div>
 					</div>
+					<div className="orderby-container filter">
+						<h3 className="filter-title">Ordenar</h3>
+						<SortSelectComponent onChange={handleOnChangeSort} />
+					</div>
 				</aside>
 				<main
-					className={`product-container ${isLoading | isError ? "loader" : ""}`}
+					className={`product-container ${
+						isLoading || isError ? "loader" : ""
+					}`}
 				>
 					{isLoading ? (
 						<div className="wrapper">
@@ -106,7 +167,9 @@ export const ProductPage = () => {
 							<ErrorCartel message={errorMsg} />
 						</div>
 					) : (
-						products.map((p) => <ProductCard product={p} key={p.productoId} />)
+						filteredProducts.map((p) => (
+							<ProductCard product={p} key={p.productoId} />
+						))
 					)}
 				</main>
 			</div>

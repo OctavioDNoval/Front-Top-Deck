@@ -144,6 +144,7 @@ a:hover {
   /*border: 1px solid black;*/
   width: 16%;
   box-shadow: 8px 0 16px -6px rgba(0, 0, 0, 0.25);
+  
 }
 
 .product-container{
@@ -153,6 +154,7 @@ a:hover {
   flex-wrap: wrap;
   gap: 24px;
   padding: 24px;
+  min-height: 72vh;
 }
 
 .loader{
@@ -165,4 +167,19 @@ a:hover {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.filter{
+  padding: 16px;
+}
+
+.category-checkbox-container{
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+}
+
+.category-checkbox-label{
+  display: flex;
+  gap: 4px;
 }
