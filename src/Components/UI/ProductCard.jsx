@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 export const ProductCard = ({ product }) => {
+	const navigate = useNavigate();
+
+	const handleNavigate = () => {
+		navigate(`/productos/${product.productoId}`);
+	};
+
 	return (
-		<article className="product-card">
+		<article className="product-card" onClick={handleNavigate}>
 			<div className="prdocut-img-container">
 				<img src="#" alt={product.nombre} />
 			</div>

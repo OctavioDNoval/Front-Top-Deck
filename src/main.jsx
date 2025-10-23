@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ProductPage } from "./Pages/ProductPage";
 import { ContactPage } from "./Pages/ContactPage";
 import { CarritoPage } from "./Pages/CarritoPage";
+import { SelectedProductPage } from "./Pages/SelectedProductPage";
 
 createRoot(document.getElementById("root")).render(
 	<BrowserRouter>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")).render(
 				<Route path="/productos" element={<ProductPage />} />
 				<Route path="/contacto" element={<ContactPage />} />
 				<Route path="/carrito" element={<CarritoPage />} />
+				<Route path="/productos/:id" element={<SelectedProductPage />} />
 			</Routes>
 			<FooterComponent />
 		</StrictMode>

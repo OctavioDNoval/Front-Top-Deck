@@ -1,4 +1,4 @@
-import { ShoppingCart, Volleyball } from "lucide-react";
+import { CircleUser, ShoppingCart, Volleyball } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const HeaderComponent = () => {
@@ -12,7 +12,10 @@ export const HeaderComponent = () => {
 				<Link to="/productos">Productos</Link>
 				<Link to="/contacto">Contacto</Link>
 				<Link to="/carrito">
-					<ShoppingCart color="white" />{" "}
+					<ShoppingCart color="white" />
+				</Link>
+				<Link to="/account">
+					<CircleUser color="white" />
 				</Link>
 			</ul>
 		</header>
