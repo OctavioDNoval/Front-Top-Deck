@@ -48,7 +48,9 @@ export const ProductPage = () => {
 					<input type="checkbox" />
 					<input type="checkbox" />
 				</aside>
-				<main className="product-container">
+				<main
+					className={`product-container ${isLoading | isError ? "loader" : ""}`}
+				>
 					{isLoading ? (
 						<div className="wrapper">
 							<LoadingCartel />
