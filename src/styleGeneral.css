@@ -200,10 +200,17 @@ a:hover {
   min-height: 72vh;
   border-radius: 32px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
 }
 
 .product-selected-img-container{
   width: 55%;
+}
+
+.product-selected-img{
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .product-selected-info-container{
@@ -216,6 +223,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 5;
 }
 
 .product-selected-info{

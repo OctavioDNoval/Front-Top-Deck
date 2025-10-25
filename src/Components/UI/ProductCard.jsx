@@ -10,7 +10,7 @@ export const ProductCard = ({ product }) => {
 	return (
 		<article className="product-card" onClick={handleNavigate}>
 			<div className="prdocut-img-container">
-				<img src="#" alt={product.nombre} />
+				<img src={product.img_url} alt={product.nombre} />
 			</div>
 			<div className="product-title-container">
 				<h3 className="product-title">{product.nombre}</h3>

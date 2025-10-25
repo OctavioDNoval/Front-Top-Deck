@@ -46,7 +46,11 @@ export const SelectedProductPage = () => {
 			) : (
 				<div className="product-selected-wrapped">
 					<div className="product-selected-img-container">
-						<img src="#" alt={producto.nombre} />
+						<img
+							src={producto.img_url}
+							alt={producto.nombre}
+							className="product-selected-img"
+						/>
 					</div>
 					<div className="product-selected-info-container">
 						<div className="product-selected-info">
