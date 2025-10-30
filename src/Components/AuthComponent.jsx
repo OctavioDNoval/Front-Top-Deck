@@ -1,17 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LoginForm } from "./UI/LoginForm";
+import { SignupForm } from "./UI/SignupForm";
 
 export const AuthComponent = ({ isOpen, onClose }) => {
-	if (!isOpen) return null;
-
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+	useEffect(() => {
+		if (isOpen) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "auto";
+		}
+
+		return () => {
+			document.body.style.overflow = "auto";
+		};
+	}, [isOpen]);
+
+	if (!isOpen) return null;
+
 	return (
-		<section className="login-signup-conmtainer">
-			<div className="close-btn-container">
-				<button type="button" onClick={onClose}>
-					X
-				</button>
-			</div>
-		</section>
+		<div className="auth-component-background" onClick={onClose}>
+			<section
+				className="login-signup-conmtainer"
+				onClick={(e) => e.stopPropagation()}
+			>
+				<div className="close-btn-container" onClick={onClose}>
+					<button type="button" className="close-btn">
+						X
+					</button>
+				</div>
+				{isAuthenticated ? (
+					<div className="profile-container"></div>
+				) : (
+					<div className="login-signup-wrapper">
+						<div className="login-container auth-container">
+							<LoginForm />
+						</div>
+						<div className="signup-container auth-container">
+							<SignupForm />
+						</div>
+					</div>
+				)}
+			</section>
+		</div>
 	);
 };
