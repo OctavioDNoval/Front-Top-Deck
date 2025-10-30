@@ -1,7 +1,12 @@
 import { CircleUser, ShoppingCart, Volleyball } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthComponent } from "./AuthComponent";
 
 export const HeaderComponent = () => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 	return (
 		<header className="header">
 			<div className="logo-container">
@@ -14,10 +19,14 @@ export const HeaderComponent = () => {
 				<Link to="/carrito">
 					<ShoppingCart color="white" />
 				</Link>
-				<Link to="/account">
+				<button onClick={() => setIsModalOpen(true)}>
 					<CircleUser color="white" />
-				</Link>
+				</button>
 			</ul>
+
+			<AuthComponent isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+				{isAuthenticated ? <div></div> : null}
+			</AuthComponent>
 		</header>
 	);
 };
