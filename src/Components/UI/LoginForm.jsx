@@ -1,6 +1,6 @@
 export const LoginForm = () => {
 	return (
-		<section className="login-component">
+		<section className="login-component login-1">
 			<div className="login-img-container">
 				<img
 					src="../../../img/piplup.webp"

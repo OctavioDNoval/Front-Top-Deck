@@ -4,6 +4,7 @@ import { SignupForm } from "./UI/SignupForm";
 
 export const AuthComponent = ({ isOpen, onClose }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isSigning, setisSigning] = useState(false);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -14,6 +15,7 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 
 		return () => {
 			document.body.style.overflow = "auto";
+			setisSigning(false);
 		};
 	}, [isOpen]);
 
@@ -38,7 +40,21 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 							<LoginForm />
 						</div>
 						<div className="signup-container auth-container">
-							<SignupForm />
+							<SignupForm onClose={onClose} />
+						</div>
+						<div className={`top-wrapper ${isSigning ? "signup" : "login"}`}>
+							<div className="topdeck-img-container">
+								<img src="" alt="TopDeck Logo" />
+							</div>
+							<div className="create-account-text-container">
+								<p>{isSigning ? "Ya tienes cuenta?" : "No tienes cuenta?"}</p>
+								<p
+									className="create-account-text"
+									onClick={() => setisSigning(!isSigning)}
+								>
+									{isSigning ? "Inicia Sesion" : "Crea una"}
+								</p>
+							</div>
 						</div>
 					</div>
 				)}

@@ -120,13 +120,17 @@
 /*---------------------------LOGIN FORM-------------------------*/
 
 .login-component{
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     width: 85%;
     height: 85%;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.login-1{
+    margin-bottom: 12%;
 }
 
 .login-img-container{
@@ -137,6 +141,67 @@
 .login-img{
     object-fit: cover;
     width: 100%;
+}
+
+.form-title{
+    font-size: 2rem;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+}
+
+.login-component input{
+    outline: 1px solid var(--primary-color);
+    padding: 8px 16px;
+    width: 100%;
+    border-radius: 16px;
+    transition: all 0.1s ease;
+}
+
+.login-component label{
+    margin-left: 8px;
+}
+
+.login-form{
+    width: 72%;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-btn{
+    background-color: var(--primary-color);
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 12px;
+    color: white;
+    font-weight: bold;
+    transition: all 0.1s ease-in-out;
+}
+
+.login-component input:focus{
+    background-color: color-mix(in srgb, var(--primary-color) 70%,  transparent);
+    outline: 1px solid black;
+}
+
+.login-component input:focus::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+.submit-btn:active{
+    transform: scale(1.2);
 }
 
 /*------------------------KEYFRAMES------------------------*/
