@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useEffectEvent, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { CarritoCard } from "../Components/UI/CarritoCard";
 
 export const CarritoPage = () => {
-	const { user, isLoading } = useContext(AuthContext);
+	const { carrito, isFetching } = useContext(AuthContext);
 
 	const [carritoProductos, setCarritoProductos] = useState([]);
 	const [error, setError] = useState("");
-	const [isFetching, setisFetching] = useState(false);
 
 	const apiUrl = import.meta.env.VITE_API_URL_BASE;
 
@@ -26,33 +25,10 @@ export const CarritoPage = () => {
 	};
 
 	useEffect(() => {
-		if (isLoading || !user) return;
-
-		const fetchData = async () => {
-			setisFetching(true);
-			try {
-				const res = await fetch(`${apiUrl}/carrito/usuario/${user.id_usuario}`);
-				if (!res.ok) {
-					const errData = await res.json();
-					throw new Error(errData.message || "Error al cargar el carrito");
-				} else {
-					const carrito = await res.json();
-					if (carrito?.idCarrito) {
-						fetchCarrito(carrito.id_carrito);
-						setisFetching(false);
-					} else {
-						throw new Error("carrito no encontrado ");
-					}
-				}
-			} catch (e) {
-				setError(e.message);
-			} finally {
-				setisFetching(false);
-			}
-		};
-
-		fetchData();
-	}, [user, isLoading]);
+		if (!isFetching && carrito) {
+			fetchCarrito(carrito.id_carrito);
+		}
+	}, [isFetching, carrito]);
 
 	return (
 		<section className="carrito-container">
