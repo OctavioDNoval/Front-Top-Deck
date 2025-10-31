@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginForm } from "./UI/LoginForm";
 import { SignupForm } from "./UI/SignupForm";
+import { AuthContext } from "../AuthProvider";
+import { ProfileComponent } from "./ProfileComponent";
 
 export const AuthComponent = ({ isOpen, onClose }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isSigning, setisSigning] = useState(false);
+
+	const { user, isLoading, logout } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -18,6 +22,14 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 			setisSigning(false);
 		};
 	}, [isOpen]);
+
+	useEffect(() => {
+		if (!isLoading && user) {
+			setIsAuthenticated(true);
+		} else {
+			setIsAuthenticated(false);
+		}
+	}, [user, isLoading]);
 
 	if (!isOpen) return null;
 
@@ -33,7 +45,9 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 					</button>
 				</div>
 				{isAuthenticated ? (
-					<div className="profile-container"></div>
+					<div className="profile-container">
+						<ProfileComponent />
+					</div>
 				) : (
 					<div className="login-signup-wrapper">
 						<div className="login-container auth-container">

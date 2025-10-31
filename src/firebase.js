@@ -7,7 +7,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-	apiKey: "AIzaSyAIHdSzMIGq5CBuiytA6zYdjOx7E60VuBc",
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
 	authDomain: "topdeck-e0b90.firebaseapp.com",
 	projectId: "topdeck-e0b90",
 	storageBucket: "topdeck-e0b90.firebasestorage.app",
