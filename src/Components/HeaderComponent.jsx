@@ -5,28 +5,32 @@ import { AuthComponent } from "./AuthComponent";
 
 export const HeaderComponent = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 	return (
 		<header className="header">
 			<div className="logo-container">
-				<Volleyball />
+				<img
+					src="../../img/LogoOnly2.webp"
+					alt="topdek"
+					className="header-logo"
+				/>
 			</div>
 			<ul className="header-list">
 				<Link to="/">Inicio</Link>
 				<Link to="/productos">Productos</Link>
 				<Link to="/contacto">Contacto</Link>
 				<Link to="/carrito">
-					<ShoppingCart color="white" />
+					<ShoppingCart />
 				</Link>
 				<button onClick={() => setIsModalOpen(true)}>
 					<CircleUser color="white" />
 				</button>
 			</ul>
 
-			<AuthComponent isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				{isAuthenticated ? <div></div> : null}
-			</AuthComponent>
+			<AuthComponent
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+			/>
 		</header>
 	);
 };

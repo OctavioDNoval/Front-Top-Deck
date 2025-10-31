@@ -44,7 +44,7 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 						</div>
 						<div className={`top-wrapper ${isSigning ? "signup" : "login"}`}>
 							<div className="topdeck-img-container">
-								<img src="" alt="TopDeck Logo" />
+								<img src="../../img/LogoOnly2.webp" alt="TopDeck Logo" />
 							</div>
 							<div className="create-account-text-container">
 								<p>{isSigning ? "Ya tienes cuenta?" : "No tienes cuenta?"}</p>
