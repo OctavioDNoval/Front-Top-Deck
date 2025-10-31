@@ -37,6 +37,8 @@ export const SelectedProductPage = () => {
 		fetchProductById();
 	}, []);
 
+	const handleAddToCart = () => {};
+
 	return (
 		<section className="product-selected-page">
 			{isLoading ? (
@@ -78,7 +80,10 @@ export const SelectedProductPage = () => {
 						</div>
 
 						<div className="product-selected-buy">
-							<button className="product-selected-add">
+							<button
+								className="product-selected-add"
+								onClick={handleAddToCart}
+							>
 								Añadir al carrito
 							</button>
 						</div>
