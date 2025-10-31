@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider";
 
 export const SignupForm = ({ onClose }) => {
 	const [email, setEmail] = useState("");
@@ -11,6 +12,8 @@ export const SignupForm = ({ onClose }) => {
 	const apiUrl = import.meta.env.VITE_API_URL_BASE;
 
 	const navigate = useNavigate();
+
+	const { login } = useContext(AuthContext);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -41,12 +44,8 @@ export const SignupForm = ({ onClose }) => {
 
 			const data = await res.json();
 
-			if (data.token) {
-				localStorage.setItem("token", data.token);
-			}
-
-			if (data.usuario) {
-				localStorage.setItem("user".data.usuario);
+			if (data.usuario && data.token) {
+				login(data.usuario, data.token);
 			}
 
 			onClose();

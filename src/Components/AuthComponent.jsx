@@ -51,7 +51,7 @@ export const AuthComponent = ({ isOpen, onClose }) => {
 				) : (
 					<div className="login-signup-wrapper">
 						<div className="login-container auth-container">
-							<LoginForm />
+							<LoginForm onClose={onClose} />
 						</div>
 						<div className="signup-container auth-container">
 							<SignupForm onClose={onClose} />
