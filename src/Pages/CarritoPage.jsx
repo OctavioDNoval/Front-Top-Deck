@@ -1,9 +1,8 @@
 import { useContext, useEffect, useEffectEvent, useState } from "react";
 import { AuthContext } from "../AuthProvider";
-import { CarritoCard } from "../Components/UI/CarritoCard";
 
 export const CarritoPage = () => {
-	const { carrito, isFetching } = useContext(AuthContext);
+	const { carrito, isFetching, token } = useContext(AuthContext);
 
 	const [carritoProductos, setCarritoProductos] = useState([]);
 	const [error, setError] = useState("");
@@ -12,7 +11,9 @@ export const CarritoPage = () => {
 
 	const fetchCarrito = async (idCarrito) => {
 		try {
-			const res = await fetch(`${apiUrl}/carrito/user/${idCarrito}/detalles`);
+			const res = await fetch(`${apiUrl}/carrito/user/${idCarrito}/detalles`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
 			if (!res.ok) {
 				const errData = await res.json();
 				throw new Error(errData.message);
@@ -28,12 +29,17 @@ export const CarritoPage = () => {
 		if (!isFetching && carrito) {
 			fetchCarrito(carrito.id_carrito);
 		}
-	}, [isFetching, carrito]);
+	}, [isFetching, carrito, token]);
 
 	return (
 		<section className="carrito-container">
+			{carrito ? (
+				<p color="black">CArrito nasheeee</p>
+			) : (
+				<p color="black">:( </p>
+			)}
 			{carritoProductos.map((p) => (
-				<CarritoCard product={p} />
+				<p>nashe</p>
 			))}
 		</section>
 	);

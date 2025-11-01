@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCounter } from "../Hooks/useCounter";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
+import { AuthContext } from "../AuthProvider";
 
 export const SelectedProductPage = () => {
 	const { id } = useParams();
@@ -12,12 +13,16 @@ export const SelectedProductPage = () => {
 	const [isError, setIsError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
 	const { counter, increment, reset, decrement } = useCounter(1);
+	const { carrito, isFetching, token } = useContext(AuthContext);
+	const [productAdded, setProductAdded] = useState(false);
+
+	const apiUrl = import.meta.env.VITE_API_URL_BASE;
 
 	useEffect(() => {
 		const fetchProductById = async () => {
 			setIsLoading(true);
 			try {
-				const res = await fetch(`http://localhost:8080/products/public/${id}`);
+				const res = await fetch(`${apiUrl}/products/public/${id}`);
 
 				if (!res.ok) {
 					setIsError(true);
@@ -37,7 +42,33 @@ export const SelectedProductPage = () => {
 		fetchProductById();
 	}, []);
 
-	const handleAddToCart = () => {};
+	const handleAddToCart = async (idProducto, cantidad) => {
+		try {
+			const res = await fetch(
+				`${apiUrl}/user/${carrito.idCarrito}/save?idProducto=${id}&cantidad=${cantidad}`,
+				{
+					method: "POST",
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!res.ok) {
+				const errData = await res.json();
+				throw new Error(errData.message);
+			}
+
+			if (res.status === 201) {
+				setProductAdded(true);
+				setTimeout(() => {
+					setProductAdded(false);
+				}, 1000);
+			}
+		} catch (e) {
+			setErrorMsg(e.message);
+		}
+	};
 
 	return (
 		<section className="product-selected-page">
@@ -82,7 +113,7 @@ export const SelectedProductPage = () => {
 						<div className="product-selected-buy">
 							<button
 								className="product-selected-add"
-								onClick={handleAddToCart}
+								onClick={() => handleAddToCart(producto.id_producto, counter)}
 							>
 								Añadir al carrito
 							</button>

@@ -45,7 +45,10 @@ export const AuthProvider = ({ children }) => {
 					`${import.meta.env.VITE_API_URL_BASE}/carrito/usuario/${
 						user.id_usuario
 					}`,
-					{ signal: controller.signal }
+					{
+						headers: { Authorization: `Bearer ${token}` },
+						signal: controller.signal,
+					}
 				);
 				if (!res.ok) {
 					const errData = await res.json();
