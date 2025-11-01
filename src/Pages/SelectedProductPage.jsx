@@ -42,17 +42,20 @@ export const SelectedProductPage = () => {
 		fetchProductById();
 	}, []);
 
-	const handleAddToCart = async (idProducto, cantidad) => {
+	const handleAddToCart = async (cantidad) => {
 		try {
 			const res = await fetch(
-				`${apiUrl}/user/${carrito.idCarrito}/save?idProducto=${id}&cantidad=${cantidad}`,
+				`${apiUrl}/carrito/user/${carrito.idCarrito}/save?idProducto=${id}&cantidad=${cantidad}`,
 				{
 					method: "POST",
 					headers: {
+						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
 					},
 				}
 			);
+
+			console.log(res);
 
 			if (!res.ok) {
 				const errData = await res.json();
@@ -113,7 +116,7 @@ export const SelectedProductPage = () => {
 						<div className="product-selected-buy">
 							<button
 								className="product-selected-add"
-								onClick={() => handleAddToCart(producto.id_producto, counter)}
+								onClick={() => handleAddToCart(counter)}
 							>
 								Añadir al carrito
 							</button>

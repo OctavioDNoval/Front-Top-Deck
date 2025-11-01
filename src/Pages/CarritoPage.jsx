@@ -15,11 +15,16 @@ export const CarritoPage = () => {
 				headers: { Authorization: `Bearer ${token}` },
 			});
 			if (!res.ok) {
-				const errData = await res.json();
-				throw new Error(errData.message);
+				const text = await res.text();
+				const errData = text ? JSON.parse(text) : { message: res.statusText };
+				console.log(errData);
+				throw new Error(errData);
 			}
-			const data = await res.json();
+
+			const text = await res.text();
+			const data = text ? JSON.parse(text) : [];
 			setCarritoProductos(data);
+			console.log(data);
 		} catch (e) {
 			console.log(e);
 		}
@@ -27,7 +32,7 @@ export const CarritoPage = () => {
 
 	useEffect(() => {
 		if (!isFetching && carrito) {
-			fetchCarrito(carrito.id_carrito);
+			fetchCarrito(carrito.idCarrito);
 		}
 	}, [isFetching, carrito, token]);
 
@@ -38,7 +43,7 @@ export const CarritoPage = () => {
 			) : (
 				<p color="black">:( </p>
 			)}
-			{carritoProductos.map((p) => (
+			{carritoProductos?.map((p) => (
 				<p>nashe</p>
 			))}
 		</section>
