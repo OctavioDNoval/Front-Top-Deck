@@ -1,0 +1,9 @@
+/*------------------------------HEADER------------------------------*/
+
+.admin-header{
+    width: 100vw;
+}
+
+.admin-navbar-list{
+    display: flex;
+}
