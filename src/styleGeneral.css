@@ -19,6 +19,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  
 }
 
 body {
@@ -26,7 +27,7 @@ body {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: #fff;
   color: #000;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* 3. Asegura que los medios se comporten correctamente */

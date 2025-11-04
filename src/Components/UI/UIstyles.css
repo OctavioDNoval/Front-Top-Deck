@@ -208,6 +208,80 @@
     transform: scale(1.2);
 }
 
+/*-----------------CREATE ACCOUNT CARD-----------------------*/
+
+.create-account-advice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+.create-account-advice-logo{
+    position: absolute;
+    top: 64px;
+    width: 32%;
+}
+
+.create-account-advice-text{
+    text-align: center;
+}
+
+.create-account-advice h3{
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.create-account-advice h5{
+    font-size: 1.2rem;
+}
+
+.create-account-advice button{
+    background-color: var(--primary-color);
+    border-radius: 16px;
+    padding: 8px 64px;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.create-account-advice button:hover{
+    background-color: white;
+    outline: 2px solid var(--primary-color);
+    color: black;
+    transform: scale(1.1);
+}
+
+/*-------------------------CARRITO CARD-----------------------*/
+
+.carrito-card{
+    width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    height: 140px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.carrito-card-img-container{
+    height: 88%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrito-card-img{
+    height: 100%;
+    object-fit: cover;
+}
+
+.carrito-card-product-info{
+    display: flex;
+    flex-direction: column;
+}
+
 /*------------------------KEYFRAMES------------------------*/
 
 @keyframes spinEase {

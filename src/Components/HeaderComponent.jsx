@@ -2,9 +2,11 @@ import { CircleUser, ShoppingCart, Volleyball } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthComponent } from "./AuthComponent";
+import { CarritoComponent } from "./CarritoComponent";
 
 export const HeaderComponent = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isCarritoOpen, setIsCarritoOpen] = useState(false);
 
 	return (
 		<header className="header">
@@ -19,13 +21,19 @@ export const HeaderComponent = () => {
 				<Link to="/">Inicio</Link>
 				<Link to="/productos">Productos</Link>
 				<Link to="/contacto">Contacto</Link>
-				<Link to="/carrito">
+				<button onClick={() => setIsCarritoOpen(true)}>
 					<ShoppingCart />
-				</Link>
+				</button>
 				<button onClick={() => setIsModalOpen(true)}>
 					<CircleUser color="white" />
 				</button>
 			</ul>
+
+			<CarritoComponent
+				isOpen={isCarritoOpen}
+				onClose={() => setIsCarritoOpen(false)}
+				authOpen={() => setIsModalOpen(true)}
+			/>
 
 			<AuthComponent
 				isOpen={isModalOpen}
