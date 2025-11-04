@@ -8,7 +8,7 @@
     height: var(--header-height);
     position:sticky;
     top: 0;
-    z-index: 2;
+    z-index: 20;
     color: white;
     font-weight: bold;
 }
@@ -200,8 +200,7 @@
 }
 
 /*----------------------CARRITO COMPONENT--------------------*/
-
-.carrito-component{
+.carrito-component {
     position: fixed;
     top: 0;
     right: -100%;
@@ -212,20 +211,102 @@
     background-color: white;
     border-left: 2px solid var(--primary-color);
     color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
 }
 
-.carrito-component.open{
+.carrito-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 8px; /* Añadido para separación */
+}
+
+.carrito-username {
+    font-style: italic;
+    margin-bottom: 16px; /* Añadido para separación */
+}
+
+.carrito-productos-contendor {
+    flex: 1; /* Ocupa el espacio disponible */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    max-height: calc(100vh - 250px); /* Altura máxima considerando header y footer */
+}
+
+/* Personalizar la barra de scroll (opcional) */
+.carrito-productos-contendor::-webkit-scrollbar {
+    width: 6px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.total-container {
+    position: absolute;
+    bottom: 0;
+    padding: 16px 16px 32px 16px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: white;
+    height: 15vh;
+}
+
+.total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-cart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.buy-cart-btn {
+    width: 88%;
+    background-color: var(--primary-color);
+    padding: 8px 0;
+    border-radius: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.carrito-component.open {
     right: 0;
 }
 
-.create-account-card-container{
+.create-account-card-container {
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 
 
 /*---------------------FOOTER COMPONENT---------------------*/

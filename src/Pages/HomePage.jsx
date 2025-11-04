@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import { CategoryCard } from "../Components/UI/CategoryCard";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
 
 export const HomePage = () => {
 	const [carruselImg, setCarruselImg] = useState([]);
 	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
-		const imagenes = [
-			"/img/carrusel/carrusel1.png",
-			"/img/carrusel/carrusel2.png",
-			"/img/carrusel/carrusel3.png",
-		];
-		setCarruselImg(imagenes);
+		const fetchImages = async () => {
+			try {
+				const folderRef = ref(storage, "PromosCarrusel");
+				const res = await listAll(folderRef);
+				const urlPromises = res.items.map((imageRef) =>
+					getDownloadURL(imageRef)
+				);
+				const urls = await Promise.all(urlPromises);
+				setCarruselImg(urls);
+				console.log(carruselImg);
+			} catch (e) {
+				console.log(e.message);
+			}
+		};
+		fetchImages();
 	}, []);
 
 	useEffect(() => {

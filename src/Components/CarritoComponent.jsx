@@ -4,40 +4,24 @@ import { CreateAccount } from "./UI/CreateAccount";
 import { CarritoCard } from "./UI/CarritoCard";
 
 export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
-	const { carrito, isFetching, token, user } = useContext(AuthContext);
+	const {
+		carrito,
+		isFetching,
+		token,
+		user,
+		carritoProductos,
+		eliminarProductoDelCarrito,
+		actualizarCarrito,
+	} = useContext(AuthContext);
 
-	const [carritoProductos, setCarritoProductos] = useState([]);
 	const [error, setError] = useState("");
 	const [subTotal, setSubTotal] = useState(0);
 
-	const apiUrl = import.meta.env.VITE_API_URL_BASE;
-
-	const fetchCarrito = async (idCarrito) => {
-		try {
-			const res = await fetch(`${apiUrl}/carrito/user/${idCarrito}/detalles`, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
-			if (!res.ok) {
-				const text = await res.text();
-				const errData = text ? JSON.parse(text) : { message: res.statusText };
-				console.log(errData);
-				throw new Error(errData);
-			}
-
-			const text = await res.text();
-			const data = text ? JSON.parse(text) : [];
-			setCarritoProductos(data);
-			console.log(data);
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
 	useEffect(() => {
-		if (!isFetching && carrito) {
-			fetchCarrito(carrito.idCarrito);
+		if (isOpen && carrito) {
+			actualizarCarrito();
 		}
-	}, [isFetching, carrito, token]);
+	}, [isOpen, carrito]);
 
 	useEffect(() => {
 		let total = 0;
@@ -46,6 +30,10 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 		});
 		setSubTotal(total);
 	}, [carritoProductos]);
+
+	const handleDelete = async (id_DetalleCarito) => {
+		await eliminarProductoDelCarrito(id_DetalleCarito);
+	};
 
 	return (
 		<div
@@ -65,20 +53,17 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 								<CarritoCard
 									detalleCarrito={c}
 									key={c.id_DetalleCarito}
-									onDelete={() =>
-										setCarritoProductos((prev) =>
-											prev.filter(
-												(p) => p.id_DetalleCarrito !== c.id_DetalleCarrito
-											)
-										)
-									}
+									onDelete={() => handleDelete(c.id_DetalleCarrito)}
 								/>
 							))}
 						</div>
 						<div className="total-container">
 							<div className="total-wrapper">
 								<p>Subtotal</p>
-								<p>{subTotal}</p>
+								<p>${subTotal}</p>
+							</div>
+							<div className="btn-cart-container">
+								<button className="buy-cart-btn">Comprar</button>
 							</div>
 						</div>
 					</>

@@ -10,11 +10,14 @@ export const ProfileComponent = () => {
 			{isLoading ? (
 				<LoadingCartel />
 			) : user ? (
-				<div>
-					<p>{user.nombre}</p>
-					<p>{user.email}</p>
-					<p>{user.rol}</p>
-				</div>
+				<>
+					<div>
+						<p>{user.nombre}</p>
+						<p>{user.email}</p>
+						<p>{user.rol}</p>
+					</div>
+					<button onClick={logout}>Cerrar sesion</button>
+				</>
 			) : null}
 		</>
 	);

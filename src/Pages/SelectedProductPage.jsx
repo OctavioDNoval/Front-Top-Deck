@@ -5,6 +5,7 @@ import { useCounter } from "../Hooks/useCounter";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { AuthContext } from "../AuthProvider";
+import { CircleCheckBig } from "lucide-react";
 
 export const SelectedProductPage = () => {
 	const { id } = useParams();
@@ -13,7 +14,7 @@ export const SelectedProductPage = () => {
 	const [isError, setIsError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState("");
 	const { counter, increment, reset, decrement } = useCounter(1);
-	const { carrito, isFetching, token } = useContext(AuthContext);
+	const { carrito, agregarAlCarrito } = useContext(AuthContext);
 	const [productAdded, setProductAdded] = useState(false);
 
 	const apiUrl = import.meta.env.VITE_API_URL_BASE;
@@ -44,30 +45,11 @@ export const SelectedProductPage = () => {
 
 	const handleAddToCart = async (cantidad) => {
 		try {
-			const res = await fetch(
-				`${apiUrl}/carrito/user/${carrito.idCarrito}/save?idProducto=${id}&cantidad=${cantidad}`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-
-			console.log(res);
-
-			if (!res.ok) {
-				const errData = await res.json();
-				throw new Error(errData.message);
-			}
-
-			if (res.status === 201) {
-				setProductAdded(true);
-				setTimeout(() => {
-					setProductAdded(false);
-				}, 1000);
-			}
+			await agregarAlCarrito(cantidad, id);
+			setProductAdded(true);
+			setTimeout(() => {
+				setProductAdded(false);
+			}, 1000);
 		} catch (e) {
 			setErrorMsg(e.message);
 		}
@@ -115,10 +97,12 @@ export const SelectedProductPage = () => {
 
 						<div className="product-selected-buy">
 							<button
-								className="product-selected-add"
+								className={`product-selected-add ${
+									productAdded ? "added " : ""
+								}`}
 								onClick={() => handleAddToCart(counter)}
 							>
-								Añadir al carrito
+								{productAdded ? <CircleCheckBig /> : <p>Añadir al carrito</p>}
 							</button>
 						</div>
 					</div>
