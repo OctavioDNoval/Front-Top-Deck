@@ -1,3 +1,3 @@
 export const ProductosAdminComponent = () => {
-	return <div>ProductosAdminComponent</div>;
+	return <article className="admin-product-container"></article>;
 };

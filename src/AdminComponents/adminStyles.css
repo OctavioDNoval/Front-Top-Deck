@@ -1,13 +1,23 @@
+/*----------------------------VARIABLES-----------------------------*/
+
+:root{
+    --admin-header-height: 15vh
+}
+
 /*------------------------------HEADER------------------------------*/
 
 .admin-header{
     width: 100vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    position: relative;
 }
 
 .admin-navbar-list{
     display: flex;
     justify-content: space-evenly;
     padding: 32px;
+    max-height: var(--admin-header-height);
 }
 
 .admin-navbar-list a{
@@ -23,4 +33,33 @@
     text-decoration: none;
     border: 1.5px solid black;
     transform: scale(1.1);
+}
+
+/*---------------------------------WELCOME PAGE-------------------------*/
+
+.admin-main-page{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    color: var(--primary-color);
+    font-weight: 900;
+    z-index: 1;
+}
+
+.img1{
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+}
+
+.img2{
+    position: absolute;
+    top: var(--admin-header-height);
+    right: 4px;
+    width:  25vw;
 }

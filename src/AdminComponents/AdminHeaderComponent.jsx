@@ -10,6 +10,7 @@ export const AdminHeaderComponent = () => {
 		<header className="admin-header">
 			<nav className="admin-navbar">
 				<ul className="admin-navbar-list">
+					<Link to="/">Inicio</Link>
 					<Link to="/productos">Productos</Link>
 					<Link to="/categoria">Categorias</Link>
 					<Link to="/usuarios">Usuarios</Link>

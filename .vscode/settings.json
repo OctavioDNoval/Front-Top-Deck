@@ -1,0 +1,24 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "Front-Top-Deck\\src\\AdminComponents\\",
+            "color": "foldercolorizer.color_00cc00"
+        },
+        {
+            "folderPath": "Front-Top-Deck\\src\\Components\\",
+            "color": "foldercolorizer.color_cc0000"
+        },
+        {
+            "folderPath": "Front-Top-Deck\\src\\Components\\UI\\",
+            "color": "foldercolorizer.color_0000cc"
+        },
+        {
+            "folderPath": "Front-Top-Deck\\public\\img\\",
+            "color": "foldercolorizer.color_ff66cc"
+        },
+        {
+            "folderPath": "Front-Top-Deck\\src\\Pages\\",
+            "color": "foldercolorizer.color_00ffcc"
+        }
+    ]
+}
