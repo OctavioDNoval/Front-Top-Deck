@@ -113,12 +113,21 @@ export const AuthProvider = ({ children }) => {
 			fetch(`${apiUrl}/auth/validate/start`, {
 				headers: { Authorization: `Bearer ${token}` },
 			})
-				.then((res) => {
-					if (!res.ok) throw new Error("token invalido");
-					setToken(token);
+				.then(async (res) => {
+					if (!res.ok) {
+						const errorText = await res.text();
+						console.error("❌ Token validation failed:", errorText);
+						throw new Error(errorText || "Token inválido");
+					}
+					return res.text();
+				})
+				.then((validatedToken) => {
+					console.log("✅ Token validated successfully");
+					setToken(validatedToken);
 					setUser(JSON.parse(usuario));
 				})
-				.catch(() => {
+				.catch((error) => {
+					console.error("💥 Validation error:", error);
 					logout();
 				})
 				.finally(() => setIsLoading(false));
