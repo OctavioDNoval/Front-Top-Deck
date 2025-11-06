@@ -10,7 +10,7 @@
         },
         {
             "folderPath": "Front-Top-Deck\\src\\Components\\UI\\",
-            "color": "foldercolorizer.color_0000cc"
+            "color": "foldercolorizer.color_336666"
         },
         {
             "folderPath": "Front-Top-Deck\\public\\img\\",
@@ -19,6 +19,10 @@
         {
             "folderPath": "Front-Top-Deck\\src\\Pages\\",
             "color": "foldercolorizer.color_00ffcc"
+        },
+        {
+            "folderPath": "Front-Top-Deck\\src\\Hooks\\",
+            "color": "foldercolorizer.color_cccc00"
         }
     ]
 }
