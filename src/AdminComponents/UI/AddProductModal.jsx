@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCategorias } from "../../Hooks/useCategorias";
 import { useProductos } from "../../Hooks/useProductos";
+import { storage } from "../../firebase";
 
 export const AddProductModal = ({ isOpen, onClose }) => {
 	const [nombre, setNombre] = useState("");
@@ -28,7 +29,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 	};
 
 	const subirImagenAFirebase = async (file) => {
-		const { storage, ref, uploadBytes, getDownloadURL } = await import(
+		const { ref, uploadBytes, getDownloadURL } = await import(
 			"firebase/storage"
 		);
 		try {
@@ -87,8 +88,8 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 		setNombre("");
 		setPrecio(0);
 		setStock(0);
-		setDescripcion("");
-		setCategoriaId("");
+		setDesc("");
+		setCategoriaId(0);
 		setImagen(null);
 		setImagenPreview("");
 	};
