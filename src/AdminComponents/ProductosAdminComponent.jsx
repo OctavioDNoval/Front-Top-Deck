@@ -1,23 +1,54 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useProductos } from "../Hooks/useProductos";
 import { AdminProduct } from "./UI/AdminProduct";
 import { AddProductModal } from "./UI/AddProductModal";
+import { ViewProductModal } from "./UI/ViewProductModal";
 
 export const ProductosAdminComponent = () => {
-	const { productos, isLoading, error, obtenerProductos, agregarProductos } =
-		useProductos();
+	const { productos, isLoading, error, obtenerProductos } = useProductos();
 
 	const [addProductModalOpen, setAddProductModalOpen] = useState(false);
+	const [filter, setFilter] = useState("");
+	const [viewProductModalOpen, setViewProductModalOpen] = useState(false);
+	const [productSelected, setProductSelected] = useState({});
+	console.log(productos);
+
+	useEffect(() => {
+		obtenerProductos();
+	}, [addProductModalOpen]);
+
+	const filteredProducts = useMemo(() => {
+		if (!filter) return productos;
+
+		const searchTerm = filter.toLowerCase();
+		return productos.filter(
+			(producto) =>
+				producto.nombre.toLowerCase().includes(searchTerm) ||
+				producto.categoria.nombre.toLowerCase().includes(searchTerm)
+		);
+	}, [productos, filter]);
+
+	const handleProductClick = (product) => {
+		console.log(product);
+		setViewProductModalOpen(true);
+		setProductSelected(product);
+	};
 
 	return (
 		<div className="admin-product-wrapper">
-			<button onClick={() => setAddProductModalOpen(true)} className="add">
-				Agregar Producto
-			</button>
-			<AddProductModal
-				isOpen={addProductModalOpen}
-				onClose={() => setAddProductModalOpen(false)}
-			/>
+			<div className="admin-products-buttons">
+				<button onClick={() => setAddProductModalOpen(true)} className="add">
+					Agregar Producto
+				</button>
+				<input
+					type="text"
+					name="filter"
+					placeholder="Buscar"
+					value={filter}
+					onChange={(e) => setFilter(e.target.value)}
+				/>
+			</div>
+
 			<article className="admin-product-container">
 				<div className="admin-product-header">
 					<div>Nombre</div>
@@ -25,10 +56,32 @@ export const ProductosAdminComponent = () => {
 					<div>Categoria</div>
 					<div>Stock</div>
 				</div>
-				{productos.map((p) => (
-					<AdminProduct product={p} />
+				{filteredProducts.map((p) => (
+					<AdminProduct
+						key={p.productoId}
+						product={p}
+						onClick={() => handleProductClick(p)}
+					/>
 				))}
+
+				{filteredProducts.length === 0 && productos.length > 0 && (
+					<div className="no-result">
+						No se encontraron productos con {filter}
+					</div>
+				)}
 			</article>
+			<AddProductModal
+				isOpen={addProductModalOpen}
+				onClose={() => setAddProductModalOpen(false)}
+			/>
+			<ViewProductModal
+				isOpen={viewProductModalOpen}
+				onClose={() => {
+					setViewProductModalOpen(false);
+					setProductSelected({});
+				}}
+				product={productSelected}
+			/>
 		</div>
 	);
 };

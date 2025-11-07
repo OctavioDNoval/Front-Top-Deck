@@ -5,9 +5,9 @@ import { storage } from "../../firebase";
 
 export const AddProductModal = ({ isOpen, onClose }) => {
 	const [nombre, setNombre] = useState("");
-	const [precio, setPrecio] = useState(0);
-	const [stock, setStock] = useState(0);
-	const [categoriaId, setCategoriaId] = useState(0);
+	const [precio, setPrecio] = useState("");
+	const [stock, setStock] = useState("");
+	const [categoriaId, setCategoriaId] = useState("");
 	const [desc, setDesc] = useState("");
 	const [imagen, setImagen] = useState(null);
 	const [imagenPreview, setImagenPreview] = useState("");
@@ -49,7 +49,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (!nombre || !precio || !categoriaId) {
+		if (!nombre || !precio || !categoriaId || categoriaId === "0") {
 			alert("Completa los campos obligatorios");
 			return;
 		}
@@ -63,13 +63,15 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 			}
 
 			const productData = {
-				nombre,
-				desc,
-				precio: parseFloat(precio),
-				stock: parseInt(stock),
+				nombre: nombre.trim(),
+				descripcion: desc,
+				precio: parseFloat(precio) || 0,
+				stock: parseInt(stock) || 0,
 				id_categoria: parseInt(categoriaId),
 				img_url: imagenUrl,
 			};
+
+			console.log("Enviando datos: ", productData);
 
 			const productoGuardado = await agregarProducto(productData);
 			console.log("Producto guardado: ", productoGuardado);
@@ -78,7 +80,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 			resetForm();
 		} catch (e) {
 			console.error("Error al agregar al producto: ", e);
-			alert("Error al agregar al producto: ", e);
+			alert("Error al agregar al producto: ", e.message);
 		} finally {
 			setSubiendo(false);
 		}
@@ -86,10 +88,10 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 
 	const resetForm = () => {
 		setNombre("");
-		setPrecio(0);
-		setStock(0);
+		setPrecio("");
+		setStock("");
 		setDesc("");
-		setCategoriaId(0);
+		setCategoriaId("");
 		setImagen(null);
 		setImagenPreview("");
 	};
@@ -171,7 +173,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 								value={categoriaId}
 								onChange={(e) => setCategoriaId(e.target.value)}
 							>
-								<option value="0">Seleccionar...</option>
+								<option value="">Seleccionar...</option>
 								{categorias.map((c) => (
 									<option value={c.idCategoria} key={c.idCategoria}>
 										{c.nombre}

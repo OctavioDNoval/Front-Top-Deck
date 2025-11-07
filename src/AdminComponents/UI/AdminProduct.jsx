@@ -1,7 +1,6 @@
-export const AdminProduct = ({ product }) => {
-	console.log(product);
+export const AdminProduct = ({ product, onClick }) => {
 	return (
-		<div className="admin-product-card">
+		<div className="admin-product-card" onClick={onClick}>
 			<p className="admin-product name">{product.nombre}</p>
 			<p className="admin-product price">{product.precio}</p>
 			<p className="admin-product category">{product.categoria.nombre}</p>

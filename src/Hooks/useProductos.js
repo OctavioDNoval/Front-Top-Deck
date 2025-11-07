@@ -38,9 +38,7 @@ export const useProductos = () => {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({
-					newProduct,
-				}),
+				body: JSON.stringify(newProduct),
 			});
 			if (!res.ok) {
 				throw new Error(res.statusText);
@@ -54,6 +52,7 @@ export const useProductos = () => {
 			return productoGuardado;
 		} catch (e) {
 			setError("ERROR:", e);
+			throw e;
 		} finally {
 			setIsLoading(false);
 		}
