@@ -301,9 +301,26 @@
 }
 
 /* BUTTON STYLES */
-.add-product-form button[type="submit"] {
+
+.add-product-form button[type="submit"]{
     width: 100%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 1rem;
+}
+
+.add-product-form .x {
+    width: 100%;
+    background: linear-gradient(135deg, #ea6666 0%, #a24b4b 100%);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -394,3 +411,4 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
 }
+

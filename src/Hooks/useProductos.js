@@ -58,6 +58,66 @@ export const useProductos = () => {
 		}
 	};
 
+	const actualizarProducto = async (id, newProducto) => {
+		setIsLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/products/admin/edit/${id}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(newProducto),
+			});
+
+			if (!res.ok) {
+				const errText = await res.statusText();
+				throw new Error(`Error ${res.status}: ${errText}`);
+			}
+
+			const productoActualizado = await res.json();
+
+			setProductos((prev) =>
+				prev.map((p) => (p.idProducto === id ? productoActualizado : p))
+			);
+
+			return productoActualizado;
+		} catch (e) {
+			setError(e.message);
+			throw e;
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	const eliminarProducto = async (id) => {
+		setIsLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/products/admin/delete/${id}`, {
+				method: "DELETE",
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			console.log(res.status);
+
+			if (res.status === 204 || res.status === 200) {
+				setProductos((prev) => prev.filter((p) => p.idProducto != id));
+				return true;
+			} else if (res.status === 404) {
+				console.warn("producto no encontrado");
+				return false;
+			} else {
+				console.error("Error al eliminar el producto");
+				return false;
+			}
+		} catch (e) {
+			console.log("Error", e.message);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		obtenerProductos();
 	}, []);
@@ -68,5 +128,7 @@ export const useProductos = () => {
 		error,
 		obtenerProductos,
 		agregarProducto,
+		actualizarProducto,
+		eliminarProducto,
 	};
 };

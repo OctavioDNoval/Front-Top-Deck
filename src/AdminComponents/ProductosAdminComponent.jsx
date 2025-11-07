@@ -15,7 +15,7 @@ export const ProductosAdminComponent = () => {
 
 	useEffect(() => {
 		obtenerProductos();
-	}, [addProductModalOpen]);
+	}, [addProductModalOpen, viewProductModalOpen]);
 
 	const filteredProducts = useMemo(() => {
 		if (!filter) return productos;
@@ -48,7 +48,6 @@ export const ProductosAdminComponent = () => {
 					onChange={(e) => setFilter(e.target.value)}
 				/>
 			</div>
-
 			<article className="admin-product-container">
 				<div className="admin-product-header">
 					<div>Nombre</div>
@@ -74,6 +73,7 @@ export const ProductosAdminComponent = () => {
 				isOpen={addProductModalOpen}
 				onClose={() => setAddProductModalOpen(false)}
 			/>
+
 			<ViewProductModal
 				isOpen={viewProductModalOpen}
 				onClose={() => {
