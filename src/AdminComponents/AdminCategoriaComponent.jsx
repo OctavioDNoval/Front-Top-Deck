@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCategorias } from "../Hooks/useCategorias";
 import { AdminCategoryCard } from "./UI/AdminCategoryCard";
 import { AddCategoryModal } from "./UI/AddCategoryModal";
@@ -17,6 +17,15 @@ export const AdminCategoriaComponent = () => {
 		obtenerCategorias();
 	}, [addCategoryModalOpen, actualizarCategoriaModalOpen]);
 
+	const filteredCategoires = useMemo(() => {
+		if (!filter) return categorias;
+
+		const searchTerm = filter.toLowerCase();
+		return categorias.filter((c) =>
+			c.nombre.toLowerCase().includes(searchTerm)
+		);
+	}, [categorias, filter]);
+
 	const handleClick = (categoria) => {
 		console.log(categoria);
 		setActualizarCategoriaModalOpen(true);
@@ -31,19 +40,26 @@ export const AdminCategoriaComponent = () => {
 				</button>
 				<input
 					type="text"
+					name="filter"
 					placeholder="Buscar"
 					value={filter}
 					onChange={(e) => setFilter(e.target.value)}
 				/>
 			</div>
 			<div className="admin-category-wrapper">
-				{categorias.map((c) => (
+				{filteredCategoires.map((c) => (
 					<AdminCategoryCard
 						key={c.idCategoria}
 						category={c}
 						onClick={() => handleClick(c)}
 					/>
 				))}
+
+				{filteredCategoires.length === 0 && categorias.length > 0 && (
+					<div className="no-result">
+						No se encontraron productos con {filter}
+					</div>
+				)}
 			</div>
 
 			<AddCategoryModal

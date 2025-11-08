@@ -190,14 +190,7 @@
 
 /*-----------------------PROFILE COMPONENT-----------------------*/
 
-.profile-container{
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
+
 
 /*----------------------CARRITO COMPONENT--------------------*/
 .carrito-component {
