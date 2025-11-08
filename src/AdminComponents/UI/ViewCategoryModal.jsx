@@ -25,14 +25,9 @@ export const ViewCategoryModal = ({ isOpen, onClose, categoria }) => {
 		setActualizando(true);
 
 		try {
-			const categoriaNueva = {
-				nombre,
-			};
+			const categoriaActualizada = await actualizarCategoria(id, nombre);
 
-			const categoriaActualizada = await actualizarCategoria(
-				id,
-				categoriaNueva
-			);
+			console.log("Categoria actualizada", categoriaActualizada);
 
 			onClose();
 			resetForm();

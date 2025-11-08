@@ -63,13 +63,16 @@ export const useCategorias = () => {
 		setisLoading(true);
 		setError("");
 		try {
+			console.log("desde el hook: ", categoriaNueva);
 			const res = await fetch(`${apiUrl}/category/admin/edit/${id}`, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify(categoriaNueva),
+				body: JSON.stringify({
+					nombre: categoriaNueva,
+				}),
 			});
 
 			if (!res.ok) {
@@ -81,6 +84,8 @@ export const useCategorias = () => {
 			setCategorias((prev) =>
 				prev.map((p) => (p.idCategoria === id ? categoriaActualizado : p))
 			);
+
+			return categoriaActualizado;
 		} catch (e) {
 			throw new Error(e.message);
 		} finally {
