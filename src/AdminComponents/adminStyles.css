@@ -14,10 +14,10 @@
 }
 
 .admin-navbar-list{
+    max-height: var(--admin-header-height);
     display: flex;
     justify-content: space-evenly;
     padding: 32px;
-    max-height: var(--admin-header-height);
 }
 
 .admin-navbar-list a{
@@ -404,7 +404,9 @@
     padding: 0px 32px;
 }
 
-.admin-products-buttons input[type="text"]{
+.admin-products-buttons input[type="text"],
+.admin-category-btn-wrapper input[type="text"]
+{
     height: fit-content;
     padding: 16px 64px;
     border-radius: 16px;
@@ -412,3 +414,43 @@
 
 }
 
+.admin-category-section{
+    height: calc(100vh - var(--admin-header-height));
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-category-wrapper{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    /*border: 1px solid black;*/
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.admin-category-btn-wrapper{
+    margin: 24px
+}
+
+.admin-category-card{
+    padding: 2% 5%;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 32px;
+    transition: all 0.2s ease-in-out;
+}
+
+.admin-category-card p{
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.admin-category-card:hover{
+    transform: scale(1.15);
+    cursor: pointer;
+}

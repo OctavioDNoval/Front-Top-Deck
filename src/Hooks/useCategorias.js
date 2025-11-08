@@ -67,7 +67,7 @@ export const useCategorias = () => {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${apiUrl}`,
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify(categoriaNueva),
 			});

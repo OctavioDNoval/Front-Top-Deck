@@ -1,3 +1,61 @@
+import { useEffect, useState } from "react";
+import { useCategorias } from "../Hooks/useCategorias";
+import { AdminCategoryCard } from "./UI/AdminCategoryCard";
+import { AddCategoryModal } from "./UI/AddCategoryModal";
+import { ViewCategoryModal } from "./UI/ViewCategoryModal";
+
 export const AdminCategoriaComponent = () => {
-	return <div>AdminCategoriaComponent</div>;
+	const { categorias, obtenerCategorias } = useCategorias();
+
+	const [filter, setFilter] = useState("");
+	const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
+	const [actualizarCategoriaModalOpen, setActualizarCategoriaModalOpen] =
+		useState(false);
+	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState({});
+
+	useEffect(() => {
+		obtenerCategorias();
+	}, [addCategoryModalOpen, actualizarCategoriaModalOpen]);
+
+	const handleClick = (categoria) => {
+		console.log(categoria);
+		setActualizarCategoriaModalOpen(true);
+		setCategoriaSeleccionada(categoria);
+	};
+
+	return (
+		<section className="admin-category-section">
+			<div className="admin-category-btn-wrapper admin-products-buttons">
+				<button type="button" onClick={() => setAddCategoryModalOpen(true)}>
+					Agregar categoria
+				</button>
+				<input
+					type="text"
+					placeholder="Buscar"
+					value={filter}
+					onChange={(e) => setFilter(e.target.value)}
+				/>
+			</div>
+			<div className="admin-category-wrapper">
+				{categorias.map((c) => (
+					<AdminCategoryCard
+						key={c.idCategoria}
+						category={c}
+						onClick={() => handleClick(c)}
+					/>
+				))}
+			</div>
+
+			<AddCategoryModal
+				isOpen={addCategoryModalOpen}
+				onClose={() => setAddCategoryModalOpen(false)}
+			/>
+
+			<ViewCategoryModal
+				isOpen={actualizarCategoriaModalOpen}
+				onClose={() => setActualizarCategoriaModalOpen(false)}
+				categoria={categoriaSeleccionada}
+			/>
+		</section>
+	);
 };
