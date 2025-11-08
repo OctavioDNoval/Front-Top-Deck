@@ -30,6 +30,88 @@ export const useCategorias = () => {
 		}
 	};
 
+	const agregarCategoria = async (nombreCategoriaNueva) => {
+		setisLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/category/admin/new`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(nombreCategoriaNueva),
+			});
+
+			if (!res.ok) {
+				throw new Error("Error al cargar una categoria nueva");
+			}
+
+			const categoriaGuardada = await res.json();
+			console.log(`Categoria Guardada, ${categoriaGuardada}`);
+
+			setCategorias((prev) => [...prev, categoriaGuardada]);
+			return categoriaGuardada;
+		} catch (e) {
+			console.error(e.message);
+		} finally {
+			setisLoading(false);
+		}
+	};
+
+	const actualizarCategoria = async (id, categoriaNueva) => {
+		setisLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/category/admin/edit/${id}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${apiUrl}`,
+				},
+				body: JSON.stringify(categoriaNueva),
+			});
+
+			if (!res.ok) {
+				throw new Error(`Error ${res.status}: ${res.statusText}`);
+			}
+
+			const categoriaActualizado = await res.json();
+
+			setCategorias((prev) =>
+				prev.map((p) => (p.idCategoria === id ? categoriaActualizado : p))
+			);
+		} catch (e) {
+			throw new Error(e.message);
+		} finally {
+			setisLoading(false);
+		}
+	};
+
+	const eliminarCategoria = async (id) => {
+		setisLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/category/admin/delete/${id}`, {
+				method: "DELETE",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (!res.ok) {
+				throw new Error("Error al eliminar la categoria");
+			}
+
+			setCategorias((prev) => prev.filter((c) => c.idCategoria != id));
+			return true;
+		} catch (e) {
+			console.error(e.message);
+		} finally {
+			setisLoading(false);
+		}
+	};
+
 	useEffect(() => {
 		obtenerCategorias();
 	}, []);
@@ -39,5 +121,8 @@ export const useCategorias = () => {
 		isLoading,
 		error,
 		obtenerCategorias,
+		agregarCategoria,
+		actualizarCategoria,
+		eliminarCategoria,
 	};
 };
