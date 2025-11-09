@@ -288,6 +288,216 @@
     flex-direction: column;
 }
 
+/*------------------------PROFILE UI------------------------*/
+
+.profile-info-wrapper{
+    display: flex;
+    height: 100%;
+}
+
+.profile-info-wrapper section{
+    flex-grow: 1;
+    border: 1px solid black;
+    height: 100%    ;
+}
+
+/* Profile Container */
+.profile-container {
+    height: 100%;
+    color: #333;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.profile-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+/* Info User Card */
+.info-user-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.info-user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-basic-info h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.user-role {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.user-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.85em;
+    color: #718096;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 1em;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+/* Address User Card */
+.address-user-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.address-user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.address-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.address-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.edit-address-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-address-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.address-content {
+    color: #718096;
+    font-style: italic;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* Logout Button */
+.logout-button-container {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.logout-button {
+    width: 100%;
+    background: linear-gradient(135deg, #fc8181, #f56565);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 101, 101, 0.4);
+}
+
+/* Scrollbar personalizado */
+.profile-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.profile-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.profile-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.profile-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+
 /*------------------------KEYFRAMES------------------------*/
 
 @keyframes spinEase {
@@ -303,3 +513,5 @@
     transform: rotate(720deg);
   }
 }
+
+

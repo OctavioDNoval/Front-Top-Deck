@@ -47,7 +47,7 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 				{carrito ? (
 					<>
 						<h3 className="carrito-title">CARRITO</h3>
-						<h5 className="carrito-username">{user.nombre}</h5>
+						<h5 className="carrito-username">{user?.nombre}</h5>
 						<div className="carrito-productos-contendor">
 							{carritoProductos.map((c) => (
 								<CarritoCard

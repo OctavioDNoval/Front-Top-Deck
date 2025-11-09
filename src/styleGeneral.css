@@ -1,5 +1,6 @@
 :root{
-    --primary-color: #FF7A00;
+    --primary-color:/* #FF7A00*/ #000000;
+    --primary-color-gradient:/* #ffab5c*/ #424242;
     --header-height: 56px;
     --footer-height:35vh;
 }

@@ -190,7 +190,14 @@
 
 /*-----------------------PROFILE COMPONENT-----------------------*/
 
-
+.profile-container {
+    height: 100%;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
 
 /*----------------------CARRITO COMPONENT--------------------*/
 .carrito-component {
