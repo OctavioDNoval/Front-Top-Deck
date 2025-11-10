@@ -314,3 +314,837 @@ a:hover {
   overflow-x: hidden;
 }
 
+/*---------------------HEADER COMPONENT---------------------*/
+.header{
+    width: 100vw;
+    background-color: var(--primary-color);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: var(--header-height);
+    position:sticky;
+    top: 0;
+    z-index: 20;
+    color: white;
+    font-weight: bold;
+}
+
+.header a{
+    padding: 8px 16px;
+    border-radius: 16px;
+    transition: all 0.2s ease;
+}
+
+.header a:hover{
+    background-color: white;
+    color: var(--primary-color);
+    text-decoration: none;
+    transform: scale(1.05);
+}
+
+.logo-container{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    height: 80%;
+}
+
+.header-logo{
+    height: 100%;
+}
+
+.header-list{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-evenly;
+    padding-right: 8%;
+}
+
+.header-list-item{
+    color: white;
+    font-weight: bold;
+}
+
+/*---------------------AUTH COMPONENT-----------------------*/
+
+.auth-component-background{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-signup-conmtainer{
+    background-color: white;
+    height: 75%;
+    width: 64%;
+    border-radius: 32px;
+    z-index: 15;
+    position: relative;
+    overflow: hidden;
+}
+
+.close-btn-container{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    background-color: red;
+    height: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.close-btn{
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bolder;
+}
+
+.login-signup-wrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+}
+
+.login-signup-wrapper .auth-container{
+    width: 50%;
+    position: relative;
+}
+
+.login-container::after{
+    content: "";
+    background-color: black;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5px;
+    height: 60%;
+    opacity: 0.2;
+}
+
+.signup-container::after{
+    content: "";
+    background-color: black;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5px;
+    height: 60%;
+    opacity: 0.2;
+}
+
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.top-wrapper{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    right: 0;
+    left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.4s ease;
+    gap: 24px;
+}
+
+.top-wrapper.signup{
+    transform: translateX(-100%);
+}
+
+.top-wrapper.login{
+    transform: translateX(0);
+}
+
+.topdeck-img-container{
+    width: 75%;
+}
+
+.create-account-text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.create-account-text{
+    color: var(--primary-color);
+}
+
+.create-account-text:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/*-----------------------PROFILE COMPONENT-----------------------*/
+
+.profile-container {
+    height: 100%;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/*----------------------CARRITO COMPONENT--------------------*/
+.carrito-component {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: clamp(300px, 35vw, 450px);
+    z-index: 90;
+    transition: all 0.4s ease-in-out;
+    background-color: white;
+    border-left: 2px solid var(--primary-color);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+}
+
+.carrito-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 8px; /* Añadido para separación */
+}
+
+.carrito-username {
+    font-style: italic;
+    margin-bottom: 16px; /* Añadido para separación */
+}
+
+.carrito-productos-contendor {
+    flex: 1; /* Ocupa el espacio disponible */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    max-height: calc(100vh - 250px); /* Altura máxima considerando header y footer */
+}
+
+/* Personalizar la barra de scroll (opcional) */
+.carrito-productos-contendor::-webkit-scrollbar {
+    width: 6px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.carrito-productos-contendor::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.total-container {
+    position: absolute;
+    bottom: 0;
+    padding: 16px 16px 32px 16px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: white;
+    height: 15vh;
+}
+
+.total-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-cart-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.buy-cart-btn {
+    width: 88%;
+    background-color: var(--primary-color);
+    padding: 8px 0;
+    border-radius: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.carrito-component.open {
+    right: 0;
+}
+
+.create-account-card-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*---------------------FOOTER COMPONENT---------------------*/
+footer{
+    height: var(--footer-height);
+    background-color: black;
+}
+
+/*-------------------------CATEGORY CARD-------------------------*/
+.category-card{
+    flex: 1;
+    position: relative;
+    width: 50%;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+}
+
+.category-title{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    color: white;
+    z-index: 2;
+}
+
+.category-card-image{
+    filter: brightness(0.4);
+    width: 100%;
+    transition: all 0.4s ease-in-out;
+    object-fit: cover;
+    height: 100%;
+}
+
+.category-card:hover{
+    flex-grow: 1.5;
+}
+
+.category-card:hover .category-card-image{
+    filter: brightness(1);
+}
+
+/*-----------------------PRODUCT CARD-----------------------*/
+
+.product-card{
+    flex: 0 0 calc(33.333% - 24px);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 400px;
+    border-radius: 24px;
+    transition: all 0.2s ease-in;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.product-card:hover{
+    border: 1px solid rgba(0, 0, 0, 0);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: scale(1.01);
+}
+
+.prdocut-img-container{
+    /*border: 1px solid black;*/
+    width: 80%;
+    aspect-ratio: 1;
+}
+
+.bottom-product-container{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 16px;
+}
+
+.product-price{
+    font-weight: bold;
+    font-style: italic;
+}
+
+.add-to-cart-btn{
+    background-color: var(--primary-color);
+    height: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/*-----------------------LOADING CARTEL-----------------------*/
+
+.loading-container{
+    height: 280px;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+}
+
+.loading-img-container{
+    flex-grow: 1;
+}
+
+.loading-img{
+    height: 100%;
+    animation: spinEase 2.4s infinite;
+}
+
+.loading{
+    flex-grow: 1;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.error{
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/*---------------------------LOGIN FORM-------------------------*/
+
+.login-component{
+    /*border: 1px solid black;*/
+    width: 85%;
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+    font-weight: 500;
+}
+
+.login-1{
+    margin-bottom: 12%;
+}
+
+.login-img-container{
+    aspect-ratio: 1;
+    width: 116px;
+}
+
+.login-img{
+    object-fit: cover;
+    width: 100%;
+}
+
+.form-title{
+    font-size: 2rem;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 4px;
+}
+
+.login-component input{
+    outline: 1px solid var(--primary-color);
+    padding: 8px 16px;
+    width: 100%;
+    border-radius: 16px;
+    transition: all 0.1s ease;
+}
+
+.login-component label{
+    margin-left: 8px;
+}
+
+.login-form{
+    width: 72%;
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-btn{
+    background-color: var(--primary-color);
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 12px;
+    color: white;
+    font-weight: bold;
+    transition: all 0.1s ease-in-out;
+}
+
+.login-component input:focus{
+    background-color: color-mix(in srgb, var(--primary-color) 70%,  transparent);
+    outline: 1px solid black;
+}
+
+.login-component input:focus::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+
+
+.submit-btn:active{
+    transform: scale(1.2);
+}
+
+/*-----------------CREATE ACCOUNT CARD-----------------------*/
+
+.create-account-advice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+.create-account-advice-logo{
+    position: absolute;
+    top: 64px;
+    width: 32%;
+}
+
+.create-account-advice-text{
+    text-align: center;
+}
+
+.create-account-advice h3{
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.create-account-advice h5{
+    font-size: 1.2rem;
+}
+
+.create-account-advice button{
+    background-color: var(--primary-color);
+    border-radius: 16px;
+    padding: 8px 64px;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.create-account-advice button:hover{
+    background-color: white;
+    outline: 2px solid var(--primary-color);
+    color: black;
+    transform: scale(1.1);
+}
+
+/*-------------------------CARRITO CARD-----------------------*/
+
+.carrito-card{
+    width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    height: 140px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 8px;
+}
+
+.carrito-card-img-container{
+    height: 88%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrito-card-product-info{
+    flex-grow: 1;
+    padding: 16px;
+}
+
+.carrito-card-img{
+    height: 100%;
+    object-fit: cover;
+}
+
+.carrito-card-product-info{
+    display: flex;
+    flex-direction: column;
+}
+
+/*------------------------PROFILE UI------------------------*/
+
+.profile-info-wrapper{
+    display: flex;
+    height: 100%;
+}
+
+.profile-info-wrapper section{
+    flex-grow: 1;
+    border: 1px solid black;
+    height: 100%    ;
+}
+
+/* Profile Container */
+.profile-container {
+    height: 100%;
+    color: #333;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
+    border-radius: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.profile-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+/* Info User Card */
+.info-user-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.info-user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-basic-info h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.user-role {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.user-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 0.85em;
+    color: #718096;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 1em;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+/* Address User Card */
+.address-user-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.address-user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.address-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.address-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #2d3748;
+    font-weight: 600;
+}
+
+.edit-address-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-address-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.address-content {
+    color: #718096;
+    font-style: italic;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+/* Logout Button */
+.logout-button-container {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.logout-button {
+    width: 100%;
+    background: linear-gradient(135deg, #fc8181, #f56565);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+}
+
+.logout-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 101, 101, 0.4);
+}
+
+/* Scrollbar personalizado */
+.profile-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.profile-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.profile-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.profile-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+
+/*------------------------KEYFRAMES------------------------*/
+
+@keyframes spinEase {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: cubic-bezier(0.7, 0, 1, 0.5); /* acelera */
+  }
+  50% {
+    transform: rotate(360deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.3, 1); /* empieza a frenar */
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+
