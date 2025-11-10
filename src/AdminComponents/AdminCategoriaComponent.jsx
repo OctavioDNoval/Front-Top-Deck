@@ -16,6 +16,8 @@ export const AdminCategoriaComponent = () => {
 		useState(false);
 	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState({});
 
+	const [addTagModalOpen, setAddTagModalOpen] = useState(false);
+
 	useEffect(() => {
 		obtenerCategorias();
 	}, [addCategoryModalOpen, actualizarCategoriaModalOpen]);
@@ -39,9 +41,27 @@ export const AdminCategoriaComponent = () => {
 
 	return (
 		<>
-			<div className="admin-category-btn-wrapper admin-products-buttons">
-				<button type="button" onClick={() => setAddCategoryModalOpen(true)}>
-					Agregar categoria
+			<div className="admin-buttons-container">
+				<button
+					type="button"
+					className="admin-btn"
+					onClick={() => setAddCategoryModalOpen(true)}
+				>
+					<i className="icon-plus" style={{ marginRight: "8px" }}>
+						+
+					</i>
+					Agregar Categoría
+				</button>
+
+				<button
+					type="button"
+					className="admin-btn secondary"
+					onClick={() => setAddTagModalOpen(true)}
+				>
+					<i className="icon-plus" style={{ marginRight: "8px" }}>
+						+
+					</i>
+					Agregar Tag
 				</button>
 				<input
 					type="text"
@@ -53,6 +73,7 @@ export const AdminCategoriaComponent = () => {
 			</div>
 			<div className="admin-category-tag-wrapper">
 				<section className="admin-category-section">
+					<h3>Categorias</h3>
 					<div className="admin-category-wrapper">
 						{filteredCategoires.map((c) => (
 							<AdminCategoryCard
@@ -80,17 +101,16 @@ export const AdminCategoriaComponent = () => {
 						categoria={categoriaSeleccionada}
 					/>
 				</section>
-				<section className="admin-tags-section">
-					<div className="admin-category-section">
-						<div className="admin-category-wrapper">
-							{tags.map((t) => (
-								<AdminTagCard
-									key={t.idTag}
-									tag={t}
-									onClick={() => handleClickTag(t)}
-								/>
-							))}
-						</div>
+				<section className="admin-category-section">
+					<h3>Tags</h3>
+					<div className="admin-category-wrapper">
+						{tags.map((t) => (
+							<AdminCategoryCard
+								key={t.idTag}
+								category={t}
+								onClick={() => handleClickTag(t)}
+							/>
+						))}
 					</div>
 				</section>
 			</div>

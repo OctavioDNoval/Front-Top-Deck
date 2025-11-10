@@ -36,8 +36,11 @@ export const ProductosAdminComponent = () => {
 
 	return (
 		<div className="admin-product-wrapper">
-			<div className="admin-products-buttons">
-				<button onClick={() => setAddProductModalOpen(true)} className="add">
+			<div className="admin-buttons-container">
+				<button
+					onClick={() => setAddProductModalOpen(true)}
+					className="admin-btn"
+				>
 					Agregar Producto
 				</button>
 				<input
