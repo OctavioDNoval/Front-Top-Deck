@@ -3,9 +3,11 @@ import { useCategorias } from "../Hooks/useCategorias";
 import { AdminCategoryCard } from "./UI/AdminCategoryCard";
 import { AddCategoryModal } from "./UI/AddCategoryModal";
 import { ViewCategoryModal } from "./UI/ViewCategoryModal";
+import { useTags } from "../Hooks/useTags";
 
 export const AdminCategoriaComponent = () => {
 	const { categorias, obtenerCategorias } = useCategorias();
+	const { tags } = useTags();
 
 	const [filter, setFilter] = useState("");
 	const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
@@ -15,6 +17,7 @@ export const AdminCategoriaComponent = () => {
 
 	useEffect(() => {
 		obtenerCategorias();
+		console.log(tags);
 	}, [addCategoryModalOpen, actualizarCategoriaModalOpen]);
 
 	const filteredCategoires = useMemo(() => {
@@ -33,45 +36,48 @@ export const AdminCategoriaComponent = () => {
 	};
 
 	return (
-		<section className="admin-category-section">
-			<div className="admin-category-btn-wrapper admin-products-buttons">
-				<button type="button" onClick={() => setAddCategoryModalOpen(true)}>
-					Agregar categoria
-				</button>
-				<input
-					type="text"
-					name="filter"
-					placeholder="Buscar"
-					value={filter}
-					onChange={(e) => setFilter(e.target.value)}
-				/>
-			</div>
-			<div className="admin-category-wrapper">
-				{filteredCategoires.map((c) => (
-					<AdminCategoryCard
-						key={c.idCategoria}
-						category={c}
-						onClick={() => handleClick(c)}
+		<>
+			<section className="admin-category-section">
+				<div className="admin-category-btn-wrapper admin-products-buttons">
+					<button type="button" onClick={() => setAddCategoryModalOpen(true)}>
+						Agregar categoria
+					</button>
+					<input
+						type="text"
+						name="filter"
+						placeholder="Buscar"
+						value={filter}
+						onChange={(e) => setFilter(e.target.value)}
 					/>
-				))}
+				</div>
+				<div className="admin-category-wrapper">
+					{filteredCategoires.map((c) => (
+						<AdminCategoryCard
+							key={c.idCategoria}
+							category={c}
+							onClick={() => handleClick(c)}
+						/>
+					))}
 
-				{filteredCategoires.length === 0 && categorias.length > 0 && (
-					<div className="no-result">
-						No se encontraron productos con {filter}
-					</div>
-				)}
-			</div>
+					{filteredCategoires.length === 0 && categorias.length > 0 && (
+						<div className="no-result">
+							No se encontraron productos con {filter}
+						</div>
+					)}
+				</div>
 
-			<AddCategoryModal
-				isOpen={addCategoryModalOpen}
-				onClose={() => setAddCategoryModalOpen(false)}
-			/>
+				<AddCategoryModal
+					isOpen={addCategoryModalOpen}
+					onClose={() => setAddCategoryModalOpen(false)}
+				/>
 
-			<ViewCategoryModal
-				isOpen={actualizarCategoriaModalOpen}
-				onClose={() => setActualizarCategoriaModalOpen(false)}
-				categoria={categoriaSeleccionada}
-			/>
-		</section>
+				<ViewCategoryModal
+					isOpen={actualizarCategoriaModalOpen}
+					onClose={() => setActualizarCategoriaModalOpen(false)}
+					categoria={categoriaSeleccionada}
+				/>
+			</section>
+			<section className="admin-tags-section"></section>
+		</>
 	);
 };
