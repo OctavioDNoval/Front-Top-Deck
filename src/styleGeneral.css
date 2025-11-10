@@ -1649,6 +1649,8 @@ footer{
 
 .admin-category-section h3{
   font-size: 2rem;
+  position: absolute;
+  top: 24px;
 }
 
 .admin-category-section{

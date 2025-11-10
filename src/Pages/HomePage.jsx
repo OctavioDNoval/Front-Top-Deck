@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { CategoryCard } from "../Components/UI/CategoryCard";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
+import { useTags } from "../Hooks/useTags";
 
 export const HomePage = () => {
 	const [carruselImg, setCarruselImg] = useState([]);
 	const [index, setIndex] = useState(0);
+
+	const { tags } = useTags();
 
 	useEffect(() => {
 		const fetchImages = async () => {
@@ -47,13 +49,7 @@ export const HomePage = () => {
 						/>
 					))}
 				</section>
-				<section className="categorias">
-					<CategoryCard category="Sobres" img="/img/categorias/sobres.jpg" />
-					<CategoryCard
-						category="Extras"
-						img="/img/categorias/Collection.webp"
-					/>
-				</section>
+				<section className="categorias"></section>
 			</main>
 		</>
 	);

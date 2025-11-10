@@ -5,10 +5,11 @@ import { AddCategoryModal } from "./UI/AddCategoryModal";
 import { ViewCategoryModal } from "./UI/ViewCategoryModal";
 import { useTags } from "../Hooks/useTags";
 import { AdminTagCard } from "./UI/AdminTagCard";
+import { AddTagModal } from "./UI/AddTagModal";
 
 export const AdminCategoriaComponent = () => {
 	const { categorias, obtenerCategorias } = useCategorias();
-	const { tags } = useTags();
+	const { tags, obtenerTags } = useTags();
 
 	const [filter, setFilter] = useState("");
 	const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
@@ -21,6 +22,10 @@ export const AdminCategoriaComponent = () => {
 	useEffect(() => {
 		obtenerCategorias();
 	}, [addCategoryModalOpen, actualizarCategoriaModalOpen]);
+
+	useEffect(() => {
+		obtenerTags();
+	}, [addTagModalOpen]);
 
 	const filteredCategoires = useMemo(() => {
 		if (!filter) return categorias;
@@ -112,6 +117,10 @@ export const AdminCategoriaComponent = () => {
 							/>
 						))}
 					</div>
+					<AddTagModal
+						isOpen={addTagModalOpen}
+						onClose={() => setAddTagModalOpen(false)}
+					/>
 				</section>
 			</div>
 		</>
