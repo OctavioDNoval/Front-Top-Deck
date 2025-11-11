@@ -4,6 +4,7 @@ import { ProductCard } from "../Components/UI/ProductCard";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { SortSelectComponent } from "../Components/SortSelectComponent";
+import { useTags } from "../Hooks/useTags";
 
 export const ProductPage = () => {
 	const [products, setProducts] = useState([]);
@@ -17,6 +18,8 @@ export const ProductPage = () => {
 	const [categories, setCategories] = useState([]);
 	const [isErrorCategory, setIsErrorCategory] = useState(false);
 	const [isLoadingCategory, setIsLoadingCategory] = useState(false);
+
+	const { tags } = useTags();
 
 	const handleOnChangeSort = (option) => {
 		setSort(option);
@@ -124,6 +127,31 @@ export const ProductPage = () => {
 				<aside className="product-filter-container">
 					<div className="filter-by-category-container filter">
 						<h3 className="filter-title">Categoria</h3>
+						{/*CheckBox para las categorias*/}
+						<div className="category-checkbox-container">
+							{isLoadingCategory ? (
+								<p>...</p>
+							) : isErrorCategory ? (
+								<p>error</p>
+							) : (
+								categories.map((c) => (
+									<label
+										key={c.idCategoria}
+										className="category-checkbox-label"
+									>
+										<input
+											type="checkbox"
+											value={c.idCategoria}
+											checked={selectedCategories.includes(c.idCategoria)}
+											onChange={() => handleCategoryChange(c.idCategoria)}
+											className="category-checkbox"
+										/>
+										{c.nombre}
+									</label>
+								))
+							)}
+						</div>
+						{/*CheckBox para los Tags*/}
 						<div className="category-checkbox-container">
 							{isLoadingCategory ? (
 								<p>...</p>
