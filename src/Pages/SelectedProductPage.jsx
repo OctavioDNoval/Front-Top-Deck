@@ -73,7 +73,9 @@ export const SelectedProductPage = () => {
 					<div className="product-selected-info-container">
 						<div className="product-selected-info">
 							<h2 className="product-selected-name">{producto.nombre}</h2>
-							<p className="product-selected-price">${producto.precio}</p>
+							<p className="product-selected-price" style={{ color: "white" }}>
+								${producto.precio}
+							</p>
 							<p className="product-selected-desc">{producto.descripcion}</p>
 
 							<div className="number-input">
