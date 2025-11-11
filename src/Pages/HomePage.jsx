@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { useTags } from "../Hooks/useTags";
+import { TagComponent } from "../Components/UI/TagComponent";
 
 export const HomePage = () => {
 	const [carruselImg, setCarruselImg] = useState([]);
@@ -49,7 +50,11 @@ export const HomePage = () => {
 						/>
 					))}
 				</section>
-				<section className="categorias"></section>
+				<section className="tags-container-home-page">
+					{tags.map((t) => (
+						<TagComponent tag={t} />
+					))}
+				</section>
 			</main>
 		</>
 	);

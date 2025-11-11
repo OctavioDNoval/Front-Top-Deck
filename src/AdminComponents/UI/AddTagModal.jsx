@@ -27,7 +27,7 @@ export const AddTagModal = ({ isOpen, onClose }) => {
 			"firebase/storage"
 		);
 		try {
-			const nombreArchivo = `productos/${Date.now()}_${file.name}`;
+			const nombreArchivo = `Tags/${Date.now()}_${file.name}`;
 			const storageRef = ref(storage, nombreArchivo);
 
 			const snapshot = await uploadBytes(storageRef, file);

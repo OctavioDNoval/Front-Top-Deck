@@ -19,7 +19,8 @@ export const ProductPage = () => {
 	const [isErrorCategory, setIsErrorCategory] = useState(false);
 	const [isLoadingCategory, setIsLoadingCategory] = useState(false);
 
-	const { tags } = useTags();
+	const { tags, isLoading: isLoadingTags, error } = useTags();
+	const [selectedTag, setSelectedTag] = useState([]);
 
 	const handleOnChangeSort = (option) => {
 		setSort(option);
@@ -125,9 +126,9 @@ export const ProductPage = () => {
 			<h2 className="product-page-title">Productos</h2>
 			<div className="product-container-wrapper">
 				<aside className="product-filter-container">
+					{/*CheckBox para las categorias*/}
 					<div className="filter-by-category-container filter">
 						<h3 className="filter-title">Categoria</h3>
-						{/*CheckBox para las categorias*/}
 						<div className="category-checkbox-container">
 							{isLoadingCategory ? (
 								<p>...</p>
@@ -151,26 +152,26 @@ export const ProductPage = () => {
 								))
 							)}
 						</div>
-						{/*CheckBox para los Tags*/}
+					</div>
+					{/*CheckBox para los Tags*/}
+					<div className="filter-by-category-container filter">
+						<h3 className="filter-title">Franquicia</h3>
 						<div className="category-checkbox-container">
-							{isLoadingCategory ? (
+							{isLoadingTags ? (
 								<p>...</p>
-							) : isErrorCategory ? (
+							) : error ? (
 								<p>error</p>
 							) : (
-								categories.map((c) => (
-									<label
-										key={c.idCategoria}
-										className="category-checkbox-label"
-									>
+								tags.map((t) => (
+									<label key={t.idTag} className="category-checkbox-label">
 										<input
 											type="checkbox"
-											value={c.idCategoria}
-											checked={selectedCategories.includes(c.idCategoria)}
-											onChange={() => handleCategoryChange(c.idCategoria)}
+											value={t.idTag}
+											checked={selectedTag.includes(t.idTag)}
+											onChange={() => handleTagChange(t.idTag)}
 											className="category-checkbox"
 										/>
-										{c.nombre}
+										{t.nombre}
 									</label>
 								))
 							)}
