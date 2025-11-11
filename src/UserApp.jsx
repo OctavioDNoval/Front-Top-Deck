@@ -13,6 +13,7 @@ export const UserApp = () => {
 			<Routes>
 				<Route path="/" element={<HomePage />} />
 				<Route path="/productos" element={<ProductPage />} />
+				<Route path="/productos/:id_tag" element={<ProductPage />} />
 				<Route path="/contacto" element={<ContactPage />} />
 				<Route path="/productos/:id" element={<SelectedProductPage />} />
 			</Routes>

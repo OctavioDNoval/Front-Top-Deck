@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data } from "react-router-dom";
+import { data, useParams } from "react-router-dom";
 import { ProductCard } from "../Components/UI/ProductCard";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
@@ -7,6 +7,8 @@ import { SortSelectComponent } from "../Components/SortSelectComponent";
 import { useTags } from "../Hooks/useTags";
 
 export const ProductPage = () => {
+	const { id_tag } = useParams();
+
 	const [products, setProducts] = useState([]);
 	const [filteredProducts, setfilteredProducts] = useState([]);
 	const [selectedCategories, setSelectedCategories] = useState([]);
@@ -20,7 +22,7 @@ export const ProductPage = () => {
 	const [isLoadingCategory, setIsLoadingCategory] = useState(false);
 
 	const { tags, isLoading: isLoadingTags, error } = useTags();
-	const [selectedTag, setSelectedTag] = useState([]);
+	const [selectedTag, setSelectedTag] = useState(0);
 
 	const handleOnChangeSort = (option) => {
 		setSort(option);
@@ -32,6 +34,10 @@ export const ProductPage = () => {
 				? prev.filter((id) => id !== category)
 				: [...prev, category]
 		);
+	};
+
+	const handleTagChange = (id) => {
+		setSelectedTag(id);
 	};
 
 	/*UseEffect que se va a encargar de filtrar 
@@ -167,7 +173,7 @@ export const ProductPage = () => {
 										<input
 											type="checkbox"
 											value={t.idTag}
-											checked={selectedTag.includes(t.idTag)}
+											checked={() => selectedTag === t.idTag}
 											onChange={() => handleTagChange(t.idTag)}
 											className="category-checkbox"
 										/>

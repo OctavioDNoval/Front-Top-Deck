@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
 import { useTags } from "../Hooks/useTags";
 import { TagComponent } from "../Components/UI/TagComponent";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
+	const navigate = useNavigate();
+
 	const [carruselImg, setCarruselImg] = useState([]);
 	const [index, setIndex] = useState(0);
 
