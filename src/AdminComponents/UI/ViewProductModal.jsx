@@ -4,6 +4,7 @@ import { storage } from "../../firebase";
 import { useProductos } from "../../Hooks/useProductos";
 import { setLogLevel } from "firebase/app";
 import { EliminadoModal } from "./EliminadoModal";
+import { useTags } from "../../Hooks/useTags";
 
 export const ViewProductModal = ({ isOpen, onClose, product }) => {
 	console.log(product);
@@ -13,6 +14,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 	const [precio, setPrecio] = useState("");
 	const [stock, setStock] = useState("");
 	const [categoriaId, setCategoriaId] = useState("");
+	const [tagId, setTagId] = useState("");
 	const [descripcion, setDescripcion] = useState("");
 	const [imagen, setImagen] = useState(null);
 	const [imagenPreview, setImagenPreview] = useState("");
@@ -22,6 +24,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 
 	const { categorias, isLoading, error, obtenerCategorias } = useCategorias();
 	const { actualizarProducto, eliminarProducto } = useProductos();
+	const { tags } = useTags();
 
 	useEffect(() => {
 		if (product && product.nombre) {
@@ -79,6 +82,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 		setStock("");
 		setDescripcion("");
 		setCategoriaId("");
+		setTagId("");
 		setImagen(null);
 		setImagenPreview("");
 	};
@@ -97,6 +101,8 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 				(c) => c.idCategoria === parseInt(categoriaId)
 			);
 
+			const tagSeleccionado = tags.find((t) => t.idTag === parseInt(tagId));
+
 			const productData = {
 				nombre: nombre.trim(),
 				descripcion: descripcion.trim(),
@@ -104,6 +110,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 				stock: parseInt(stock) || 0,
 				categoria: categoriaSeleccionada,
 				img_url: imageUrl,
+				tag: tagSeleccionado,
 			};
 
 			console.log("Actualizando produto: ", productData);
@@ -132,11 +139,9 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 
 			if (res) {
 				setEliminadoModal(true);
-				setTimeout(() => {
-					setEliminadoModal(false);
-					onClose();
-					resetData();
-				}, 2000);
+
+				onClose();
+				resetData();
 			} else {
 				alert("No se pudo eliminar el producto");
 			}
@@ -232,6 +237,23 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 							</div>
 
 							<div className="add-product-input">
+								<label htmlFor="product-Tag">Franquicia</label>
+								<select
+									name="Tag"
+									id="product-Tag"
+									value={tagId}
+									onChange={(e) => setTagId(e.target.value)}
+								>
+									<option value="">Seleccionar...</option>
+									{tags.map((t) => (
+										<option value={t.idTag} key={t.idTag}>
+											{t.nombre}
+										</option>
+									))}
+								</select>
+							</div>
+
+							<div className="add-product-input">
 								<label htmlFor="product-desc">Descripcion</label>
 								<textarea
 									id="product-desc"
@@ -257,7 +279,6 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 						</form>
 					</div>
 				</div>
-				<EliminadoModal isOpen={eliminadoModal} />
 			</article>
 		</>
 	);

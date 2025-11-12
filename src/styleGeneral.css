@@ -7,6 +7,7 @@
     --text-secondary: #b0b0b0;     /* Texto secundario */
     --border-color: #333333;       /* Bordes sutiles */
     --shadow-intensity: 0.3;       /* Control de sombras */
+    --secondary-color: #FF7A00;
     
     --header-height: 56px;
     --footer-height: 35vh;
@@ -37,6 +38,10 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     overflow-x: clip;
+}
+
+option{
+    color: black;
 }
 
 /* 3. Asegura que los medios se comporten correctamente */
@@ -583,7 +588,7 @@ a:hover {
 }
 
 .tag-container:hover .tag-name-container h3 {
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 /* Efecto de brillo al hacer hover */
@@ -2077,6 +2082,11 @@ a:hover {
     transition: all 0.3s ease;
     background: #f8fafc;
     box-sizing: border-box;
+    color: var(--text-secondary);
+}
+
+.add-product-input select{
+    color: black;
 }
 
 .add-product-input input:focus,
@@ -2087,6 +2097,11 @@ a:hover {
     background: white;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     transform: translateY(-1px);
+}
+
+.add-product-input input:not(:placeholder-shown),
+.add-product-input textarea:not(:placeholder-shown) {
+    color: black;
 }
 
 .add-product-input textarea {

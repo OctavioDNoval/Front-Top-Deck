@@ -51,6 +51,9 @@ export const ProductPage = () => {
 				selectedCategories.includes(p.categoria.idCategoria)
 			);
 		}
+		if (selectedTag != 0) {
+			result = result.filter((p) => p.tag.id_tag === selectedTag);
+		}
 
 		switch (sort) {
 			case "prec-des":
@@ -67,7 +70,7 @@ export const ProductPage = () => {
 		}
 
 		setfilteredProducts(result);
-	}, [products, selectedCategories, sort]);
+	}, [products, selectedCategories, sort, selectedTag]);
 
 	/*
 	 *UseEffect para traer los productos
@@ -168,18 +171,30 @@ export const ProductPage = () => {
 							) : error ? (
 								<p>error</p>
 							) : (
-								tags.map((t) => (
-									<label key={t.idTag} className="category-checkbox-label">
+								<>
+									<label className="category-checkbox-label">
 										<input
 											type="checkbox"
-											value={t.idTag}
-											checked={() => selectedTag === t.idTag}
-											onChange={() => handleTagChange(t.idTag)}
+											value={0}
+											onChange={() => handleTagChange(0)}
+											checked={selectedTag === 0 ? true : false}
 											className="category-checkbox"
 										/>
-										{t.nombre}
+										Todo
 									</label>
-								))
+									{tags.map((t) => (
+										<label key={t.idTag} className="category-checkbox-label">
+											<input
+												type="checkbox"
+												value={t.idTag}
+												onChange={() => handleTagChange(t.idTag)}
+												checked={t.idTag === selectedTag ? true : false}
+												className="category-checkbox"
+											/>
+											{t.nombre}
+										</label>
+									))}
+								</>
 							)}
 						</div>
 					</div>

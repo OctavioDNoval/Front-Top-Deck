@@ -4,7 +4,7 @@ export const TagComponent = ({ tag }) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/productos/${tag.idTag}`);
+		navigate(`/productos/tag/${tag.idTag}`);
 	};
 
 	return (

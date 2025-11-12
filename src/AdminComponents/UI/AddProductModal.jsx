@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useCategorias } from "../../Hooks/useCategorias";
 import { useProductos } from "../../Hooks/useProductos";
 import { storage } from "../../firebase";
+import { useTags } from "../../Hooks/useTags";
 
 export const AddProductModal = ({ isOpen, onClose }) => {
 	const [nombre, setNombre] = useState("");
 	const [precio, setPrecio] = useState("");
 	const [stock, setStock] = useState("");
 	const [categoriaId, setCategoriaId] = useState("");
+	const [tagId, setTagId] = useState("");
 	const [desc, setDesc] = useState("");
 	const [imagen, setImagen] = useState(null);
 	const [imagenPreview, setImagenPreview] = useState("");
 	const [subiendo, setSubiendo] = useState(false);
 
+	const { tags } = useTags();
 	const { categorias, isLoading, error, obtenerCategorias } = useCategorias();
 	const { agregarProducto } = useProductos();
 
@@ -68,6 +71,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 				precio: parseFloat(precio) || 0,
 				stock: parseInt(stock) || 0,
 				id_categoria: parseInt(categoriaId),
+				id_tag: parseInt(tagId),
 				img_url: imagenUrl,
 			};
 
@@ -92,6 +96,7 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 		setStock("");
 		setDesc("");
 		setCategoriaId("");
+		setTagId("");
 		setImagen(null);
 		setImagenPreview("");
 	};
@@ -177,6 +182,23 @@ export const AddProductModal = ({ isOpen, onClose }) => {
 								{categorias.map((c) => (
 									<option value={c.idCategoria} key={c.idCategoria}>
 										{c.nombre}
+									</option>
+								))}
+							</select>
+						</div>
+
+						<div className="add-product-input">
+							<label htmlFor="product-Tag">Franquicia</label>
+							<select
+								name="Tag"
+								id="product-Tag"
+								value={tagId}
+								onChange={(e) => setTagId(e.target.value)}
+							>
+								<option value="">Seleccionar...</option>
+								{tags.map((t) => (
+									<option value={t.idTag} key={t.idTag}>
+										{t.nombre}
 									</option>
 								))}
 							</select>
