@@ -1736,6 +1736,97 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
+.product-card.no-stock {
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Solución para el brightness - usamos pseudo-elemento en lugar de filter */
+.product-card.no-stock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+/* Overlay de Sin Stock - ahora con z-index mayor */
+.no-stock-overlay {
+  position: absolute;
+  background: linear-gradient(135deg, var(--secondary-color), #ff944d);
+  width: 200%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  padding: 20px;
+  z-index: 3; /* Mayor que el pseudo-elemento oscuro */
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(255, 122, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+}
+
+.no-stock-overlay p {
+  margin: 0;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: rotate(-45deg);
+}
+
+/* Efecto hover mejorado */
+.product-card.no-stock:hover .no-stock-overlay {
+  transform: translate(-50%, -50%) rotate(0deg);
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.product-card.no-stock:hover .no-stock-overlay p {
+  transform: rotate(0deg);
+}
+
+/* Deshabilitar el botón de agregar al carrito cuando no hay stock */
+.product-card.no-stock .add-to-cart-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: scale(0.9);
+}
+
+.product-card.no-stock .add-to-cart-btn:hover {
+  transform: scale(0.9);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+}
+
+/* Efecto sutil en la imagen cuando no hay stock */
+.product-card.no-stock .prdocut-img-container img {
+  filter: grayscale(30%);
+}
+
+/* Precio con estilo diferente cuando no hay stock */
+.product-card.no-stock .product-price {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+/* Efecto de click deshabilitado */
+.product-card.no-stock:active {
+  transform: none;
+}
+
+.product-card.no-stock:hover {
+  transform: none;
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
 
 
 /*-----------------------LOADING CARTEL-----------------------*/

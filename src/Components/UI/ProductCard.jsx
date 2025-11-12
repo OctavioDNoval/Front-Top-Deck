@@ -6,11 +6,16 @@ export const ProductCard = ({ product }) => {
 	const { formatPrice } = useFormatNum();
 
 	const handleNavigate = () => {
-		navigate(`/productos/${product.idProducto}`);
+		if (product.stock > 0) {
+			navigate(`/productos/${product.idProducto}`);
+		}
 	};
 
 	return (
-		<article className="product-card" onClick={handleNavigate}>
+		<article
+			className={`product-card ${product.stock === 0 ? "no-stock" : ""}`}
+			onClick={handleNavigate}
+		>
 			<div className="prdocut-img-container">
 				<img src={product.img_url} alt={product.nombre} />
 			</div>
@@ -23,6 +28,12 @@ export const ProductCard = ({ product }) => {
 					+
 				</button>
 			</div>
+
+			{product.stock === 0 ? (
+				<div className="no-stock-overlay">
+					<p>Sin Stock</p>
+				</div>
+			) : null}
 		</article>
 	);
 };

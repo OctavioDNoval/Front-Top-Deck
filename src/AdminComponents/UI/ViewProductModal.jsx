@@ -7,8 +7,6 @@ import { EliminadoModal } from "./EliminadoModal";
 import { useTags } from "../../Hooks/useTags";
 
 export const ViewProductModal = ({ isOpen, onClose, product }) => {
-	console.log(product);
-
 	const [productoId, setProductoId] = useState("");
 	const [nombre, setNombre] = useState("");
 	const [precio, setPrecio] = useState("");
@@ -28,7 +26,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 
 	useEffect(() => {
 		if (product && product.nombre) {
-			setProductoId(product.productoId || "");
+			setProductoId(product.idProducto || "");
 			setNombre(product.nombre || "");
 			setPrecio(product.precio || "");
 			setStock(product.stock || "");
@@ -125,7 +123,7 @@ export const ViewProductModal = ({ isOpen, onClose, product }) => {
 			return productoActualizado;
 		} catch (e) {
 			console.error("Error: ", e.message);
-			alert("Error al actualizar el producto", e);
+			alert("Error al actualizar el producto", e.message);
 		} finally {
 			setActualizando(false);
 		}
