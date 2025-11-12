@@ -6,6 +6,7 @@ import { ViewCategoryModal } from "./UI/ViewCategoryModal";
 import { useTags } from "../Hooks/useTags";
 import { AdminTagCard } from "./UI/AdminTagCard";
 import { AddTagModal } from "./UI/AddTagModal";
+import { ViewTagModal } from "./UI/ViewTagModal";
 
 export const AdminCategoriaComponent = () => {
 	const { categorias, obtenerCategorias } = useCategorias();
@@ -18,6 +19,8 @@ export const AdminCategoriaComponent = () => {
 	const [categoriaSeleccionada, setCategoriaSeleccionada] = useState({});
 
 	const [addTagModalOpen, setAddTagModalOpen] = useState(false);
+	const [actualizarTagModalOpen, setActualizarTagModalOpen] = useState(false);
+	const [tagSeleccionado, setTagSeleccionado] = useState({});
 
 	useEffect(() => {
 		obtenerCategorias();
@@ -25,7 +28,7 @@ export const AdminCategoriaComponent = () => {
 
 	useEffect(() => {
 		obtenerTags();
-	}, [addTagModalOpen]);
+	}, [addTagModalOpen, actualizarTagModalOpen]);
 
 	const filteredCategoires = useMemo(() => {
 		if (!filter) return categorias;
@@ -37,12 +40,16 @@ export const AdminCategoriaComponent = () => {
 	}, [categorias, filter]);
 
 	const handleClick = (categoria) => {
-		console.log(categoria);
+		console.log("Categoria abierta: ", categoria);
 		setActualizarCategoriaModalOpen(true);
 		setCategoriaSeleccionada(categoria);
 	};
 
-	const handleClickTag = (tag) => {};
+	const handleClickTag = (tag) => {
+		console.log("Tag abierto: ", tag);
+		setActualizarTagModalOpen(true);
+		setTagSeleccionado(tag);
+	};
 
 	return (
 		<>
@@ -120,6 +127,12 @@ export const AdminCategoriaComponent = () => {
 					<AddTagModal
 						isOpen={addTagModalOpen}
 						onClose={() => setAddTagModalOpen(false)}
+					/>
+
+					<ViewTagModal
+						isOpen={actualizarTagModalOpen}
+						onClose={() => setActualizarTagModalOpen(false)}
+						tag={tagSeleccionado}
 					/>
 				</section>
 			</div>

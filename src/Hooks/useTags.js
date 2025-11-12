@@ -34,6 +34,36 @@ export const useTags = () => {
 		}
 	};
 
+	const actualizarTag = async (tag, idTag) => {
+		setisLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/tags/admin/edit/${idTag}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify(tag),
+			});
+			if (!res.ok) {
+				throw new Error("Error en el hook de tags: ", e.message);
+			}
+
+			const tagActualizado = await res.json();
+
+			setTags((prev) =>
+				prev.map((p) => (p.idTag === idTag ? tagActualizado : p))
+			);
+
+			return tagActualizado;
+		} catch (e) {
+			setError(e.message);
+		} finally {
+			setisLoading(false);
+		}
+	};
+
 	const agregarTag = async (newTag) => {
 		setisLoading(true);
 		setError("");
@@ -94,5 +124,6 @@ export const useTags = () => {
 		obtenerTags,
 		agregarTag,
 		deleteTag,
+		actualizarTag,
 	};
 };
