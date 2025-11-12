@@ -35,7 +35,7 @@ html {
 body {
     line-height: 1.5;
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
     color: var(--text-primary);
     overflow-x: clip;
 }
@@ -98,9 +98,7 @@ a:hover {
 
 /*-----------------------------HOME PAGE-----------------------------*/
 
-.home-main{
-    background-color: white;
-}
+
 
 .promo-carrusel{
     width: 80vw;
@@ -239,6 +237,19 @@ a:hover {
     height: 18px;
     cursor: pointer;
     accent-color: var(--primary-color); /* Color consistente */
+}
+
+.no-products-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.no-products-container p{
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
 /*------------------------------SELECTED PRODUCT PAGE---------------------*/
@@ -688,54 +699,272 @@ a:hover {
 }
 
 /*---------------------HEADER COMPONENT---------------------*/
-.header{
-    width: 100vw;
-    background: linear-gradient(135deg, var(--primary-color-gradient) 0%, var(--primary-color) 100%);
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: var(--header-height);
-    position:sticky;
-    top: 0;
-    z-index: 20;
-    color: white;
-    font-weight: bold;
+.header {
+	width: 100%;
+	background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
+	height: var(--header-height);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	border-bottom: 1px solid transparent;
 }
 
-.header a{
-    padding: 8px 16px;
-    border-radius: 16px;
-    transition: all 0.2s ease;
+.header.scrolled {
+	background: rgba(10, 10, 10, 0.95);
+	backdrop-filter: blur(10px);
+	border-bottom-color: var(--border-color);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	height: calc(var(--header-height) - 5px);
 }
 
-.header a:hover{
-    background-color: white;
-    color: var(--primary-color);
-    text-decoration: none;
-    transform: scale(1.05);
+.header-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
 }
 
-.logo-container{
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    height: 80%;
+/* Logo */
+.logo-link {
+	text-decoration: none;
+	display: flex;
+	align-items: center;
 }
 
-.header-logo{
-    height: 100%;
+.logo-container {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	transition: transform 0.3s ease;
 }
 
-.header-list{
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-evenly;
-    padding-right: 8%;
+.logo-container:hover {
+	transform: scale(1.05);
 }
 
-.header-list-item{
-    color: white;
-    font-weight: bold;
+.header-logo {
+	height: 40px;
+	width: auto;
+	object-fit: contain;
+}
+
+.logo-text {
+	color: var(--text-primary);
+	font-size: 1.5rem;
+	font-weight: 700;
+	background: linear-gradient(135deg, #ffffff, var(--text-secondary));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* Navegación Desktop */
+.header-nav {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+.nav-link {
+	color: var(--text-primary);
+	text-decoration: none;
+	padding: 10px 20px;
+	border-radius: 25px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.nav-link::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+	transition: left 0.5s;
+}
+
+.nav-link:hover::before {
+	left: 100%;
+}
+
+.nav-link:hover {
+	background: rgba(255, 255, 255, 0.1);
+	transform: translateY(-1px);
+}
+
+.nav-link.active {
+	background: var(--secondary-color);
+	color: white;
+	box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+}
+
+/* Acciones */
+.header-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.action-btn {
+	background: rgba(255, 255, 255, 0.1);
+	border: none;
+	border-radius: 50%;
+	width: 44px;
+	height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-primary);
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+	backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+	background: rgba(255, 255, 255, 0.2);
+	transform: scale(1.1);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cart-btn::after {
+	content: '';
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 8px;
+	height: 8px;
+	background: var(--secondary-color);
+	border-radius: 50%;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+/* Para cuando tengas items en el carrito */
+.cart-btn.has-items::after {
+	opacity: 1;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+	display: none;
+	background: none;
+	border: none;
+	color: var(--text-primary);
+	cursor: pointer;
+	padding: 8px;
+	border-radius: 8px;
+	transition: background 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: var(--card-bg);
+	border-bottom: 1px solid var(--border-color);
+	transform: translateY(-100%);
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+	z-index: 999;
+}
+
+.mobile-menu.open {
+	transform: translateY(0);
+	opacity: 1;
+	visibility: visible;
+}
+
+.mobile-nav {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	gap: 8px;
+}
+
+.mobile-nav-link {
+	color: var(--text-primary);
+	text-decoration: none;
+	padding: 16px 20px;
+	border-radius: 12px;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	border-left: 3px solid transparent;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+	background: rgba(255, 255, 255, 0.05);
+	border-left-color: var(--secondary-color);
+	color: var(--secondary-color);
+}
+
+.mobile-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	z-index: 998;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.header-nav {
+		display: none;
+	}
+	
+	.mobile-menu-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.logo-text {
+		font-size: 1.3rem;
+	}
+	
+	.header-content {
+		padding: 0 15px;
+	}
+}
+
+@media (max-width: 480px) {
+	.logo-text {
+		display: none;
+	}
+	
+	.header-logo {
+		height: 35px;
+	}
+	
+	.action-btn {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+/* Añadir padding al body para compensar el header fixed */
+body {
+	padding-top: var(--header-height);
 }
 
 /*---------------------AUTH COMPONENT-----------------------*/

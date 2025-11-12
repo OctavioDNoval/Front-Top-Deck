@@ -49,9 +49,7 @@ export const ProductPage = () => {
 		let result = [...products];
 
 		if (selectedCategories.length > 0) {
-			result = result.filter((p) =>
-				selectedCategories.includes(p.categoria.idCategoria)
-			);
+			result = result.filter((p) => selectedCategories.includes(p.categoriaId));
 		}
 		if (selectedTag != 0 && products.length > 0) {
 			result = result.filter((p) => p.tagId === selectedTag);
@@ -229,9 +227,13 @@ export const ProductPage = () => {
 						<div className="wrapper">
 							<ErrorCartel message={errorMsg} />
 						</div>
+					) : filteredProducts.length === 0 ? (
+						<div className="no-products-container">
+							<p>No hay productos disponibles</p>
+						</div>
 					) : (
 						filteredProducts.map((p) => (
-							<ProductCard product={p} key={p.productoId} />
+							<ProductCard product={p} key={p.idProducto} />
 						))
 					)}
 				</main>
