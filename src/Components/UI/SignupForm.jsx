@@ -122,7 +122,7 @@ export const SignupForm = ({ onClose }) => {
 						Registrarse
 					</button>
 				</form>
-				<div className="error-container"></div>
+				{error ? <div className="error-container">nazi</div> : null}
 			</div>
 		</section>
 	);
