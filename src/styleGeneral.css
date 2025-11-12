@@ -1895,9 +1895,12 @@ a:hover {
     justify-content: center;
     align-items: center;
     font-size: 4rem;
-    color: var(--primary-color);
     font-weight: 900;
     z-index: 1;
+}
+
+.admin-main-page h2{
+  color: var(--secondary-color);
 }
 
 .img1{

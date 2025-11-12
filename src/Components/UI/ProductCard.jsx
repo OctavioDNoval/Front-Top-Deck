@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useFormatNum } from "../../Hooks/useFormatNum";
 
 export const ProductCard = ({ product }) => {
 	const navigate = useNavigate();
+	const { formatPrice } = useFormatNum();
 
 	const handleNavigate = () => {
-		navigate(`/productos/${product.productoId}`);
+		navigate(`/productos/${product.idProducto}`);
 	};
 
 	return (
@@ -16,7 +18,7 @@ export const ProductCard = ({ product }) => {
 				<h3 className="product-title">{product.nombre}</h3>
 			</div>
 			<div className="bottom-product-container">
-				<p className="product-price">${product.precio}</p>
+				<p className="product-price">${formatPrice(product.precio)}</p>
 				<button type="button" className="add-to-cart-btn">
 					+
 				</button>

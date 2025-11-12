@@ -23,7 +23,6 @@ export const HomePage = () => {
 				);
 				const urls = await Promise.all(urlPromises);
 				setCarruselImg(urls);
-				console.log(carruselImg);
 			} catch (e) {
 				console.log(e.message);
 			}
@@ -55,7 +54,7 @@ export const HomePage = () => {
 				</section>
 				<section className="tags-container-home-page">
 					{tags.map((t) => (
-						<TagComponent tag={t} />
+						<TagComponent tag={t} key={t.idTag} />
 					))}
 				</section>
 			</main>

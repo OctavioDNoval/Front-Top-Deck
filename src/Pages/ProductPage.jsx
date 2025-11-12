@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { data, useParams } from "react-router-dom";
+import { useEffect, useEffectEvent, useState } from "react";
+import { data, useNavigate, useParams } from "react-router-dom";
 import { ProductCard } from "../Components/UI/ProductCard";
 import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
@@ -22,7 +22,9 @@ export const ProductPage = () => {
 	const [isLoadingCategory, setIsLoadingCategory] = useState(false);
 
 	const { tags, isLoading: isLoadingTags, error } = useTags();
-	const [selectedTag, setSelectedTag] = useState(0);
+	const [selectedTag, setSelectedTag] = useState(id_tag ? parseInt(id_tag) : 0);
+
+	const navigate = useNavigate();
 
 	const handleOnChangeSort = (option) => {
 		setSort(option);
@@ -51,8 +53,8 @@ export const ProductPage = () => {
 				selectedCategories.includes(p.categoria.idCategoria)
 			);
 		}
-		if (selectedTag != 0) {
-			result = result.filter((p) => p.tag.id_tag === selectedTag);
+		if (selectedTag != 0 && products.length > 0) {
+			result = result.filter((p) => p.tagId === selectedTag);
 		}
 
 		switch (sort) {
@@ -92,6 +94,7 @@ export const ProductPage = () => {
 				const data = await res.json();
 				setProducts(data);
 				setfilteredProducts(data);
+				console.log("Estos son los productos: ", data);
 			} catch (err) {
 				console.error(err);
 				setIsError(true);
@@ -126,9 +129,11 @@ export const ProductPage = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(categories);
-		console.log(products);
-	}, [products, categories]);
+		if (id_tag) {
+			const tag = parseInt(id_tag);
+			setSelectedTag(tag);
+		}
+	}, [id_tag]);
 
 	return (
 		<section className="product-page">
@@ -174,9 +179,14 @@ export const ProductPage = () => {
 								<>
 									<label className="category-checkbox-label">
 										<input
-											type="checkbox"
+											type="radio"
 											value={0}
-											onChange={() => handleTagChange(0)}
+											onChange={() => {
+												handleTagChange(0);
+												if (id_tag) {
+													navigate("/productos");
+												}
+											}}
 											checked={selectedTag === 0 ? true : false}
 											className="category-checkbox"
 										/>
@@ -185,9 +195,12 @@ export const ProductPage = () => {
 									{tags.map((t) => (
 										<label key={t.idTag} className="category-checkbox-label">
 											<input
-												type="checkbox"
+												type="radio"
 												value={t.idTag}
-												onChange={() => handleTagChange(t.idTag)}
+												onChange={() => {
+													handleTagChange(t.idTag);
+													navigate(`/productos/tag/${t.idTag}`);
+												}}
 												checked={t.idTag === selectedTag ? true : false}
 												className="category-checkbox"
 											/>

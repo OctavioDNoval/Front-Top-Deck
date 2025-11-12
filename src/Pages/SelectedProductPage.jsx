@@ -33,6 +33,7 @@ export const SelectedProductPage = () => {
 
 				const data = await res.json();
 				setProducto(data);
+				console.log("Este es el producto: ", data);
 			} catch (err) {
 				setIsError(true);
 				setErrorMsg("Error en el servidor");
