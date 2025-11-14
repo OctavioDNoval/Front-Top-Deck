@@ -2353,33 +2353,136 @@ body {
 
 /*------------------------------HEADER------------------------------*/
 
-.admin-header{
-    width: 100vw;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+.admin-header {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    z-index: 100;
     position: relative;
 }
 
-.admin-navbar-list{
-    max-height: var(--admin-header-height);
+.admin-navbar {
+    padding: 0 20px;
+}
+
+.admin-navbar-list {
     display: flex;
-    justify-content: space-evenly;
-    padding: 32px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin: 0;
+    list-style: none;
+    max-height: var(--admin-header-height);
 }
 
-.admin-navbar-list a{
-    border: 1.5px solid var(--primary-color);
-    border-radius: 8px;
-    padding: 8px 16px;
-    transition: all 0.2s ease;
-}
-
-.admin-navbar-list a:hover{
-    background-color: var(--primary-color);
-    color: white;
+.admin-navbar-list a {
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
     text-decoration: none;
-    border: 1.5px solid black;
-    transform: scale(1.1);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-navbar-list a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.admin-navbar-list a:hover::before {
+    left: 100%;
+}
+
+.admin-navbar-list a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estado activo para la ruta actual */
+.admin-navbar-list a.active {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+}
+
+.admin-navbar-list button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.admin-navbar-list button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive para admin */
+@media (max-width: 768px) {
+    .admin-navbar {
+        padding: 0 15px;
+    }
+    
+    .admin-navbar-list {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        padding: 15px 0;
+    }
+    
+    .admin-navbar-list a {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .admin-navbar-list button {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-navbar-list {
+        gap: 8px;
+    }
+    
+    .admin-navbar-list a {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .admin-navbar-list a,
+    .admin-navbar-list button {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        justify-content: center;
+    }
 }
 
 /*---------------------------------WELCOME PAGE-------------------------*/
@@ -2432,6 +2535,10 @@ body {
     gap: 1rem;
     padding: 1rem;
     margin-bottom: 80px;
+}
+
+.admin-product-container.logs{
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .admin-product-header{
