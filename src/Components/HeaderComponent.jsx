@@ -37,7 +37,6 @@ export const HeaderComponent = () => {
 								alt="TopDeck Importados"
 								className="header-logo"
 							/>
-							<span className="logo-text">TopDeck</span>
 						</div>
 					</Link>
 

@@ -97,7 +97,7 @@ export const SignupForm = ({ onClose }) => {
 					<div className="password-container input-container">
 						<label htmlFor="register-password">Contraseña</label>
 						<input
-							type="text"
+							type="password"
 							id="register-password"
 							placeholder="123456789"
 							value={password}
@@ -110,7 +110,7 @@ export const SignupForm = ({ onClose }) => {
 							Confirmar contraseña
 						</label>
 						<input
-							type="text"
+							type="password"
 							id="register-password-confirm"
 							placeholder="123456789"
 							value={passwordConfirm}

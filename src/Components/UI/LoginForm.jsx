@@ -73,7 +73,7 @@ export const LoginForm = ({ onClose }) => {
 					<div className="password-container input-container">
 						<label htmlFor="password">Contraseña</label>
 						<input
-							type="text"
+							type="password"
 							id="password"
 							placeholder="Contraseña"
 							value={password}
