@@ -38,6 +38,12 @@ export const AdminHeaderComponent = () => {
 					>
 						Logs
 					</Link>
+					<Link
+						to="/eventos"
+						className={location.pathname === "/eventos" ? "active" : ""}
+					>
+						Eventos
+					</Link>
 					<button onClick={() => setIsProfileOpen(true)}>
 						<CircleUser size={20} />
 					</button>

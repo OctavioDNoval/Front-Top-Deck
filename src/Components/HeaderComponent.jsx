@@ -59,12 +59,12 @@ export const HeaderComponent = () => {
 							Productos
 						</Link>
 						<Link
-							to="/contacto"
+							to="/eventos	"
 							className={`nav-link ${
-								location.pathname === "/contacto" ? "active" : ""
+								location.pathname === "/eventos" ? "active" : ""
 							}`}
 						>
-							Contacto
+							Eventos
 						</Link>
 					</nav>
 
@@ -76,8 +76,6 @@ export const HeaderComponent = () => {
 							aria-label="Carrito de compras"
 						>
 							<ShoppingCart size={20} />
-							{/* Podrías añadir un badge aquí para la cantidad de items */}
-							{/* <span className="cart-badge">3</span> */}
 						</button>
 
 						<button
@@ -121,10 +119,10 @@ export const HeaderComponent = () => {
 						<Link
 							to="/contacto"
 							className={`mobile-nav-link ${
-								location.pathname === "/contacto" ? "active" : ""
+								location.pathname === "/eventos" ? "active" : ""
 							}`}
 						>
-							Contacto
+							Eventos
 						</Link>
 					</nav>
 				</div>

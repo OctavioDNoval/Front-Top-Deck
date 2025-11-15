@@ -5,6 +5,7 @@ import { AdminCategoriaComponent } from "./AdminComponents/AdminCategoriaCompone
 import { AdminUsuariosComponent } from "./AdminComponents/AdminUsuariosComponent";
 import { AdminWelcomePage } from "./AdminComponents/AdminWelcomePage";
 import { AdminLogsComponent } from "./AdminComponents/AdminLogsComponent";
+import { AdminEventosComponents } from "./AdminComponents/AdminEventosComponents";
 
 export const AdminApp = () => {
 	return (
@@ -16,6 +17,7 @@ export const AdminApp = () => {
 				<Route path="/categoria" element={<AdminCategoriaComponent />} />
 				<Route path="/usuarios" element={<AdminUsuariosComponent />} />
 				<Route path="/logs" element={<AdminLogsComponent />} />
+				<Route path="/eventos" element={<AdminEventosComponents />} />
 			</Routes>
 		</>
 	);
