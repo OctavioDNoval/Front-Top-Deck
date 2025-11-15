@@ -3038,6 +3038,204 @@ body {
 }
 
 
+/*-------------------------EVENTOS----------------------------*/
+
+/* Estilos para la sección de eventos */
+.eventos-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Tarjeta de evento principal */
+.evento-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, calc(var(--shadow-intensity) * 0.8));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.evento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(255, 122, 0, calc(var(--shadow-intensity) * 0.3));
+  border-color: var(--secondary-color);
+}
+
+/* Header de la tarjeta */
+.evento-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem 1.25rem 0.75rem;
+  position: relative;
+}
+
+.evento-fecha {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 70px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.fecha-dia {
+  display: block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* Estados del evento */
+.evento-estado {
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.evento-estado.proximamente {
+  background: rgba(255, 122, 0, 0.15);
+  color: var(--secondary-color);
+  border: 1px solid rgba(255, 122, 0, 0.3);
+}
+
+.evento-estado.en_curso {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4CAF50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.evento-estado.finalizado {
+  background: rgba(158, 158, 158, 0.15);
+  color: #9E9E9E;
+  border: 1px solid rgba(158, 158, 158, 0.3);
+}
+
+/* Contenido de la tarjeta */
+.evento-content {
+  padding: 0 1.25rem 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.evento-nombre {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Información del evento */
+.evento-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.info-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+/* Precio de entrada - opcional si decides agregarlo */
+.evento-precio {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.precio-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.precio-valor {
+  font-weight: 700;
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+}
+
+.precio-gratis {
+  font-weight: 700;
+  color: #4CAF50;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .eventos-section {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .evento-header {
+    padding: 1rem 1rem 0.5rem;
+  }
+  
+  .evento-content {
+    padding: 0 1rem 1rem;
+  }
+  
+  .evento-nombre {
+    font-size: 1.1rem;
+  }
+}
+
+/* Efectos de acento naranja */
+.evento-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary-color), #ff9d4d);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.evento-card:hover::before {
+  opacity: 1;
+}
+
 /*------------------------KEYFRAMES------------------------*/
 
 @keyframes spinEase {
