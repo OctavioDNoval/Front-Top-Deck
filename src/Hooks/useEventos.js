@@ -15,7 +15,6 @@ export const useEventos = () => {
 		seterror("");
 		try {
 			const res = await fetch(`${apiUrl}/public/getAll`);
-			console.log(res);
 			if (!res.ok) {
 				throw new Error(`ERROR ${res.status}: ${res.text}`);
 			}
@@ -39,6 +38,7 @@ export const useEventos = () => {
 					"Content-Type": "application/json",
 					Authorization: `Bearer ${token}`,
 				},
+				body: JSON.stringify(newEvento),
 			});
 
 			if (!res.ok) {

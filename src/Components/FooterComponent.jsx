@@ -143,6 +143,13 @@ export const FooterComponent = () => {
 						derechos reservados.
 					</p>
 
+					<p className="developer">
+						Developer:
+						<a href="https://github.com/OctavioDNoval" target="blank">
+							Octavio Noval
+						</a>
+					</p>
+
 					<p className="made-with">
 						Hecho con <Heart size={14} /> para la comunidad TCG
 					</p>

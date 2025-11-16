@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEventos } from "../Hooks/useEventos";
 import { EventoCard } from "../Components/UI/EventoCard";
 import { AddEventoModal } from "./UI/AddEventoModal";
+import { DeleteEventoModal } from "./UI/DeleteEventoModal";
 
 export const AdminEventosComponents = () => {
 	const [addEventoModalOpen, setAddEventoModalOpen] = useState(false);
+	const [deleteEventoModalOpen, setDeleteEventoModalOpen] = useState(false);
+	const [eventoSelected, setEventoSelected] = useState({});
 
-	const { eventos } = useEventos();
+	const handleClick = (evento) => {
+		setDeleteEventoModalOpen(true);
+		setEventoSelected(evento);
+	};
+
+	const { eventos, obtenerEventos } = useEventos();
+
+	useEffect(() => {
+		obtenerEventos();
+	}, [addEventoModalOpen, deleteEventoModalOpen]);
 
 	return (
 		<>
@@ -22,13 +34,23 @@ export const AdminEventosComponents = () => {
 			</button>
 			<section className="eventos-section">
 				{eventos.map((e) => (
-					<EventoCard evento={e} />
+					<EventoCard
+						key={e.idEvento}
+						evento={e}
+						onClick={() => handleClick(e)}
+					/>
 				))}
 			</section>
 
 			<AddEventoModal
 				isOpen={addEventoModalOpen}
 				onClose={() => setAddEventoModalOpen(false)}
+			/>
+
+			<DeleteEventoModal
+				isOpen={deleteEventoModalOpen}
+				onClose={() => setDeleteEventoModalOpen(false)}
+				evento={eventoSelected}
 			/>
 		</>
 	);

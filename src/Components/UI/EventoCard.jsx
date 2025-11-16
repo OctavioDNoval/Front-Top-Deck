@@ -1,10 +1,4 @@
-export const EventoCard = ({ evento }) => {
-	// Función para formatear la fecha si es necesario
-	const formatFecha = (fecha) => {
-		// Puedes personalizar el formato de fecha aquí
-		return fecha;
-	};
-
+export const EventoCard = ({ evento, onClick }) => {
 	// Determinar clase del estado para estilos diferentes
 	const getEstadoClass = (estado) => {
 		switch (estado?.toLowerCase()) {
@@ -20,10 +14,10 @@ export const EventoCard = ({ evento }) => {
 	};
 
 	return (
-		<article className="evento-card">
+		<article className="evento-card" onClick={onClick}>
 			<div className="evento-header">
 				<div className="evento-fecha">
-					<span className="fecha-dia">{formatFecha(evento.fecha)}</span>
+					<span className="fecha-dia">{evento.fecha}</span>
 				</div>
 				<div className={`evento-estado ${getEstadoClass(evento.estado)}`}>
 					{evento.estado}
@@ -40,6 +34,10 @@ export const EventoCard = ({ evento }) => {
 					<div className="info-item">
 						<span className="info-icon">🕒</span>
 						<span className="info-text">{evento.hora}</span>
+					</div>
+					<div className="info-item">
+						<span className="info-icon">💲</span>
+						<span className="info-text">{evento.precioEntrada}</span>
 					</div>
 				</div>
 			</div>
