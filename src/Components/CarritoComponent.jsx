@@ -1,7 +1,7 @@
 import { useContext, useEffect, useEffectEvent, useState } from "react";
 import { AuthContext } from "../AuthProvider";
-import { CreateAccount } from "./UI/CreateAccount";
 import { CarritoCard } from "./UI/CarritoCard";
+import { CarritoEfimeroComponent } from "./CarritoEfimeroComponent";
 
 export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 	const {
@@ -68,9 +68,9 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 						</div>
 					</>
 				) : (
-					<div className="create-account-card-container">
-						<CreateAccount onClose={onClose} authOpen={authOpen} />
-					</div>
+					<>
+						<CarritoEfimeroComponent isOpen={isOpen} />
+					</>
 				)}
 			</aside>
 		</div>

@@ -1,8 +1,6 @@
 import { Trash2 } from "lucide-react";
 
 export const CarritoCard = ({ detalleCarrito, onDelete }) => {
-	console.log("detalle carrito: ", detalleCarrito);
-
 	return (
 		<article className="carrito-card">
 			<div className="carrito-card-img-container">

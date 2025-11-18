@@ -6,6 +6,8 @@ import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { AuthContext } from "../AuthProvider";
 import { CircleCheckBig } from "lucide-react";
+import { useCarritoEfimero } from "../Hooks/useCarritoEfimero";
+import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
 
 export const SelectedProductPage = () => {
 	const { id } = useParams();
@@ -16,6 +18,8 @@ export const SelectedProductPage = () => {
 	const { counter, increment, reset, decrement } = useCounter(1);
 	const { carrito, agregarAlCarrito } = useContext(AuthContext);
 	const [productAdded, setProductAdded] = useState(false);
+
+	const { agregarAlCarritoEfimero } = useContext(CarritoEfimeroContext);
 
 	const apiUrl = import.meta.env.VITE_API_URL_BASE;
 
@@ -45,14 +49,18 @@ export const SelectedProductPage = () => {
 	}, []);
 
 	const handleAddToCart = async (cantidad) => {
-		try {
-			await agregarAlCarrito(cantidad, id);
-			setProductAdded(true);
-			setTimeout(() => {
-				setProductAdded(false);
-			}, 1000);
-		} catch (e) {
-			setErrorMsg(e.message);
+		if (carrito) {
+			try {
+				await agregarAlCarrito(cantidad, id);
+				setProductAdded(true);
+				setTimeout(() => {
+					setProductAdded(false);
+				}, 1000);
+			} catch (e) {
+				setErrorMsg(e.message);
+			}
+		} else {
+			agregarAlCarritoEfimero(producto, cantidad);
 		}
 	};
 
