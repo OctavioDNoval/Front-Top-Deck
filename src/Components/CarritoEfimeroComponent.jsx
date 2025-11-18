@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { useCarritoEfimero } from "../Hooks/useCarritoEfimero";
+import { useContext } from "react";
 import { CarritoCard } from "./UI/CarritoCard";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
+import { useNavigate } from "react-router-dom";
 
-export const CarritoEfimeroComponent = ({ isOpen }) => {
+export const CarritoEfimeroComponent = ({ onClose }) => {
+	const navigate = useNavigate();
+
 	const { carritoEfimero, totalCarrito, eliminarDelCarritoEfimero } =
 		useContext(CarritoEfimeroContext);
 
@@ -23,10 +25,6 @@ export const CarritoEfimeroComponent = ({ isOpen }) => {
 		};
 	};
 
-	console.log(
-		"Desde el componente del carrito este es el carrito: ",
-		carritoEfimero
-	);
 	return (
 		<>
 			<h3 className="carrito-title">CARRITO</h3>
@@ -45,7 +43,15 @@ export const CarritoEfimeroComponent = ({ isOpen }) => {
 					<p>${totalCarrito}</p>
 				</div>
 				<div className="btn-cart-container">
-					<button className="buy-cart-btn">Comprar</button>
+					<button
+						className="buy-cart-btn"
+						onClick={() => {
+							navigate("/pedido");
+							onClose();
+						}}
+					>
+						Comprar
+					</button>
 				</div>
 			</div>
 		</>

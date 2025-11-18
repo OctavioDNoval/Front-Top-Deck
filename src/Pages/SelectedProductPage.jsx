@@ -6,7 +6,6 @@ import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { AuthContext } from "../AuthProvider";
 import { CircleCheckBig } from "lucide-react";
-import { useCarritoEfimero } from "../Hooks/useCarritoEfimero";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
 
 export const SelectedProductPage = () => {

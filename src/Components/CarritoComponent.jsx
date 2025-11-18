@@ -69,7 +69,7 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 					</>
 				) : (
 					<>
-						<CarritoEfimeroComponent isOpen={isOpen} />
+						<CarritoEfimeroComponent onClose={onClose} />
 					</>
 				)}
 			</aside>

@@ -6,6 +6,7 @@ import { SelectedProductPage } from "./Pages/SelectedProductPage";
 import { FooterComponent } from "./Components/FooterComponent";
 import { EventosPage } from "./Pages/EventosPage";
 import { CarritoEfimeroProvider } from "./CarritoEfimeroProvider";
+import { PedidoPage } from "./Pages/PedidoPage";
 
 export const UserApp = () => {
 	return (
@@ -18,6 +19,7 @@ export const UserApp = () => {
 					<Route path="/productos/tag/:id_tag" element={<ProductPage />} />
 					<Route path="/eventos" element={<EventosPage />} />
 					<Route path="/productos/:id" element={<SelectedProductPage />} />
+					<Route path="/pedido" element={<PedidoPage />} />
 				</Routes>
 				<FooterComponent />
 			</CarritoEfimeroProvider>
