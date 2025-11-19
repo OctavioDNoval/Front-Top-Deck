@@ -3465,12 +3465,36 @@ body {
     text-align: center;
     color: var(--text-secondary);
     padding: 40px 20px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .resume-placeholder h3 {
     color: var(--text-primary);
     margin-bottom: 12px;
     font-size: 1.3rem;
+}
+
+.total-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.total-label {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.total-amount {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--secondary-color), #ff944d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Responsive */

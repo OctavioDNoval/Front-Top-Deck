@@ -18,9 +18,11 @@ export const CarritoCard = ({ detalleCarrito, onDelete }) => {
 					</p>
 				</div>
 			</div>
-			<button className="delete-carrito-card" onClick={onDelete}>
-				<Trash2 />
-			</button>
+			{onDelete ? (
+				<button className="delete-carrito-card" onClick={onDelete}>
+					<Trash2 />
+				</button>
+			) : null}
 		</article>
 	);
 };
