@@ -5,7 +5,7 @@ export const useDireccion = () => {
 		try {
 			const res = await fetch(`${apiUrl}/public/save/nouser`, {
 				method: "POST",
-				"Content-Type": "application/json",
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(direccion),
 			});
 
@@ -15,10 +15,14 @@ export const useDireccion = () => {
 
 			const data = await res.json();
 			console.log("Direccion sin usuario guardada, ", data);
+			localStorage.setItem("Direccion", JSON.stringify(data));
+			return data;
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
-	return;
+	return {
+		agregarDireccionSinUsuario,
+	};
 };

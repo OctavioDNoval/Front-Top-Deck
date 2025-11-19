@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { CarritoCard } from "../Components/UI/CarritoCard";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
+import { useFormatNum } from "../Hooks/useFormatNum";
+import { useUsuarios } from "../Hooks/useUsuarios";
+import { useDireccion } from "../Hooks/useDireccion";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -17,6 +20,10 @@ export const PedidoPage = () => {
 	const [altura, setAltura] = useState("");
 	const [piso, setPiso] = useState("");
 
+	const { formatPrice } = useFormatNum();
+	const { agregarUsuarioSinContrasenia } = useUsuarios();
+	const { agregarDireccionSinUsuario } = useDireccion();
+
 	const { carritoEfimero, totalCarrito } = useContext(CarritoEfimeroContext);
 
 	const normalizarItemCarrito = (item) => {
@@ -31,6 +38,9 @@ export const PedidoPage = () => {
 		};
 	};
 
+	/*UseEffect para traer las provincias del pais desde
+	 * la base de datos del gobierno
+	 */
 	useEffect(() => {
 		const obtenerProvincias = async () => {
 			try {
@@ -54,9 +64,56 @@ export const PedidoPage = () => {
 		obtenerProvincias();
 	}, []);
 
-	const handleSubmit = () => {
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		try {
-		} catch (e) {}
+			const usuario = {
+				nombreCompleto: nombre.trim(),
+				email: email.trim(),
+			};
+
+			const usuarioAgregado = await subirUsuarioSinContrasenia(usuario);
+
+			const direccion = {
+				id_usuario: usuarioAgregado.idUsuario,
+				provincia: provincia.trim() || "",
+				pais: "Argentina",
+				ciudad: ciudad.trim() || "",
+				codigo_postal: codigoPostal.trim(),
+				direccion: calle.trim() || "",
+				altura: altura.trim(),
+				piso: piso.trim() || "",
+			};
+
+			console.log(direccion);
+
+			const direccionAgregada = await subirDireccionSinUsuarioLogueado(
+				direccion
+			);
+
+			console.log("Usuario cargado: ", usuarioAgregado);
+			console.log("direccion cargado: ", direccionAgregada);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const subirDireccionSinUsuarioLogueado = async (direccion) => {
+		try {
+			const res = await agregarDireccionSinUsuario(direccion);
+			return res;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	const subirUsuarioSinContrasenia = async (usuario) => {
+		try {
+			const res = await agregarUsuarioSinContrasenia(usuario);
+			return res;
+		} catch (e) {
+			console.error("Problemas al realziar el pedido");
+		}
 	};
 
 	return (
@@ -220,7 +277,7 @@ export const PedidoPage = () => {
 
 							<div className="form-actions">
 								<button type="submit" className="submit-btn">
-									Continuar al Pago
+									Confirmar pedido
 								</button>
 							</div>
 						</form>
@@ -239,7 +296,7 @@ export const PedidoPage = () => {
 					</div>
 					<div className="total-info">
 						<span className="total-label">Total</span>
-						<span className="total-amount">${totalCarrito}</span>
+						<span className="total-amount">${formatPrice(totalCarrito)}</span>
 					</div>
 				</aside>
 			</div>

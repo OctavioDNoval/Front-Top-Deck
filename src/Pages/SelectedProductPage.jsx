@@ -60,6 +60,10 @@ export const SelectedProductPage = () => {
 			}
 		} else {
 			agregarAlCarritoEfimero(producto, cantidad);
+			setProductAdded(true);
+			setTimeout(() => {
+				setProductAdded(false);
+			}, 1000);
 		}
 	};
 

@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider";
-import { ReceiptRussianRuble } from "lucide-react";
 
-const apiUrl = import.meta.env.VITE_API_URL_BASE;
+const apiUrl = `${import.meta.env.VITE_API_URL_BASE}/user`;
 
 export const useUsuarios = () => {
 	const [usuarios, setUsuarios] = useState([]);
@@ -19,7 +18,7 @@ export const useUsuarios = () => {
 		setIsLoading(true);
 		setError("");
 		try {
-			const res = await fetch(`${apiUrl}/user/admin/getAll`, {
+			const res = await fetch(`${apiUrl}/admin/getAll`, {
 				method: "GET",
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -39,10 +38,38 @@ export const useUsuarios = () => {
 		}
 	};
 
+	const agregarUsuarioSinContrasenia = async (usuario) => {
+		setIsLoading(true);
+		setError("");
+		try {
+			const res = await fetch(`${apiUrl}/public/usuario/!contrasenia`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(usuario),
+			});
+
+			if (!res.ok) {
+				throw new Error("Error al cargar el nuevo usuario sin contrasenia");
+			}
+
+			const data = await res.json();
+			console.log("Usuario sin contrasenia guardado: ", data);
+			localStorage.setItem("Usuario", JSON.stringify(data));
+			return data;
+		} catch (e) {
+			console.log("Error en el hook: ", e);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return {
 		usuarios,
 		isLoading,
 		error,
 		obtenerUsuarios,
+		agregarUsuarioSinContrasenia,
 	};
 };
