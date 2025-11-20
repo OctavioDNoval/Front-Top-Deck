@@ -6,6 +6,8 @@ import { useFormatNum } from "../Hooks/useFormatNum";
 import { useUsuarios } from "../Hooks/useUsuarios";
 import { useDireccion } from "../Hooks/useDireccion";
 import { useWhatsApp } from "../Hooks/useWhatsApp";
+import { Plus } from "lucide-react";
+import { AdressCard } from "../Components/UI/AdressCard";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -21,12 +23,18 @@ export const PedidoPage = () => {
 	const [altura, setAltura] = useState("");
 	const [piso, setPiso] = useState("");
 
+	const [subtotal, setSubtotal] = useState(0);
+
 	const { formatPrice } = useFormatNum();
 	const { agregarUsuarioSinContrasenia } = useUsuarios();
 	const { agregarDireccionSinUsuario } = useDireccion();
 	const { enviarWhatsApp } = useWhatsApp();
+	const { direcciones, traerDireccionesDeUnUsuario } = useDireccion();
 
 	const { carritoEfimero, totalCarrito } = useContext(CarritoEfimeroContext);
+	const { carritoProductos } = useContext(AuthContext);
+
+	console.log(carritoProductos);
 
 	const normalizarItemCarrito = (item) => {
 		return {
@@ -66,6 +74,20 @@ export const PedidoPage = () => {
 		obtenerProvincias();
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			traerDireccionesDeUnUsuario();
+		}
+	}, []);
+
+	useEffect(() => {
+		let total = 0;
+		carritoProductos.forEach((item) => {
+			total += item.productoDTO.precio * item.cantidad;
+		});
+		setSubtotal(total);
+	}, [carritoProductos]);
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -103,7 +125,6 @@ export const PedidoPage = () => {
 			enviarWhatsApp(usuarioAgregado, direccionAgregada);
 		} catch (e) {
 			console.error(e);
-		} finally {
 		}
 	};
 
@@ -130,7 +151,30 @@ export const PedidoPage = () => {
 			<div className="pedido-container">
 				{user ? (
 					<div className="confirm-pedido-container">
-						{/* Esto lo completarás después */}
+						<div className="direcciones-header">
+							<h2 className="direcciones-title">
+								Selecciona una dirección de envío
+							</h2>
+							<p className="direcciones-subtitle">
+								Elige una de tus direcciones guardadas o agrega una nueva
+							</p>
+						</div>
+						<div className="confirm-pedido-container">
+							<div className="direcciones-container-grid">
+								{direcciones?.map((d) => {
+									return <AdressCard direccion={d} />;
+								})}
+								<div className="add-adress-card adress-card">
+									<span>Agregar direccion</span>
+									<Plus />
+								</div>
+							</div>
+							<div className="form-actions">
+								<button type="submit" className="submit-btn">
+									Confirmar pedido
+								</button>
+							</div>
+						</div>
 					</div>
 				) : (
 					<div className="pedido-form-container">
@@ -296,16 +340,25 @@ export const PedidoPage = () => {
 				<aside className="carrito-resume">
 					<div className="resume-placeholder">
 						<h3>Resumen del Pedido</h3>
-						{carritoEfimero.map((item) => (
-							<CarritoCard
-								detalleCarrito={normalizarItemCarrito(item)}
-								key={item.producto.idProducto}
-							/>
-						))}
+						{user
+							? carritoProductos.map((item) => (
+									<CarritoCard
+										detalleCarrito={item}
+										key={item.id_DetalleCarrito}
+									/>
+							  ))
+							: carritoEfimero.map((item) => (
+									<CarritoCard
+										detalleCarrito={normalizarItemCarrito(item)}
+										key={item.producto.idProducto}
+									/>
+							  ))}
 					</div>
 					<div className="total-info">
 						<span className="total-label">Total</span>
-						<span className="total-amount">${formatPrice(totalCarrito)}</span>
+						<span className="total-amount">
+							${user ? formatPrice(subtotal) : formatPrice(totalCarrito)}
+						</span>
 					</div>
 				</aside>
 			</div>

@@ -2,6 +2,8 @@ import { useContext, useEffect, useEffectEvent, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { CarritoCard } from "./UI/CarritoCard";
 import { CarritoEfimeroComponent } from "./CarritoEfimeroComponent";
+import { useFormatNum } from "../Hooks/useFormatNum";
+import { useNavigate } from "react-router-dom";
 
 export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 	const {
@@ -16,6 +18,9 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 
 	const [error, setError] = useState("");
 	const [subTotal, setSubTotal] = useState(0);
+	const navigate = useNavigate();
+
+	const { formatPrice } = useFormatNum();
 
 	useEffect(() => {
 		if (isOpen && carrito) {
@@ -60,10 +65,18 @@ export const CarritoComponent = ({ isOpen, onClose, authOpen }) => {
 						<div className="total-container">
 							<div className="total-wrapper">
 								<p>Subtotal</p>
-								<p>${subTotal}</p>
+								<p>${formatPrice(subTotal)}</p>
 							</div>
 							<div className="btn-cart-container">
-								<button className="buy-cart-btn">Comprar</button>
+								<button
+									className="buy-cart-btn"
+									onClick={() => {
+										navigate("/pedido");
+										onClose();
+									}}
+								>
+									Comprar
+								</button>
 							</div>
 						</div>
 					</>

@@ -22,33 +22,43 @@ export const useWhatsApp = () => {
 			)
 			.join("\n");
 
-		console.log("Usuario para el mensaje: ", usuario);
-		console.log("Direccion para el mensaje: ", direccion);
-
 		const mensaje = `
-            ¡Hola! Tengo un nuevo pedido desde la web:
+🛒 *NUEVO PEDIDO ONLINE* 🛒
 
-            👤 *DATOS DEL CLIENTE:*
-            • Nombre: ${usuario.nombre}
-            • Email: ${usuario.email}
+👤 *INFORMACIÓN DEL CLIENTE*
+━━━━━━━━━━━━━━━━━━━━
+• 🧑‍💼 *Nombre:* ${usuario.nombre}
+• 📧 *Email:* ${usuario.email}
 
-            📍 *DIRECCIÓN DE ENVÍO:*
-            • Dirección: ${direccion.direccion} ${direccion.altura}
-            • Piso: ${direccion.piso || "No especificado"}
-            • Ciudad: ${direccion.ciudad}
-            • Provincia: ${direccion.provincia}
-            • Código Postal: ${direccion.codigo_postal}
-            • País: ${direccion.pais || "Argentina"}
+📍 *DIRECCIÓN DE ENVÍO*
+━━━━━━━━━━━━━━━━━━━━
+• 🏠 *Dirección:* ${direccion.direccion} ${direccion.altura}
+• 🏢 *Piso:* ${direccion.piso || "No especificado"}
+• 🏙️ *Ciudad:* ${direccion.ciudad}
+• 🗺️ *Provincia:* ${direccion.provincia}
+• 📮 *Código Postal:* ${direccion.codigo_postal}
+• 🌍 *País:* ${direccion.pais || "Argentina"}
 
-            🛒 *PRODUCTOS SOLICITADOS:*
-            ${listaProductos}
+📦 *PRODUCTOS SOLICITADOS*
+━━━━━━━━━━━━━━━━━━━━
+${listaProductos}
 
-            💰 *RESUMEN DEL PEDIDO:*
-            • *TOTAL: $${subTotal}*
-            • Costo de envío: A determinar
+💰 *RESUMEN DEL PEDIDO*
+━━━━━━━━━━━━━━━━━━━━
+• 💵 *Subtotal:* $${subTotal}
+• 🚚 *Envío:* A determinar
+• 💰 *Total:* $${subTotal} (más envío)
 
-            ¿Podrías procesar este pedido? ¡Gracias! 🎉
-        `.trim();
+📋 *NOTAS ADICIONALES*
+━━━━━━━━━━━━━━━━━━━━
+• Cliente: Usuario efímero
+• Pago: A coordinar
+• Entrega: A confirmar
+
+¡Por favor, procesa este pedido! 🎉
+
+*¡Gracias por tu atención!* 😊
+`.trim();
 
 		return mensaje;
 	};

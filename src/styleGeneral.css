@@ -3497,6 +3497,103 @@ body {
     background-clip: text;
 }
 
+
+.confirm-pedido-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.direcciones-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.direcciones-title {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.direcciones-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.direcciones-container-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* Tarjeta de dirección */
+.adress-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.adress-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-color-gradient));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.adress-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.adress-card:hover::before {
+    transform: scaleX(1);
+}
+
+.adress-card.selected {
+    border-color: var(--secondary-color);
+    background: rgba(255, 122, 0, 0.05);
+}
+
+.adress-card.selected::before {
+    background: linear-gradient(90deg, var(--secondary-color), #ff944d);
+    transform: scaleX(1);
+}
+
+.add-adress-card {
+    border: 2px dashed var(--border-color);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    transition: all 0.3s ease;
+}
+
+.add-adress-card:hover {
+    border-color: var(--secondary-color);
+    background: rgba(255, 122, 0, 0.05);
+    transform: translateY(-4px);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .pedido-container {

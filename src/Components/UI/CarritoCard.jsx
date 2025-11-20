@@ -1,6 +1,9 @@
 import { Trash2 } from "lucide-react";
+import { useFormatNum } from "../../Hooks/useFormatNum";
 
 export const CarritoCard = ({ detalleCarrito, onDelete }) => {
+	const { formatPrice } = useFormatNum();
+
 	return (
 		<article className="carrito-card">
 			<div className="carrito-card-img-container">
@@ -14,7 +17,8 @@ export const CarritoCard = ({ detalleCarrito, onDelete }) => {
 				<h4>{detalleCarrito.productoDTO.nombre}</h4>
 				<div className="carrito-card-price-container">
 					<p>
-						${detalleCarrito.productoDTO.precio} x {detalleCarrito.cantidad}
+						${formatPrice(detalleCarrito.productoDTO.precio)} x
+						{detalleCarrito.cantidad}
 					</p>
 				</div>
 			</div>

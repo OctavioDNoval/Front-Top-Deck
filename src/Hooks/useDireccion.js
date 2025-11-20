@@ -1,6 +1,13 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../AuthProvider";
+
 const apiUrl = `${import.meta.env.VITE_API_URL_BASE}/direccion`;
 
 export const useDireccion = () => {
+	const [direcciones, setDirecciones] = useState([]);
+
+	const { token } = useContext(AuthContext);
+
 	const agregarDireccionSinUsuario = async (direccion) => {
 		try {
 			const res = await fetch(`${apiUrl}/public/save/nouser`, {
@@ -21,7 +28,29 @@ export const useDireccion = () => {
 		}
 	};
 
+	const traerDireccionesDeUnUsuario = async (idUsuario) => {
+		try {
+			const res = await fetch(`${apiUrl}/user/getAll/${idUsuario}`, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (!res.ok) {
+				throw new Error("Error en el hook para conseguir las direcciones");
+			}
+
+			const data = await res.json();
+			setDirecciones(data);
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	return {
 		agregarDireccionSinUsuario,
+		direcciones,
+		traerDireccionesDeUnUsuario,
 	};
 };
