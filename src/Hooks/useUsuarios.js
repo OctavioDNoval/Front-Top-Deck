@@ -55,7 +55,6 @@ export const useUsuarios = () => {
 			}
 
 			const data = await res.json();
-			console.log("Usuario sin contrasenia guardado: ", data);
 			localStorage.setItem("Usuario", JSON.stringify(data));
 			return data;
 		} catch (e) {

@@ -14,7 +14,6 @@ export const useDireccion = () => {
 			}
 
 			const data = await res.json();
-			console.log("Direccion sin usuario guardada, ", data);
 			localStorage.setItem("Direccion", JSON.stringify(data));
 			return data;
 		} catch (e) {

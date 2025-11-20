@@ -5,6 +5,7 @@ import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
 import { useFormatNum } from "../Hooks/useFormatNum";
 import { useUsuarios } from "../Hooks/useUsuarios";
 import { useDireccion } from "../Hooks/useDireccion";
+import { useWhatsApp } from "../Hooks/useWhatsApp";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -23,6 +24,7 @@ export const PedidoPage = () => {
 	const { formatPrice } = useFormatNum();
 	const { agregarUsuarioSinContrasenia } = useUsuarios();
 	const { agregarDireccionSinUsuario } = useDireccion();
+	const { enviarWhatsApp } = useWhatsApp();
 
 	const { carritoEfimero, totalCarrito } = useContext(CarritoEfimeroContext);
 
@@ -85,16 +87,23 @@ export const PedidoPage = () => {
 				piso: piso.trim() || "",
 			};
 
-			console.log(direccion);
-
 			const direccionAgregada = await subirDireccionSinUsuarioLogueado(
 				direccion
 			);
 
-			console.log("Usuario cargado: ", usuarioAgregado);
-			console.log("direccion cargado: ", direccionAgregada);
+			if (!usuarioAgregado && !direccionAgregada) {
+				throw new Error(
+					"No se pudieron obtener los datos del usuario o dirección"
+				);
+			}
+
+			console.log("Usuario", usuarioAgregado);
+			console.log("Direccion", direccionAgregada);
+
+			enviarWhatsApp(usuarioAgregado, direccionAgregada);
 		} catch (e) {
 			console.error(e);
+		} finally {
 		}
 	};
 
