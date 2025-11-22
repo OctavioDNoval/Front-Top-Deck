@@ -48,6 +48,24 @@ export const useDireccion = () => {
 		}
 	};
 
+	const agregarDireccionConUsuario = async (newDireccion) => {
+		try {
+			const res = await fetch(`${apiUrl}/public/save`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newDireccion),
+			});
+
+			if (!res.ok) {
+				throw new Error("Error al agregar la direccion al usuario");
+			}
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
 	return {
 		agregarDireccionSinUsuario,
 		direcciones,

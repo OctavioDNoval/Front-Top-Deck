@@ -8,6 +8,7 @@ import { useDireccion } from "../Hooks/useDireccion";
 import { useWhatsApp } from "../Hooks/useWhatsApp";
 import { Plus } from "lucide-react";
 import { AdressCard } from "../Components/UI/AdressCard";
+import { AddDirectionModal } from "../Components/UI/AddDirectionModal";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -25,6 +26,8 @@ export const PedidoPage = () => {
 
 	const [subtotal, setSubtotal] = useState(0);
 
+	const [addDirectionModalOpen, setAddDirectionModalOpen] = useState(false);
+
 	const { formatPrice } = useFormatNum();
 	const { agregarUsuarioSinContrasenia } = useUsuarios();
 	const { agregarDireccionSinUsuario } = useDireccion();
@@ -33,8 +36,6 @@ export const PedidoPage = () => {
 
 	const { carritoEfimero, totalCarrito } = useContext(CarritoEfimeroContext);
 	const { carritoProductos } = useContext(AuthContext);
-
-	console.log(carritoProductos);
 
 	const normalizarItemCarrito = (item) => {
 		return {
@@ -146,6 +147,10 @@ export const PedidoPage = () => {
 		}
 	};
 
+	const handleAddDirection = () => {
+		setAddDirectionModalOpen(true);
+	};
+
 	return (
 		<section className="pedido-page">
 			<div className="pedido-container">
@@ -158,13 +163,19 @@ export const PedidoPage = () => {
 							<p className="direcciones-subtitle">
 								Elige una de tus direcciones guardadas o agrega una nueva
 							</p>
+							{direcciones.length === 0 ? (
+								<span>No hay direcciones guardadas</span>
+							) : null}
 						</div>
 						<div className="confirm-pedido-container">
 							<div className="direcciones-container-grid">
 								{direcciones?.map((d) => {
 									return <AdressCard direccion={d} />;
 								})}
-								<div className="add-adress-card adress-card">
+								<div
+									className="add-adress-card adress-card"
+									onClick={handleAddDirection}
+								>
 									<span>Agregar direccion</span>
 									<Plus />
 								</div>
@@ -175,6 +186,10 @@ export const PedidoPage = () => {
 								</button>
 							</div>
 						</div>
+						<AddDirectionModal
+							isOpen={addDirectionModalOpen}
+							onClose={() => setAddDirectionModalOpen(false)}
+						/>
 					</div>
 				) : (
 					<div className="pedido-form-container">
