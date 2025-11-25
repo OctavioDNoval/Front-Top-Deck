@@ -77,9 +77,9 @@ export const PedidoPage = () => {
 
 	useEffect(() => {
 		if (user) {
-			traerDireccionesDeUnUsuario();
+			traerDireccionesDeUnUsuario(user.id_usuario);
 		}
-	}, []);
+	}, [addDirectionModalOpen]);
 
 	useEffect(() => {
 		let total = 0;
@@ -170,7 +170,7 @@ export const PedidoPage = () => {
 						<div className="confirm-pedido-container">
 							<div className="direcciones-container-grid">
 								{direcciones?.map((d) => {
-									return <AdressCard direccion={d} />;
+									return <AdressCard direccion={d} key={d.id_direccion} />;
 								})}
 								<div
 									className="add-adress-card adress-card"

@@ -1,5 +1,8 @@
 import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../AuthProvider";
+import { useDireccion } from "../../Hooks/useDireccion";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 export const AddDirectionModal = ({ isOpen, onClose }) => {
 	const [calle, setCalle] = useState("");
@@ -10,6 +13,11 @@ export const AddDirectionModal = ({ isOpen, onClose }) => {
 	const [ciudad, setCiudad] = useState("");
 	const [codigoPostal, setCodigoPostal] = useState("");
 	const [principal, setPrincipal] = useState(false);
+
+	const [isLoading, setIsLoading] = useState(false);
+
+	const { user } = useContext(AuthContext);
+	const { agregarDireccionConUsuario } = useDireccion();
 
 	useEffect(() => {
 		const cargarProvincias = async () => {
@@ -26,7 +34,32 @@ export const AddDirectionModal = ({ isOpen, onClose }) => {
 		cargarProvincias();
 	}, []);
 
-	const handleSubmit = async () => {};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setIsLoading(true);
+		try {
+			const direccion = {
+				id_usuario: user.id_usuario,
+				ciudad: ciudad.trim() || "",
+				provincia: provincia.trim() || "",
+				pais: "Argentina",
+				codigo_postal: codigoPostal.trim(),
+				direccion: calle.trim() || "",
+				altura: altura.trim() || "",
+				piso: piso.trim() || "",
+				principal: principal,
+			};
+
+			const direccionGuardada = await agregarDireccionConUsuario(direccion);
+			console.log("Direccion guardada correctamente: ", direccionGuardada);
+
+			onClose();
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	if (!isOpen) return null;
 
@@ -97,6 +130,18 @@ export const AddDirectionModal = ({ isOpen, onClose }) => {
 						</div>
 
 						<div className="location-grid">
+							<div className="input-field">
+								<label htmlFor="usuario-pais" className="input-label">
+									País
+								</label>
+								<input
+									type="text"
+									value="Argentina"
+									disabled
+									className="form-input disabled"
+								/>
+							</div>
+
 							<div className="input-field">
 								<label htmlFor="provincia" className="input-label">
 									Provincia *
@@ -171,7 +216,11 @@ export const AddDirectionModal = ({ isOpen, onClose }) => {
 							Cancelar
 						</button>
 						<button type="submit" className="btn-primary">
-							Guardar Dirección
+							{isLoading ? (
+								<LoadingSpinner size={20} color="white" />
+							) : (
+								<span>Guardar Dirección</span>
+							)}
 						</button>
 					</div>
 				</form>

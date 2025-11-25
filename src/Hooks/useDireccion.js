@@ -61,6 +61,9 @@ export const useDireccion = () => {
 			if (!res.ok) {
 				throw new Error("Error al agregar la direccion al usuario");
 			}
+
+			const data = await res.json();
+			return data;
 		} catch (e) {
 			console.error(e);
 		}
@@ -70,5 +73,6 @@ export const useDireccion = () => {
 		agregarDireccionSinUsuario,
 		direcciones,
 		traerDireccionesDeUnUsuario,
+		agregarDireccionConUsuario,
 	};
 };
