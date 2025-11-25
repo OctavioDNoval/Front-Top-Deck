@@ -40,29 +40,40 @@ export const AuthProvider = ({ children }) => {
 
 	const agregarAlCarrito = async (cantidad, idProducto) => {
 		try {
-			const res = await fetch(
-				`${apiUrl}/carrito/user/${carrito.idCarrito}/save?idProducto=${idProducto}&cantidad=${cantidad}`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				}
+			let estaEnElCarrito = carritoProductos.find(
+				(c) => parseInt(c.productoDTO.idProducto) === parseInt(idProducto)
 			);
+			if (estaEnElCarrito) {
+				const nuevaCantidad = estaEnElCarrito.cantidad + cantidad;
+				return await actualizarCantidadDetalle(
+					estaEnElCarrito.id_DetalleCarrito,
+					nuevaCantidad
+				);
+			} else {
+				const res = await fetch(
+					`${apiUrl}/carrito/user/${carrito.idCarrito}/save?idProducto=${idProducto}&cantidad=${cantidad}`,
+					{
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
 
-			console.log(res);
+				console.log(res);
 
-			if (!res.ok) {
-				const errData = await res.json();
-				throw new Error(errData.message);
+				if (!res.ok) {
+					const errData = await res.json();
+					throw new Error(errData.message);
+				}
+
+				if (res.status === 201) {
+					await fetchCarritoDetalles(carrito.idCarrito);
+					return true;
+				}
+				return false;
 			}
-
-			if (res.status === 201) {
-				await fetchCarritoDetalles(carrito.idCarrito);
-				return true;
-			}
-			return false;
 		} catch (e) {
 			setErrorMsg(e.message);
 		}
@@ -101,6 +112,32 @@ export const AuthProvider = ({ children }) => {
 	const actualizarCarrito = async () => {
 		if (carrito) {
 			await fetchCarritoDetalles(carrito.idCarrito);
+		}
+	};
+
+	const actualizarCantidadDetalle = async (idDetalle, cantidadASumar) => {
+		setIsLoading(true);
+		try {
+			const res = await fetch(
+				`${apiUrl}/carrito/user/detalle/actualizar/${idDetalle}?nuevaCantidad=${cantidadASumar}`,
+				{
+					method: "PATCH",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!res.ok) {
+				throw new Error("Error al actaulizar el producto con id: ", idDetalle);
+			}
+
+			actualizarCarrito();
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -202,6 +239,7 @@ export const AuthProvider = ({ children }) => {
 				eliminarProductoDelCarrito,
 				actualizarCarrito,
 				carritoProductos,
+				actualizarCantidadDetalle,
 			}}
 		>
 			{children}
