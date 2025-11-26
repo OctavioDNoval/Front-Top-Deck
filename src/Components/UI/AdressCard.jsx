@@ -1,19 +1,17 @@
 import { MapPin, Home, Check } from "lucide-react";
-import { useState } from "react";
 
 export const AdressCard = ({ direccion, onSelect, isSelected = false }) => {
-	const [selected, setSelected] = useState(isSelected);
-
 	const handleSelect = () => {
-		const newSelectedState = !selected;
-		setSelected(newSelectedState);
+		const newSelectedState = !isSelected;
+
 		if (onSelect) {
+			console.log("Direccion seleccionada: ", direccion);
 			onSelect(direccion, newSelectedState);
 		}
 	};
 
 	return (
-		<div className={`adress-card ${selected ? "selected" : ""}`}>
+		<div className={`adress-card ${isSelected ? "selected" : ""}`}>
 			{/* Header con icono y badge principal */}
 			<div className="adress-header">
 				<div className="adress-icon">
@@ -43,10 +41,10 @@ export const AdressCard = ({ direccion, onSelect, isSelected = false }) => {
 
 			<div className="adress-actions">
 				<button
-					className={`select-btn ${selected ? "selected" : ""}`}
+					className={`select-btn ${isSelected ? "selected" : ""}`}
 					onClick={handleSelect}
 				>
-					{selected ? (
+					{isSelected ? (
 						<>
 							<Check size={16} />
 							Seleccionada

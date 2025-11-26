@@ -2,12 +2,15 @@ import { useContext } from "react";
 import { CarritoCard } from "./UI/CarritoCard";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
 import { useNavigate } from "react-router-dom";
+import { useFormatNum } from "../Hooks/useFormatNum";
 
 export const CarritoEfimeroComponent = ({ onClose }) => {
 	const navigate = useNavigate();
 
 	const { carritoEfimero, totalCarrito, eliminarDelCarritoEfimero } =
 		useContext(CarritoEfimeroContext);
+
+	const { formatPrice } = useFormatNum();
 
 	const handleDelete = (id) => {
 		eliminarDelCarritoEfimero(id);
@@ -40,7 +43,7 @@ export const CarritoEfimeroComponent = ({ onClose }) => {
 			<div className="total-container">
 				<div className="total-wrapper">
 					<p>Subtotal</p>
-					<p>${totalCarrito}</p>
+					<p>${formatPrice(totalCarrito)}</p>
 				</div>
 				<div className="btn-cart-container">
 					<button

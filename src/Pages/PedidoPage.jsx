@@ -23,10 +23,14 @@ export const PedidoPage = () => {
 	const [calle, setCalle] = useState("");
 	const [altura, setAltura] = useState("");
 	const [piso, setPiso] = useState("");
+	const [direccionGuardada, setDireccionGuardada] = useState(
+		localStorage.getItem("Direccion") || {}
+	);
 
 	const [subtotal, setSubtotal] = useState(0);
 
 	const [addDirectionModalOpen, setAddDirectionModalOpen] = useState(false);
+	const [direccionSeleccionada, setDireccionSeleccionada] = useState({});
 
 	const { formatPrice } = useFormatNum();
 	const { agregarUsuarioSinContrasenia } = useUsuarios();
@@ -151,6 +155,10 @@ export const PedidoPage = () => {
 		setAddDirectionModalOpen(true);
 	};
 
+	const handleHacerPedido = () => {
+		enviarWhatsApp({}, direccionSeleccionada);
+	};
+
 	return (
 		<section className="pedido-page">
 			<div className="pedido-container">
@@ -170,7 +178,14 @@ export const PedidoPage = () => {
 						<div className="confirm-pedido-container">
 							<div className="direcciones-container-grid">
 								{direcciones?.map((d) => {
-									return <AdressCard direccion={d} key={d.id_direccion} />;
+									return (
+										<AdressCard
+											direccion={d}
+											key={d.id_direccion}
+											isSelected={d === direccionSeleccionada}
+											onSelect={() => setDireccionSeleccionada(d)}
+										/>
+									);
 								})}
 								<div
 									className="add-adress-card adress-card"
@@ -181,7 +196,11 @@ export const PedidoPage = () => {
 								</div>
 							</div>
 							<div className="form-actions">
-								<button type="submit" className="submit-btn">
+								<button
+									type="button"
+									className="submit-btn"
+									onClick={handleHacerPedido}
+								>
 									Confirmar pedido
 								</button>
 							</div>
