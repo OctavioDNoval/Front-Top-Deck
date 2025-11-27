@@ -28,67 +28,31 @@ export const FooterComponent = () => {
 					</div>
 				</div>
 
-				<div className="footer-sections">
-					{/* Enlaces rápidos */}
-					<div className="footer-section">
-						<h3 className="footer-title">Navegación</h3>
-						<ul className="footer-links">
-							<li>
-								<a href="/">Inicio</a>
-							</li>
-							<li>
-								<a href="/productos">Productos</a>
-							</li>
-							<li>
-								<a href="/novedades">Novedades</a>
-							</li>
-
-							<li>
-								<a href="/about">Nosotros</a>
-							</li>
-						</ul>
-					</div>
-
-					{/* Categorías */}
-					<div className="footer-section">
-						<h3 className="footer-title">Categorías</h3>
-						<ul className="footer-links">
-							<li>
-								<a href="/categoria/booster-packs">Booster Packs</a>
-							</li>
-							<li>
-								<a href="/categoria/cartas-promocionales">
-									Cartas Promocionales
-								</a>
-							</li>
-							<li>
-								<a href="/categoria/colecciones">Colecciones</a>
-							</li>
-							<li>
-								<a href="/categoria/figuras">Figuras</a>
-							</li>
-							<li>
-								<a href="/categoria/accesorios">Accesorios</a>
-							</li>
-						</ul>
-					</div>
-
-					{/* Información de contacto */}
-					<div className="footer-section">
-						<h3 className="footer-title">Contacto</h3>
-						<div className="contact-info">
-							<div className="contact-item">
-								<Mail size={16} color="white" />
-								<span>@gmail.com</span>
-							</div>
-							<div className="contact-item">
-								<Phone size={16} color="white" />
-								<span>+54 11 2345-6789</span>
-							</div>
-							<div className="contact-item">
-								<MapPin size={16} color="white" />
-								<span>Buenos Aires, Argentina</span>
-							</div>
+				<div className="footer-section">
+					<h3 className="footer-title">Navegación</h3>
+					<ul className="footer-links">
+						<li>
+							<a href="/">Inicio</a>
+						</li>
+						<li>
+							<a href="/productos">Productos</a>
+						</li>
+					</ul>
+				</div>
+				<div className="footer-section">
+					<h3 className="footer-title">Contacto</h3>
+					<div className="contact-info">
+						<div className="contact-item">
+							<Mail size={16} color="white" />
+							<span>@gmail.com</span>
+						</div>
+						<div className="contact-item">
+							<Phone size={16} color="white" />
+							<span>+{import.meta.env.VITE_PHONE_NUMBER}</span>
+						</div>
+						<div className="contact-item">
+							<MapPin size={16} color="white" />
+							<span>Buenos Aires, Argentina</span>
 						</div>
 					</div>
 				</div>
@@ -123,14 +87,15 @@ export const FooterComponent = () => {
 			<div className="footer-social">
 				<h3 className="social-title">Seguinos en nuestras redes</h3>
 				<div className="social-links">
-					<a href="#" className="social-link" aria-label="Instagram">
+					<a
+						href="https://www.instagram.com/topdeck_importados/"
+						className="social-link"
+						aria-label="Instagram"
+					>
 						<Instagram size={24} />
 					</a>
 					<a href="#" className="social-link" aria-label="Email">
 						<Mail size={24} />
-					</a>
-					<a href="#" className="social-link" aria-label="Teléfono">
-						<Phone size={24} />
 					</a>
 				</div>
 			</div>

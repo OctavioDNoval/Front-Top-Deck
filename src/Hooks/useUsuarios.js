@@ -38,7 +38,7 @@ export const useUsuarios = () => {
 		}
 	};
 
-	const agregarUsuarioSinContrasenia = async (usuario) => {
+	const agregarUsuarioSinContrasenia = async (usuario, guardarDatos) => {
 		setIsLoading(true);
 		setError("");
 		try {
@@ -55,7 +55,9 @@ export const useUsuarios = () => {
 			}
 
 			const data = await res.json();
-			localStorage.setItem("Usuario", JSON.stringify(data));
+			if (guardarDatos) {
+				localStorage.setItem("Usuario", JSON.stringify(data));
+			}
 			return data;
 		} catch (e) {
 			console.log("Error en el hook: ", e);

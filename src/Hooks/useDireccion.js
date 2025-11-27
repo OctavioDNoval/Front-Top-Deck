@@ -8,7 +8,7 @@ export const useDireccion = () => {
 
 	const { token } = useContext(AuthContext);
 
-	const agregarDireccionSinUsuario = async (direccion) => {
+	const agregarDireccionSinUsuario = async (direccion, guardarDatos) => {
 		try {
 			const res = await fetch(`${apiUrl}/public/save/nouser`, {
 				method: "POST",
@@ -21,7 +21,9 @@ export const useDireccion = () => {
 			}
 
 			const data = await res.json();
-			localStorage.setItem("Direccion", JSON.stringify(data));
+			if (guardarDatos) {
+				localStorage.setItem("Direccion", JSON.stringify(data));
+			}
 			return data;
 		} catch (e) {
 			console.log(e);

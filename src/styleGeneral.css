@@ -441,6 +441,9 @@ a:hover {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-selected-add::before {
@@ -739,8 +742,9 @@ a:hover {
 .logo-container {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 0px;
 	transition: transform 0.3s ease;
+  padding: 0 16px;
 }
 
 .logo-container:hover {
@@ -1304,12 +1308,14 @@ body {
 /* Sección principal */
 .footer-main {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 2fr 1fr 1fr;
   gap: 60px;
   padding: 60px 40px 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
+
+
 
 .footer-brand {
   display: flex;
@@ -3407,6 +3413,7 @@ body {
 .form-actions {
     margin-top: 40px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -3447,6 +3454,166 @@ body {
 
 .pedido-form .submit-btn:active {
     transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Contenedor de checkboxes */
+.checkbox-input-pedido-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+/* Cada checkbox individual */
+.checkbox-input-pedido {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.checkbox-input-pedido:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Label de los checkboxes */
+.checkbox-input-pedido label {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    cursor: pointer;
+    flex-grow: 1;
+    margin: 0;
+    user-select: none;
+}
+
+/* Enlace de términos y condiciones */
+.terms-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+}
+
+.terms-link:hover {
+    color: #ff944d;
+    
+}
+
+/* Input checkbox personalizado */
+.checkbox-input-pedido input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.checkbox-input-pedido input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--secondary-color), #ff944d);
+    border-color: var(--secondary-color);
+}
+
+.checkbox-input-pedido input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.checkbox-input-pedido input[type="checkbox"]:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.checkbox-input-pedido input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.2);
+}
+
+/* Estado deshabilitado */
+.checkbox-input-pedido input[type="checkbox"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Efecto de pulso cuando está checked */
+.checkbox-input-pedido input[type="checkbox"]:checked {
+    animation: checkboxPulse 0.3s ease;
+}
+
+@keyframes checkboxPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .checkbox-input-pedido-container {
+        padding: 20px;
+        gap: 16px;
+    }
+    
+    .checkbox-input-pedido {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .checkbox-input-pedido label {
+        font-size: 0.9rem;
+    }
+    
+    .checkbox-input-pedido input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkbox-input-pedido-container {
+        padding: 16px;
+    }
+    
+    .checkbox-input-pedido {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .checkbox-input-pedido input[type="checkbox"] {
+        align-self: flex-start;
+    }
 }
 
 /* Aside del Carrito */
@@ -4170,6 +4337,211 @@ body {
     }
 }
 
+
+/*---------------------------CONFIRM DIRECCION MODAL-------------------------*/
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-direccion-found {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from { 
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-direccion-found h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    line-height: 1.3;
+}
+
+.modal-direccion-found span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 32px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border-left: 3px solid var(--secondary-color);
+}
+
+.modal-direccion-button-wrapper {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.modal-direccion-button-wrapper button {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Botón de Confirmar */
+.modal-direccion-button-wrapper button:first-of-type {
+    background: linear-gradient(135deg, var(--secondary-color), #ff944d);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 122, 0, 0.3);
+}
+
+.modal-direccion-button-wrapper button:first-of-type:hover {
+    background: linear-gradient(135deg, #ff944d, var(--secondary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 122, 0, 0.4);
+}
+
+.modal-direccion-button-wrapper button:first-of-type:active {
+    transform: translateY(0);
+}
+
+/* Botón de Cancelar */
+.modal-direccion-button-wrapper button:last-of-type {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.modal-direccion-button-wrapper button:last-of-type:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.modal-direccion-button-wrapper button:last-of-type:active {
+    transform: translateY(0);
+}
+
+/* Efectos de focus para accesibilidad */
+.modal-direccion-button-wrapper button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-overlay {
+        padding: 15px;
+    }
+    
+    .modal-direccion-found {
+        padding: 24px;
+        max-width: 100%;
+    }
+    
+    .modal-direccion-found h3 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-direccion-button-wrapper {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .modal-direccion-button-wrapper button {
+        width: 100%;
+        padding: 16px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-direccion-found {
+        padding: 20px;
+    }
+    
+    .modal-direccion-found h3 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+    }
+    
+    .modal-direccion-found span {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+        padding: 12px;
+    }
+    
+    .modal-direccion-button-wrapper button {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+
+
+/* Efecto de pulso sutil en la dirección */
+.modal-direccion-found span {
+    animation: subtlePulse 2s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { 
+        border-left-color: var(--secondary-color);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    50% { 
+        border-left-color: #ff944d;
+        background: rgba(255, 255, 255, 0.08);
+    }
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    display: block;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
 
 /*----------------------------LOADING SPINNER------------------------------*/
 

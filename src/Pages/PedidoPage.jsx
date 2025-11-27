@@ -9,6 +9,7 @@ import { useWhatsApp } from "../Hooks/useWhatsApp";
 import { Plus } from "lucide-react";
 import { AdressCard } from "../Components/UI/AdressCard";
 import { AddDirectionModal } from "../Components/UI/AddDirectionModal";
+import { ModalUseDireccion } from "../Components/UI/ModalUseDireccion";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -23,14 +24,26 @@ export const PedidoPage = () => {
 	const [calle, setCalle] = useState("");
 	const [altura, setAltura] = useState("");
 	const [piso, setPiso] = useState("");
-	const [direccionGuardada, setDireccionGuardada] = useState(
-		localStorage.getItem("Direccion") || {}
-	);
+	const [direccionGuardada, setDireccionGuardada] = useState(() => {
+		try {
+			const stored = localStorage.getItem("Direccion");
+			return stored ? JSON.parse(stored) : null;
+		} catch (error) {
+			console.error("Error parsing direccion from localStorage:", error);
+			return null;
+		}
+	});
+	const [guardarDatosEnvios, setGuardarDatosEnvios] = useState(false);
+	const [terminosYCondicionesAccepted, setTerminosYCondicionesAccepted] =
+		useState(false);
 
 	const [subtotal, setSubtotal] = useState(0);
 
 	const [addDirectionModalOpen, setAddDirectionModalOpen] = useState(false);
 	const [direccionSeleccionada, setDireccionSeleccionada] = useState({});
+	const [isModalUseDirectionOpen, setIsModalUseDirectionOpen] = useState(false);
+	const [isLocalDireccionConfirmed, setIsLocalDireccionConfirmed] =
+		useState(false);
 
 	const { formatPrice } = useFormatNum();
 	const { agregarUsuarioSinContrasenia } = useUsuarios();
@@ -83,7 +96,7 @@ export const PedidoPage = () => {
 		if (user) {
 			traerDireccionesDeUnUsuario(user.id_usuario);
 		}
-	}, [addDirectionModalOpen]);
+	}, [user, addDirectionModalOpen]);
 
 	useEffect(() => {
 		let total = 0;
@@ -92,6 +105,25 @@ export const PedidoPage = () => {
 		});
 		setSubtotal(total);
 	}, [carritoProductos]);
+
+	useEffect(() => {
+		if (direccionGuardada) {
+			setIsModalUseDirectionOpen(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isLocalDireccionConfirmed) {
+			setProvincia(direccionGuardada.provincia);
+			setCiudad(direccionGuardada.ciudad);
+			setCodigoPostal(direccionGuardada.codigo_postal);
+			setCalle(direccionGuardada.direccion);
+			setAltura(direccionGuardada.altura);
+			setPiso(direccionGuardada.piso);
+			setNombre(direccionGuardada.usuarioDTO.nombre);
+			setEmail(direccionGuardada.usuarioDTO.email);
+		}
+	}, [isLocalDireccionConfirmed]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -135,7 +167,10 @@ export const PedidoPage = () => {
 
 	const subirDireccionSinUsuarioLogueado = async (direccion) => {
 		try {
-			const res = await agregarDireccionSinUsuario(direccion);
+			const res = await agregarDireccionSinUsuario(
+				direccion,
+				guardarDatosEnvios
+			);
 			return res;
 		} catch (e) {
 			console.error(e);
@@ -144,7 +179,10 @@ export const PedidoPage = () => {
 
 	const subirUsuarioSinContrasenia = async (usuario) => {
 		try {
-			const res = await agregarUsuarioSinContrasenia(usuario);
+			const res = await agregarUsuarioSinContrasenia(
+				usuario,
+				guardarDatosEnvios
+			);
 			return res;
 		} catch (e) {
 			console.error("Problemas al realziar el pedido");
@@ -156,6 +194,13 @@ export const PedidoPage = () => {
 	};
 
 	const handleHacerPedido = () => {
+		if (
+			!direccionSeleccionada ||
+			Object.keys(direccionSeleccionada).length === 0
+		) {
+			alert("Por favvor seleccione o añada una direccion");
+			return;
+		}
 		enviarWhatsApp({}, direccionSeleccionada);
 	};
 
@@ -182,7 +227,9 @@ export const PedidoPage = () => {
 										<AdressCard
 											direccion={d}
 											key={d.id_direccion}
-											isSelected={d === direccionSeleccionada}
+											isSelected={
+												d.id_direccion === direccionSeleccionada?.id_direccion
+											}
 											onSelect={() => setDireccionSeleccionada(d)}
 										/>
 									);
@@ -211,164 +258,222 @@ export const PedidoPage = () => {
 						/>
 					</div>
 				) : (
-					<div className="pedido-form-container">
-						<div className="form-header">
-							<h2 className="form-title">Información de Envío</h2>
-							<p className="form-subtitle">
-								Completa tus datos para finalizar la compra
-							</p>
+					<>
+						<ModalUseDireccion
+							isOpen={isModalUseDirectionOpen}
+							direccion={direccionGuardada}
+							onClose={() => setIsModalUseDirectionOpen(false)}
+							isConfirmed={setIsLocalDireccionConfirmed}
+						/>
+						<div className="pedido-form-container">
+							<div className="form-header">
+								<h2 className="form-title">Información de Envío</h2>
+								<p className="form-subtitle">
+									Completa tus datos para finalizar la compra
+								</p>
+							</div>
+
+							<form className="pedido-form" onSubmit={handleSubmit}>
+								{/* Información Personal */}
+								<div className="form-section">
+									<h3 className="section-title">Datos Personales</h3>
+									<div className="input-group">
+										<div className="input-field">
+											<label htmlFor="usuario-nombre" className="input-label">
+												Nombre Completo
+											</label>
+											<input
+												type="text"
+												name="usuario-nombre"
+												id="usuario-nombre"
+												className="form-input"
+												placeholder="Ingresa tu nombre completo"
+												value={nombre}
+												onChange={(e) => setNombre(e.target.value)}
+											/>
+										</div>
+										<div className="input-field">
+											<label htmlFor="usuario-email" className="input-label">
+												Email
+											</label>
+											<input
+												type="email"
+												name="usuario-email"
+												id="usuario-email"
+												className="form-input"
+												placeholder="ejemplo@email.com"
+												value={email}
+												onChange={(e) => setEmail(e.target.value)}
+											/>
+										</div>
+									</div>
+								</div>
+
+								{/* Dirección */}
+								<div className="form-section">
+									<h3 className="section-title">Dirección de Envío</h3>
+									<div className="input-grid">
+										<div className="input-field">
+											<label htmlFor="usuario-pais" className="input-label">
+												País
+											</label>
+											<input
+												type="text"
+												value="Argentina"
+												disabled
+												className="form-input disabled"
+											/>
+										</div>
+										<div className="input-field">
+											<label
+												htmlFor="usuario-provincia"
+												className="input-label"
+											>
+												Provincia
+											</label>
+											<select
+												name="usuario-provincia"
+												id="usuario-provincia"
+												className="form-select"
+												value={provincia}
+												onChange={(e) => setProvincia(e.target.value)}
+											>
+												<option value="">Selecciona una provincia</option>
+												{provincias.map((p) => (
+													<option key={p.id} value={p.nombre}>
+														{p.nombre}
+													</option>
+												))}
+											</select>
+										</div>
+										<div className="input-field">
+											<label htmlFor="usuario-ciudad" className="input-label">
+												Ciudad
+											</label>
+											<input
+												type="text"
+												name="usuario-ciudad"
+												id="usuario-ciudad"
+												className="form-input"
+												placeholder="Tu ciudad"
+												value={ciudad}
+												onChange={(e) => setCiudad(e.target.value)}
+											/>
+										</div>
+										<div className="input-field">
+											<label htmlFor="usuario-codigo" className="input-label">
+												Código Postal
+											</label>
+											<input
+												type="text"
+												name="usuario-codigo"
+												id="usuario-codigo"
+												className="form-input"
+												placeholder="Ej: 1425"
+												value={codigoPostal}
+												onChange={(e) => setCodigoPostal(e.target.value)}
+											/>
+										</div>
+										<div className="input-field full-width">
+											<label htmlFor="usuario-calle" className="input-label">
+												Calle
+											</label>
+											<input
+												type="text"
+												name="usuario-calle"
+												id="usuario-calle"
+												className="form-input"
+												placeholder="Nombre de la calle"
+												value={calle}
+												onChange={(e) => setCalle(e.target.value)}
+											/>
+										</div>
+										<div className="input-field">
+											<label htmlFor="usuario-altura" className="input-label">
+												Altura
+											</label>
+											<input
+												type="text"
+												name="usuario-altura"
+												id="usuario-altura"
+												className="form-input"
+												placeholder="Número"
+												value={altura}
+												onChange={(e) => setAltura(e.target.value)}
+											/>
+										</div>
+										<div className="input-field">
+											<label htmlFor="usuario-piso" className="input-label">
+												Piso/Departamento
+											</label>
+											<input
+												type="text"
+												name="usuario-piso"
+												id="usuario-piso"
+												className="form-input"
+												placeholder="Opcional"
+												value={piso}
+												onChange={(e) => setPiso(e.target.value)}
+											/>
+										</div>
+									</div>
+								</div>
+
+								<div className="form-actions">
+									<div className="checkbox-input-pedido-container">
+										<div className="checkbox-input-pedido">
+											<label htmlFor="guardar-datos">
+												Quiere guardar los datos de envio para futuras compras?
+											</label>
+											<input
+												type="checkbox"
+												name="guardar-datos"
+												id="guardar-datos"
+												checked={guardarDatosEnvios}
+												onChange={() =>
+													setGuardarDatosEnvios(!guardarDatosEnvios)
+												}
+											/>
+										</div>
+
+										<div className="checkbox-input-pedido">
+											<label htmlFor="terminos-condiciones">
+												Lei y acepte los{" "}
+												<a
+													href="#"
+													className="terms-link"
+													onClick={(e) => {
+														e.preventDefault();
+													}}
+												>
+													terminos y condiciones
+												</a>{" "}
+												de uso de la pagina
+											</label>
+											<input
+												type="checkbox"
+												name="terminos-condiciones"
+												id="terminos-condiciones"
+												checked={terminosYCondicionesAccepted}
+												onChange={() =>
+													setTerminosYCondicionesAccepted(
+														!terminosYCondicionesAccepted
+													)
+												}
+											/>
+										</div>
+									</div>
+									<button
+										type="submit"
+										className="submit-btn"
+										disabled={!terminosYCondicionesAccepted}
+									>
+										Confirmar pedido
+									</button>
+								</div>
+							</form>
 						</div>
-
-						<form className="pedido-form" onSubmit={handleSubmit}>
-							{/* Información Personal */}
-							<div className="form-section">
-								<h3 className="section-title">Datos Personales</h3>
-								<div className="input-group">
-									<div className="input-field">
-										<label htmlFor="usuario-nombre" className="input-label">
-											Nombre Completo
-										</label>
-										<input
-											type="text"
-											name="usuario-nombre"
-											id="usuario-nombre"
-											className="form-input"
-											placeholder="Ingresa tu nombre completo"
-											value={nombre}
-											onChange={(e) => setNombre(e.target.value)}
-										/>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-email" className="input-label">
-											Email
-										</label>
-										<input
-											type="email"
-											name="usuario-email"
-											id="usuario-email"
-											className="form-input"
-											placeholder="ejemplo@email.com"
-											value={email}
-											onChange={(e) => setEmail(e.target.value)}
-										/>
-									</div>
-								</div>
-							</div>
-
-							{/* Dirección */}
-							<div className="form-section">
-								<h3 className="section-title">Dirección de Envío</h3>
-								<div className="input-grid">
-									<div className="input-field">
-										<label htmlFor="usuario-pais" className="input-label">
-											País
-										</label>
-										<input
-											type="text"
-											value="Argentina"
-											disabled
-											className="form-input disabled"
-										/>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-provincia" className="input-label">
-											Provincia
-										</label>
-										<select
-											name="usuario-provincia"
-											id="usuario-provincia"
-											className="form-select"
-											value={provincia}
-											onChange={(e) => setProvincia(e.target.value)}
-										>
-											<option value="">Selecciona una provincia</option>
-											{provincias.map((p) => (
-												<option key={p.id} value={p.nombre}>
-													{p.nombre}
-												</option>
-											))}
-										</select>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-ciudad" className="input-label">
-											Ciudad
-										</label>
-										<input
-											type="text"
-											name="usuario-ciudad"
-											id="usuario-ciudad"
-											className="form-input"
-											placeholder="Tu ciudad"
-											value={ciudad}
-											onChange={(e) => setCiudad(e.target.value)}
-										/>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-codigo" className="input-label">
-											Código Postal
-										</label>
-										<input
-											type="text"
-											name="usuario-codigo"
-											id="usuario-codigo"
-											className="form-input"
-											placeholder="Ej: 1425"
-											value={codigoPostal}
-											onChange={(e) => setCodigoPostal(e.target.value)}
-										/>
-									</div>
-									<div className="input-field full-width">
-										<label htmlFor="usuario-calle" className="input-label">
-											Calle
-										</label>
-										<input
-											type="text"
-											name="usuario-calle"
-											id="usuario-calle"
-											className="form-input"
-											placeholder="Nombre de la calle"
-											value={calle}
-											onChange={(e) => setCalle(e.target.value)}
-										/>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-altura" className="input-label">
-											Altura
-										</label>
-										<input
-											type="text"
-											name="usuario-altura"
-											id="usuario-altura"
-											className="form-input"
-											placeholder="Número"
-											value={altura}
-											onChange={(e) => setAltura(e.target.value)}
-										/>
-									</div>
-									<div className="input-field">
-										<label htmlFor="usuario-piso" className="input-label">
-											Piso/Departamento
-										</label>
-										<input
-											type="text"
-											name="usuario-piso"
-											id="usuario-piso"
-											className="form-input"
-											placeholder="Opcional"
-											value={piso}
-											onChange={(e) => setPiso(e.target.value)}
-										/>
-									</div>
-								</div>
-							</div>
-
-							<div className="form-actions">
-								<button type="submit" className="submit-btn">
-									Confirmar pedido
-								</button>
-							</div>
-						</form>
-					</div>
+					</>
 				)}
 
 				<aside className="carrito-resume">
