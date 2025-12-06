@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, version } from "react";
 import { AuthContext } from "../AuthProvider";
 import { CarritoCard } from "../Components/UI/CarritoCard";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
@@ -10,6 +10,10 @@ import { Plus } from "lucide-react";
 import { AdressCard } from "../Components/UI/AdressCard";
 import { AddDirectionModal } from "../Components/UI/AddDirectionModal";
 import { ModalUseDireccion } from "../Components/UI/ModalUseDireccion";
+import { usePedidos } from "../Hooks/usePedidos";
+
+const TERMS_VERSION = "1.0";
+const TERMS_EFFECTIVE_DATE = "20-12-2025";
 
 export const PedidoPage = () => {
 	const { user } = useContext(AuthContext);
@@ -35,7 +39,12 @@ export const PedidoPage = () => {
 	});
 	const [guardarDatosEnvios, setGuardarDatosEnvios] = useState(false);
 	const [terminosYCondicionesAccepted, setTerminosYCondicionesAccepted] =
-		useState(false);
+		useState({
+			accepted: false,
+			timestamp: null,
+			version: TERMS_VERSION,
+			ip: null,
+		});
 
 	const [subtotal, setSubtotal] = useState(0);
 
@@ -50,6 +59,7 @@ export const PedidoPage = () => {
 	const { agregarDireccionSinUsuario } = useDireccion();
 	const { enviarWhatsApp } = useWhatsApp();
 	const { direcciones, traerDireccionesDeUnUsuario } = useDireccion();
+	const { obtenerIpUsuario } = usePedidos();
 
 	const { carritoEfimero, totalCarrito } = useContext(CarritoEfimeroContext);
 	const { carritoProductos } = useContext(AuthContext);
@@ -127,7 +137,14 @@ export const PedidoPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!terminosYCondicionesAccepted.accepted) {
+			alert("Acepta los termionos de uso y condiciones");
+			return;
+		}
+
 		try {
+			const clienteIp = await obtenerIpUsuario();
+
 			const usuario = {
 				nombreCompleto: nombre.trim(),
 				email: email.trim(),
@@ -423,7 +440,7 @@ export const PedidoPage = () => {
 									<div className="checkbox-input-pedido-container">
 										<div className="checkbox-input-pedido">
 											<label htmlFor="guardar-datos">
-												Quiere guardar los datos de envio para futuras compras?
+												Quiero guardar los datos de envio para futuras compras?
 											</label>
 											<input
 												type="checkbox"
@@ -454,19 +471,31 @@ export const PedidoPage = () => {
 												type="checkbox"
 												name="terminos-condiciones"
 												id="terminos-condiciones"
-												checked={terminosYCondicionesAccepted}
-												onChange={() =>
-													setTerminosYCondicionesAccepted(
-														!terminosYCondicionesAccepted
-													)
-												}
+												checked={terminosYCondicionesAccepted.accepted}
+												onChange={(e) => {
+													if (e.target.checked) {
+														setTerminosYCondicionesAccepted({
+															accepted: true,
+															timestamp: new Date().toISOString(),
+															version: TERMS_VERSION,
+															ip: null,
+														});
+													} else {
+														setTerminosYCondicionesAccepted({
+															accepted: false,
+															timestamp: null,
+															version: TERMS_VERSION,
+															ip: null,
+														});
+													}
+												}}
 											/>
 										</div>
 									</div>
 									<button
 										type="submit"
 										className="submit-btn"
-										disabled={!terminosYCondicionesAccepted}
+										disabled={!terminosYCondicionesAccepted.accepted}
 									>
 										Confirmar pedido
 									</button>
