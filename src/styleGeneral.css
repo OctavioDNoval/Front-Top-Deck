@@ -100,37 +100,103 @@ a:hover {
 
 
 
-.promo-carrusel{
-    width: 80vw;
-    height: 80vh;
-    /*border: 1px solid black;*/
+.promo-carrusel {
+    width: 90vw;
+    max-width: 1200px;
+    height: 65vh;
+    min-height: 400px;
+    max-height: 600px;
     overflow: hidden;
     position: relative;
-    border-radius: 32px;
-    margin: 40px auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+    margin: 30px auto;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
 }
 
-.promo-carrusel-image{
+.promo-carrusel-image {
     width: 100%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
     position: absolute;
     opacity: 0;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     top: 0;
-    
+    left: 0;
+    filter: brightness(0.9);
 }
 
-.promo-carrusel-image.active{
+.promo-carrusel-image.active {
     opacity: 1;
     z-index: 1;
+    filter: brightness(1);
+}
+
+.promo-carrusel-image.active {
+    animation: subtleZoom 20s linear infinite alternate;
+}
+
+@keyframes subtleZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
 }
 
 .categorias{
     display: flex;
     width: 100vw;
     height: 80vh;
+}
+
+@media (max-width: 768px) {
+    .promo-carrusel {
+        width: 96vw;
+        height: 35vh;
+        min-height: 300px;
+        max-height: 450px;
+        border-radius: 18px;
+        margin: 20px auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    
+    .tags-container-home-page {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 40px 15px;
+        gap: 20px;
+    }
+    
+    .tag-container {
+        height: 220px;
+    }
+    
+    .home-main {
+        padding-top: 20px;
+    }
+}
+
+
+@media (hover: hover) {
+    .promo-carrusel:hover .promo-carrusel-image {
+        filter: brightness(0.85);
+    }
+    
+    .promo-carrusel:hover .promo-carrusel-image.active {
+        filter: brightness(1);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .promo-carrusel {
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    
+    .promo-carrusel-image {
+        will-change: opacity, transform;
+    }
 }
 
 /*--------------------PRODUCT PAGE------------------------*/
@@ -496,10 +562,13 @@ a:hover {
 /*--------------------------TAG COMPONENT--------------------------*/
 
 .tags-container-home-page {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }
 
 .tags-container-home-page {
@@ -509,19 +578,18 @@ a:hover {
   padding: 40px 20px;
 }
 
-/* Diseño para cada tag individual */
 .tag-container {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-  height: 280px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .tag-container::before {
@@ -538,9 +606,9 @@ a:hover {
 }
 
 .tag-container:hover {
-  transform: translateY(-12px) scale(1.02);
-  border-color: var(--primary-color);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(-8px);
+    border-color: var(--secondary-color);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 .tag-container:hover::before {
@@ -548,10 +616,9 @@ a:hover {
 }
 
 .tag-img-container {
-  width: 100%;
-  height: 75%;
-  overflow: hidden;
-  position: relative;
+    width: 100%;
+    height: 75%;
+    overflow: hidden;
 }
 
 .tag-img-container::after {
@@ -571,10 +638,10 @@ a:hover {
 }
 
 .tag-img-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
 }
 
 .tag-container:hover .tag-img-container img {

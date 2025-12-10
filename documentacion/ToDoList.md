@@ -21,6 +21,7 @@
             - [ ] actualizacion manual?
             - [ ] actaulizacion en BDD?
         - [ ] Arreglar mensaje de WP, no se ven los emojis, arreglar eso (_useWhatsApp_)
+        - [ ] Agregar para eliminar, agregar imagenes del carrusel en el admin (_AdminApp_)
 
 
 - ## Back
