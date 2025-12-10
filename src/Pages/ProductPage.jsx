@@ -5,10 +5,14 @@ import { LoadingCartel } from "../Components/UI/LoadingCartel";
 import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { SortSelectComponent } from "../Components/SortSelectComponent";
 import { useTags } from "../Hooks/useTags";
+import { useMobile } from "../Hooks/useMobile";
+import { Filter, X } from "lucide-react";
 
 export const ProductPage = () => {
 	const { id_tag } = useParams();
+	const { isMobile } = useMobile();
 
+	const [showMobileFilter, setShowMobileFilter] = useState(false);
 	const [products, setProducts] = useState([]);
 	const [filteredProducts, setfilteredProducts] = useState([]);
 	const [selectedCategories, setSelectedCategories] = useState([]);
@@ -41,6 +45,16 @@ export const ProductPage = () => {
 	const handleTagChange = (id) => {
 		setSelectedTag(id);
 	};
+
+	const toggleMobileFilter = () => {
+		setShowMobileFilter(!showMobileFilter);
+	};
+
+	useEffect(() => {
+		if (isMobile) {
+			setShowMobileFilter(false);
+		}
+	}, [selectedCategories, selectedTag, sort, isMobile]);
 
 	/*UseEffect que se va a encargar de filtrar 
 	los productos por categoria y ordenarlos a su vez*/
@@ -136,35 +150,35 @@ export const ProductPage = () => {
 	return (
 		<section className="product-page">
 			<h2 className="product-page-title">Productos</h2>
+			<div
+				className={`filters-overlay ${showMobileFilter ? "active" : ""}`}
+				onClick={toggleMobileFilter}
+			/>
+			{isMobile && (
+				<button className="mobile-filters-toggle" onClick={toggleMobileFilter}>
+					<Filter size={18} />
+					Filtros
+				</button>
+			)}
 			<div className="product-container-wrapper">
-				<aside className="product-filter-container">
-					{/*CheckBox para las categorias*/}
-					<div className="filter-by-category-container filter">
-						<h3 className="filter-title">Categoria</h3>
-						<div className="category-checkbox-container">
-							{isLoadingCategory ? (
-								<p>...</p>
-							) : isErrorCategory ? (
-								<p>error</p>
-							) : (
-								categories.map((c) => (
-									<label
-										key={c.idCategoria}
-										className="category-checkbox-label"
-									>
-										<input
-											type="checkbox"
-											value={c.idCategoria}
-											checked={selectedCategories.includes(c.idCategoria)}
-											onChange={() => handleCategoryChange(c.idCategoria)}
-											className="category-checkbox"
-										/>
-										{c.nombre}
-									</label>
-								))
-							)}
+				<aside
+					className={`product-filter-container ${
+						showMobileFilter ? "mobile-open" : ""
+					}`}
+				>
+					{isMobile && (
+						<div className="mobile-filter-header">
+							<h3>Filtros</h3>
+							<button className="close-filter-btn" onClick={toggleMobileFilter}>
+								<X size={20} />
+							</button>
 						</div>
+					)}
+					<div className="orderby-container filter">
+						<h3 className="filter-title">Ordenar</h3>
+						<SortSelectComponent onChange={handleOnChangeSort} />
 					</div>
+
 					{/*CheckBox para los Tags*/}
 					<div className="filter-by-category-container filter">
 						<h3 className="filter-title">Franquicia</h3>
@@ -209,9 +223,32 @@ export const ProductPage = () => {
 							)}
 						</div>
 					</div>
-					<div className="orderby-container filter">
-						<h3 className="filter-title">Ordenar</h3>
-						<SortSelectComponent onChange={handleOnChangeSort} />
+					{/*CheckBox para las categorias*/}
+					<div className="filter-by-category-container filter">
+						<h3 className="filter-title">Categoria</h3>
+						<div className="category-checkbox-container">
+							{isLoadingCategory ? (
+								<p>...</p>
+							) : isErrorCategory ? (
+								<p>error</p>
+							) : (
+								categories.map((c) => (
+									<label
+										key={c.idCategoria}
+										className="category-checkbox-label"
+									>
+										<input
+											type="checkbox"
+											value={c.idCategoria}
+											checked={selectedCategories.includes(c.idCategoria)}
+											onChange={() => handleCategoryChange(c.idCategoria)}
+											className="category-checkbox"
+										/>
+										{c.nombre}
+									</label>
+								))
+							)}
+						</div>
 					</div>
 				</aside>
 				<main
