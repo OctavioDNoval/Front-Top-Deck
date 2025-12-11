@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
 
-export const SignupForm = ({ onClose }) => {
+export const SignupForm = ({ onClose, isMobile = false }) => {
 	const [email, setEmail] = useState("");
 	const [nombre, setNombre] = useState("");
 	const [password, setPassword] = useState("");
@@ -61,14 +61,16 @@ export const SignupForm = ({ onClose }) => {
 	};
 
 	return (
-		<section className="login-component">
-			<div className="login-img-container">
-				<img
-					src="../../../img/pikachu.webp"
-					alt="Pikachu Signup"
-					className="login-img"
-				/>
-			</div>
+		<section className={`login-component ${isMobile ? "mobile" : ""}`}>
+			{!isMobile && (
+				<div className="login-img-container">
+					<img
+						src="../../../img/pikachu.webp"
+						alt="Pikachu Signup"
+						className="login-img"
+					/>
+				</div>
+			)}
 			<h3 className="form-title">Registrate!</h3>
 			<div className="login-form-container">
 				<form className="login-form" onSubmit={handleSubmit}>

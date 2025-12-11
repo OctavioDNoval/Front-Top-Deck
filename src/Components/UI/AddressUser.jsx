@@ -1,22 +1,37 @@
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider";
+import { Edit3, MapPin, Plus } from "lucide-react";
 
-export const AddressUser = () => {
-	const { user } = useContext(AuthContext);
-
+export const AddressUser = ({ isMobile = false }) => {
 	return (
-		<section className="address-user-card">
-			<div className="address-header">
-				<h3>Dirección de Envío</h3>
-				<button className="edit-address-btn">Editar Dirección</button>
+		<div className={`address-card ${isMobile ? "mobile" : ""}`}>
+			<div className="card-header">
+				<div className="card-icon">
+					<MapPin size={24} />
+				</div>
+				<h3 className="card-title">Dirección de Envío</h3>
 			</div>
 
-			<div className="address-content">
-				<p>No hay direcciones guardadas</p>
-				<p style={{ fontSize: "0.9em", marginTop: "8px" }}>
-					Agrega una dirección para realizar pedidos
-				</p>
+			<div className="card-content">
+				<div className="address-empty-state">
+					<div className="empty-state-icon">
+						<MapPin size={48} />
+					</div>
+					<h4 className="empty-state-title">Sin dirección guardada</h4>
+					<p className="empty-state-description">
+						Agrega una dirección para recibir tus productos
+					</p>
+
+					<div className="address-actions">
+						<button className="add-address-btn">
+							<Plus size={16} />
+							Agregar Dirección
+						</button>
+						<button className="edit-address-btn">
+							<Edit3 size={16} />
+							Editar
+						</button>
+					</div>
+				</div>
 			</div>
-		</section>
+		</div>
 	);
 };

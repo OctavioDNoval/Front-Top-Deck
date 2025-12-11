@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider";
 
-export const LoginForm = ({ onClose }) => {
+export const LoginForm = ({ onClose, isMobile = false }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
@@ -48,14 +48,16 @@ export const LoginForm = ({ onClose }) => {
 	};
 
 	return (
-		<section className="login-component login-1">
-			<div className="login-img-container">
-				<img
-					src="../../../img/piplup.webp"
-					alt="Piplup Login"
-					className="login-img"
-				/>
-			</div>
+		<section className={`login-component ${isMobile ? "mobile" : ""}`}>
+			{!isMobile && (
+				<div className="login-img-container">
+					<img
+						src="../../../img/piplup.webp"
+						alt="Piplup Login"
+						className="login-img"
+					/>
+				</div>
+			)}
 			<h3 className="form-title">Iniciar Sesion</h3>
 			<div className="login-form-container">
 				<form className="login-form" onSubmit={handleSubmit}>

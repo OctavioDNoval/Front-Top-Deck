@@ -1,9 +1,6 @@
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider";
+import { CheckCircle, Mail, Shield, User } from "lucide-react";
 
-export const InfoUser = () => {
-	const { user } = useContext(AuthContext);
-
+export const InfoUser = ({ user, isMobile = false }) => {
 	const getInitials = (name) => {
 		return name
 			.split(" ")
@@ -14,33 +11,66 @@ export const InfoUser = () => {
 	};
 
 	return (
-		<section className="info-user-card">
-			<div className="user-header">
-				<div className="user-avatar">{getInitials(user.nombre)}</div>
-				<div className="user-basic-info">
-					<h3>{user.nombre}</h3>
-					<span className="user-role">{user.rol}</span>
+		<div className={`info-card ${isMobile ? "mobile" : ""}`}>
+			<div className="card-header">
+				<div className="card-icon">
+					<User size={24} />
 				</div>
+				<h3 className="card-title">Información Personal</h3>
 			</div>
 
-			<div className="user-details-grid">
-				<div className="detail-item">
-					<span className="detail-label">Email</span>
-					<span className="detail-value">{user.email}</span>
-				</div>
+			<div className="card-content">
+				<div className="info-grid">
+					<div className="info-item">
+						<div className="info-icon">
+							<User size={16} />
+						</div>
+						<div className="info-details">
+							<span className="info-label">Nombre completo</span>
+							<span className="info-value">{user.nombre}</span>
+						</div>
+					</div>
 
-				<div className="detail-item">
-					<span className="detail-label">Rol</span>
-					<span className="detail-value">{user.rol}</span>
-				</div>
+					<div className="info-item">
+						<div className="info-icon">
+							<Mail size={16} />
+						</div>
+						<div className="info-details">
+							<span className="info-label">Correo electrónico</span>
+							<span className="info-value">{user.email}</span>
+						</div>
+					</div>
 
-				<div className="detail-item">
-					<span className="detail-label">Estado</span>
-					<span className="detail-value" style={{ color: "#48bb78" }}>
-						● Activo
-					</span>
+					<div className="info-item">
+						<div className="info-icon">
+							<Shield size={16} />
+						</div>
+						<div className="info-details">
+							<span className="info-label">Tipo de cuenta</span>
+							<span
+								className={`info-badge ${
+									user.rol === "admin" ? "admin" : "user"
+								}`}
+							>
+								{user.rol === "admin" ? "Administrador" : "Usuario"}
+							</span>
+						</div>
+					</div>
+
+					<div className="info-item">
+						<div className="info-icon">
+							<CheckCircle size={16} />
+						</div>
+						<div className="info-details">
+							<span className="info-label">Estado de la cuenta</span>
+							<span className="info-status active">
+								<CheckCircle size={12} />
+								Activa
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 };

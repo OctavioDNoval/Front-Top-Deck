@@ -14,10 +14,11 @@
 - [x] Hacer Media Queries de la pagina de producto seleccionada (_SelectedProductPage_)
 - [x] Hacer que los precios aparezcan en blanco (_SelectedProductPage_)
 - [ ] Media Queries del carrito? (_CarritoComponent_)
-- [ ] Rehacer el componente que muestra el Perfil (_ProfileComponent_)
-- [ ] Mostrar los datos de la cuenta como telefono (_ProfileComponent_)
+- [x] Rehacer el componente que muestra el Perfil (_ProfileComponent_)
+- [x] Mostrar los datos de la cuenta como telefono (_ProfileComponent_)
 - [ ] Mostrar las direcciones guardadas del usuario (_ProfileComponent_)
-- [ ] Media queries para el profile log in
+- [x] Media queries para el profile log in
+- [ ] Hacer media queries del adminApp(_AdminApp_)
 
 ### Funcionalidades
 
