@@ -1,12 +1,15 @@
-export const AdminUser = ({ usuario, onClick }) => {
+export const AdminUser = ({ usuario, onClick, isMobile = false }) => {
 	return (
-		<div className="admin-product-card" onClick={onClick}>
+		<div
+			className={`admin-product-card ${isMobile ? "mobile" : ""}`}
+			onClick={onClick}
+		>
 			<p className="admin-product name">{usuario.nombre}</p>
-			<p className="admin-product price">{usuario.email}</p>
-			<p className="admin-product category">
+			<p className="admin-product email">{usuario.email}</p>
+			<p className="admin-product telefono">
 				{usuario.telefono ? usuario.telefono : "No disponible"}
 			</p>
-			<p className="admin-product stock">{usuario.rol}</p>
+			<p className="admin-product rol">{usuario.rol}</p>
 		</div>
 	);
 };

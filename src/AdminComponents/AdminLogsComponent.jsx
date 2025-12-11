@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLogs } from "../Hooks/useLogs";
 import { AdminLogs } from "./UI/AdminLogs";
+import { useMobile } from "../Hooks/useMobile";
 
 export const AdminLogsComponent = () => {
 	const { logs } = useLogs();
+	const { isMobile } = useMobile();
 	const [showAll, setShowAll] = useState(false);
 
 	// Ordenar y limitar logs
@@ -12,7 +14,9 @@ export const AdminLogsComponent = () => {
 		.slice(0, showAll ? logs.length : 100); // Mostrar 100 por defecto
 
 	return (
-		<article className="admin-product-container logs">
+		<article
+			className={`admin-product-container logs ${isMobile ? "mobile" : ""}`}
+		>
 			<div className="admin-product-header">
 				<div>Usuario</div>
 				<div>Fecha</div>
@@ -22,7 +26,7 @@ export const AdminLogsComponent = () => {
 			</div>
 
 			{sortedLogs.map((l) => (
-				<AdminLogs key={l.idAuditoria} log={l} />
+				<AdminLogs key={l.idAuditoria} log={l} isMobile={isMobile} />
 			))}
 
 			{logs.length > 100 && (

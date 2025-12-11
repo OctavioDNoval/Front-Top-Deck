@@ -3341,27 +3341,41 @@ body {
 
 /*------------------------------HEADER------------------------------*/
 
+/* ===== ADMIN HEADER - DESKTOP ===== */
 .admin-header {
     width: 100%;
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     z-index: 100;
-    position: relative;
+    position: sticky;
+    top: 0;
+    height: var(--admin-header-height);
+    min-height: 70px;
 }
 
 .admin-navbar {
-    padding: 0 20px;
+    padding: 0 40px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-navbar-content {
+    width: 100%;
+    max-width: 1200px;
 }
 
 .admin-navbar-list {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
     margin: 0;
+    padding: 0;
     list-style: none;
-    max-height: var(--admin-header-height);
+    height: 100%;
+    gap: 10px;
 }
 
 .admin-navbar-list a {
@@ -3376,6 +3390,10 @@ body {
     backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+    max-width: 140px;
 }
 
 .admin-navbar-list a::before {
@@ -3410,7 +3428,8 @@ body {
     box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
 }
 
-.admin-navbar-list button {
+/* Botón de perfil desktop */
+.desktop-profile-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     border-radius: 12px;
@@ -3422,56 +3441,244 @@ body {
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(10px);
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
 }
 
-.admin-navbar-list button:hover {
+.desktop-profile-btn:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: var(--secondary-color);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive para admin */
-@media (max-width: 768px) {
+/* ===== RESPONSIVE - MÓVIL (max-width: 760px) ===== */
+@media (max-width: 760px) {
+    .admin-header.mobile {
+        height: 60px;
+        min-height: 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    
     .admin-navbar {
         padding: 0 15px;
+        justify-content: space-between;
+        position: relative;
+    }
+    
+    .mobile-menu-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--text-primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+    }
+    
+    .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--secondary-color);
+    }
+    
+    .admin-navbar-content {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color-gradient) 100%);
+        transition: left 0.3s ease-in-out;
+        padding-top: 80px;
+        z-index: 999;
+        overflow-y: auto;
+    }
+    
+    .admin-navbar-content.open {
+        left: 0;
     }
     
     .admin-navbar-list {
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        padding: 15px 0;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 20px;
+        gap: 15px;
+        height: auto;
     }
     
     .admin-navbar-list a {
-        padding: 10px 16px;
-        font-size: 0.9rem;
+        max-width: 100%;
+        width: 100%;
+        padding: 18px 24px;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
     }
     
-    .admin-navbar-list button {
+    /* Botón de perfil móvil */
+    .mobile-profile-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        padding: 18px 24px;
+        transition: all 0.3s ease;
+        color: var(--text-primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .mobile-profile-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--secondary-color);
+    }
+    
+    /* Ocultar botón desktop en móvil */
+    .desktop-profile-btn {
+        display: none;
+    }
+    
+    /* Overlay para fondo del menú */
+    .admin-navbar-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: -1;
+    }
+    
+    /* Animación de entrada para items del menú */
+    .admin-navbar-content.open .admin-navbar-list a,
+    .admin-navbar-content.open .mobile-profile-btn {
+        animation: slideInRight 0.3s ease-out forwards;
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(1) { animation-delay: 0.1s; }
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(2) { animation-delay: 0.15s; }
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(3) { animation-delay: 0.2s; }
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(4) { animation-delay: 0.25s; }
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(5) { animation-delay: 0.3s; }
+    .admin-navbar-content.open .admin-navbar-list a:nth-child(6) { animation-delay: 0.35s; }
+    .admin-navbar-content.open .mobile-profile-btn { animation-delay: 0.4s; }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+}
+
+/* ===== MÓVIL MÁS PEQUEÑO (max-width: 480px) ===== */
+@media (max-width: 480px) {
+    .admin-header.mobile {
+        height: 55px;
+    }
+    
+    .admin-navbar {
+        padding: 0 12px;
+    }
+    
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+    }
+    
+    .admin-navbar-list {
+        padding: 0 15px;
+        gap: 12px;
+    }
+    
+    .admin-navbar-list a,
+    .mobile-profile-btn {
+        padding: 16px 20px;
+        font-size: 1rem;
+    }
+    
+    .admin-navbar-content {
+        padding-top: 70px;
+    }
+}
+
+/* ===== TABLET (entre 761px y 1024px) ===== */
+@media (min-width: 761px) and (max-width: 1024px) {
+    .admin-navbar {
+        padding: 0 25px;
+    }
+    
+    .admin-navbar-list a {
+        padding: 10px 18px;
+        font-size: 0.95rem;
+        max-width: 120px;
+    }
+    
+    .desktop-profile-btn {
+        width: 46px;
+        height: 46px;
         padding: 10px;
     }
 }
 
-@media (max-width: 480px) {
-    .admin-navbar-list {
-        gap: 8px;
+/* ===== EFECTOS COMUNES ===== */
+.admin-navbar-list a:active,
+.desktop-profile-btn:active,
+.mobile-menu-toggle:active,
+.mobile-profile-btn:active {
+    transform: scale(0.98);
+}
+
+/* ===== SCROLLBAR PARA MENÚ MÓVIL ===== */
+@media (max-width: 760px) {
+    .admin-navbar-content {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary-color) transparent;
     }
     
-    .admin-navbar-list a {
-        padding: 8px 12px;
-        font-size: 0.85rem;
+    .admin-navbar-content::-webkit-scrollbar {
+        width: 6px;
     }
     
-    .admin-navbar-list a,
-    .admin-navbar-list button {
-        flex: 1;
-        min-width: 120px;
-        text-align: center;
-        justify-content: center;
+    .admin-navbar-content::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .admin-navbar-content::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 3px;
     }
 }
+
+
 
 /*---------------------------------WELCOME PAGE-------------------------*/
 
@@ -3991,6 +4198,7 @@ body {
 		font-size: 0.95rem;
 	}
 	
+    /*PRODUCTOS*/
 	.admin-product-card.mobile .admin-product:nth-child(1)::before {
 		content: "Nombre: ";
 	}
@@ -4007,6 +4215,46 @@ body {
 		content: "Stock: ";
 	}
 	
+
+    /*USUARIOS*/
+    .admin-product-card.mobile .admin-product.name:nth-child(1)::before {
+		content: "Nombre: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.email:nth-child(2)::before {
+		content: "Email: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.telefono:nth-child(3)::before {
+		content: "Telefono: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.rol:nth-child(4)::before {
+		content: "Rol: ";
+	}
+  
+  
+  
+    /*LOGS*/
+    .admin-product-card.mobile .admin-product.usuario:nth-child(1)::before {
+		content: "Usuario: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.fecha:nth-child(2)::before {
+		content: "Fecha: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.accion:nth-child(3)::before {
+		content: "Accion: ";
+	}
+	
+	.admin-product-card.mobile .admin-product.tabla:nth-child(4)::before {
+		content: "Tabla: ";
+	}
+	.admin-product-card.mobile .admin-product.nombre:nth-child(5)::before {
+		content: "Nombre: ";
+	}
+
 	.no-result {
 		grid-column: 1;
 		text-align: center;
@@ -4051,7 +4299,6 @@ body {
 	}
 }
 
-/* LOADING STATE ENHANCEMENT */
 .add-product-form button[type="submit"]:disabled::after {
     content: "";
     display: inline-block;
@@ -4069,7 +4316,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* VALIDATION STATES */
 .add-product-input input:invalid:not(:focus):not(:placeholder-shown) {
     border-color: #fc8181;
     background: #fed7d7;
@@ -4098,7 +4344,6 @@ body {
 
 }
 
-/* Estilos para botones de administración */
 .admin-btn {
   background: linear-gradient(135deg, var(--primary-color), var(--primary-color-gradient));
   color: white;
@@ -4167,7 +4412,6 @@ body {
   width: 100%;
   gap: 0;
   z-index: 10;
-  background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -4195,65 +4439,159 @@ body {
   padding: 2rem;
   min-height: 60vh;
   transition: all 0.3s ease;
-  background: white;
   position: relative;
 }
 
-.admin-category-section h3{
-  font-size: 2rem;
-  position: absolute;
-  top: 24px;
+
+
+.admin-category-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-.admin-category-section{
-    height: calc(100vh - var(--admin-header-height));
-    width: 100vw;
-    display: flex;
-    color: #000000;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.admin-category-section h3 {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    font-weight: 700;
 }
 
 .admin-category-wrapper {
-    width: 100%; /* Cambia a 100% para usar todo el espacio disponible */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tarjetas responsivas */
-    gap: 2rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
 }
+
+.admin-category-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+.admin-category-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.admin-category-wrapper::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
 
 .admin-category-btn-wrapper{
     margin: 24px
 }
 
 .admin-category-card {
-    padding: 2rem 1.5rem;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    border-radius: 32px;
-    transition: all 0.2s ease-in-out;
-    min-height: 120px; /* Altura mínima consistente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .admin-category-card p {
-    font-size: 1.4rem;
-    font-weight: 600;
     margin: 0;
-    word-break: break-word;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    position: relative;
+    z-index: 2;
 }
 
 .admin-category-card:hover {
-    transform: scale(1.08); /* Reduce un poco el scale para mejor visualización */
-    cursor: pointer;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+    border-color: var(--secondary-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, rgba(255, 122, 0, 0.05), rgba(0, 0, 0, 0.1));
 }
 
+.admin-category-card:hover::before {
+    opacity: 1;
+}
+
+@media (max-width: 760px){
+    .admin-category-tag-wrapper.mobile {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 15px 40px;
+    }
+    
+    /* Secciones */
+    .admin-category-section.mobile {
+        padding: 25px;
+        border-radius: 16px;
+    }
+    
+    .admin-category-section.mobile h3 {
+        font-size: 1.5rem;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+    }
+    
+    /* Grid de tarjetas */
+    .admin-category-wrapper.mobile {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+        max-height: 400px;
+    }
+    
+    /* Tarjetas móvil */
+    .admin-category-card.mobile {
+        padding: 20px 15px;
+        border-radius: 12px;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .admin-category-card.mobile p {
+        font-size: 1rem;
+    }
+    
+    .admin-category-card.mobile:hover {
+        transform: translateY(-3px);
+    }
+    
+    /* Animaciones para móvil */
+    .admin-category-card.mobile {
+        animation: fadeInUp 0.4s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
 
 /*-------------------------EVENTOS----------------------------*/
 

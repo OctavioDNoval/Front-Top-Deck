@@ -7,10 +7,12 @@ import { useTags } from "../Hooks/useTags";
 import { AdminTagCard } from "./UI/AdminTagCard";
 import { AddTagModal } from "./UI/AddTagModal";
 import { ViewTagModal } from "./UI/ViewTagModal";
+import { useMobile } from "../Hooks/useMobile";
 
 export const AdminCategoriaComponent = () => {
 	const { categorias, obtenerCategorias } = useCategorias();
 	const { tags, obtenerTags } = useTags();
+	const { isMobile } = useMobile();
 
 	const [filter, setFilter] = useState("");
 	const [addCategoryModalOpen, setAddCategoryModalOpen] = useState(false);
@@ -53,7 +55,7 @@ export const AdminCategoriaComponent = () => {
 
 	return (
 		<>
-			<div className="admin-buttons-container">
+			<div className={`admin-buttons-container ${isMobile ? "mobile" : ""}`}>
 				<button
 					type="button"
 					className="admin-btn"
@@ -83,14 +85,17 @@ export const AdminCategoriaComponent = () => {
 					onChange={(e) => setFilter(e.target.value)}
 				/>
 			</div>
-			<div className="admin-category-tag-wrapper">
-				<section className="admin-category-section">
+			<div className={`admin-category-tag-wrapper ${isMobile ? "mobile" : ""}`}>
+				<section
+					className={`admin-category-section ${isMobile ? "mobile" : ""}`}
+				>
 					<h3>Categorias</h3>
-					<div className="admin-category-wrapper">
+					<div className={`admin-category-wrapper ${isMobile ? "mobile" : ""}`}>
 						{filteredCategoires.map((c) => (
 							<AdminCategoryCard
 								key={c.idCategoria}
 								category={c}
+								isMobile={isMobile}
 								onClick={() => handleClick(c)}
 							/>
 						))}
@@ -113,13 +118,16 @@ export const AdminCategoriaComponent = () => {
 						categoria={categoriaSeleccionada}
 					/>
 				</section>
-				<section className="admin-category-section">
+				<section
+					className={`admin-category-section ${isMobile ? "mobile" : ""}`}
+				>
 					<h3>Tags</h3>
-					<div className="admin-category-wrapper">
+					<div className={`admin-category-wrapper ${isMobile ? "mobile" : ""}`}>
 						{tags.map((t) => (
 							<AdminCategoryCard
 								key={t.idTag}
 								category={t}
+								isMobile={isMobile}
 								onClick={() => handleClickTag(t)}
 							/>
 						))}

@@ -1,4 +1,4 @@
-export const AdminLogs = ({ log }) => {
+export const AdminLogs = ({ log, isMobile = false }) => {
 	const formatDate = (stringDate) => {
 		const date = new Date(stringDate);
 
@@ -12,12 +12,12 @@ export const AdminLogs = ({ log }) => {
 	};
 
 	return (
-		<div className="admin-product-card">
-			<p className="admin-product ">{log.nombreUsuario}</p>
-			<p className="admin-product ">{formatDate(log.fechaAudit)}</p>
-			<p className="admin-product ">{log.accion}</p>
-			<p className="admin-product ">{log.tabla}</p>
-			<p className="admin-product ">{log.nombreEntidad}</p>
+		<div className={`admin-product-card ${isMobile ? "mobile" : ""}`}>
+			<p className="admin-product usuario">{log.nombreUsuario}</p>
+			<p className="admin-product fecha ">{formatDate(log.fechaAudit)}</p>
+			<p className="admin-product accion ">{log.accion}</p>
+			<p className="admin-product tabla">{log.tabla}</p>
+			<p className="admin-product nombre">{log.nombreEntidad}</p>
 		</div>
 	);
 };
