@@ -24,9 +24,6 @@ export const ProductCard = ({ product }) => {
 			</div>
 			<div className="bottom-product-container">
 				<p className="product-price">${formatPrice(product.precio)}</p>
-				<button type="button" className="add-to-cart-btn">
-					+
-				</button>
 			</div>
 
 			{product.stock === 0 ? (

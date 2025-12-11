@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 
 export const FooterComponent = () => {
+	const email = import.meta.env.VITE_EMAIL;
+
 	return (
 		<footer className="footer">
 			{/* Sección superior con información principal */}
@@ -44,7 +46,7 @@ export const FooterComponent = () => {
 					<div className="contact-info">
 						<div className="contact-item">
 							<Mail size={16} color="white" />
-							<span>@gmail.com</span>
+							<span>{email}</span>
 						</div>
 						<div className="contact-item">
 							<Phone size={16} color="white" />
@@ -91,10 +93,16 @@ export const FooterComponent = () => {
 						href="https://www.instagram.com/topdeck_importados/"
 						className="social-link"
 						aria-label="Instagram"
+						target="_blank"
+						rel="noopener noreferrer"
 					>
 						<Instagram size={24} />
 					</a>
-					<a href="#" className="social-link" aria-label="Email">
+					<a
+						href={`mailto:${email}`}
+						className="social-link"
+						aria-label="Email"
+					>
 						<Mail size={24} />
 					</a>
 				</div>

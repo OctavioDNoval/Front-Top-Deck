@@ -7,6 +7,8 @@ import { ErrorCartel } from "../Components/UI/ErrorCartel";
 import { AuthContext } from "../AuthProvider";
 import { CircleCheckBig } from "lucide-react";
 import { CarritoEfimeroContext } from "../CarritoEfimeroProvider";
+import { useFormatNum } from "../Hooks/useFormatNum";
+import { useMobile } from "../Hooks/useMobile";
 
 export const SelectedProductPage = () => {
 	const { id } = useParams();
@@ -19,6 +21,8 @@ export const SelectedProductPage = () => {
 	const [productAdded, setProductAdded] = useState(false);
 
 	const { agregarAlCarritoEfimero } = useContext(CarritoEfimeroContext);
+	const { formatPrice } = useFormatNum();
+	const { isMobile } = useMobile();
 
 	const apiUrl = import.meta.env.VITE_API_URL_BASE;
 
@@ -86,7 +90,7 @@ export const SelectedProductPage = () => {
 						<div className="product-selected-info">
 							<h2 className="product-selected-name">{producto.nombre}</h2>
 							<p className="product-selected-price" style={{ color: "white" }}>
-								${producto.precio}
+								${formatPrice(producto.precio)}
 							</p>
 							<p className="product-selected-desc">{producto.descripcion}</p>
 
