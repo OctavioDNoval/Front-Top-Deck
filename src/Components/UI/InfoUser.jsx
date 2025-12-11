@@ -52,7 +52,9 @@ export const InfoUser = ({ user, isMobile = false }) => {
 									user.rol === "admin" ? "admin" : "user"
 								}`}
 							>
-								{user.rol === "admin" ? "Administrador" : "Usuario"}
+								{user.rol.toLowerCase() === "admin"
+									? "Administrador"
+									: "Usuario"}
 							</span>
 						</div>
 					</div>

@@ -3,6 +3,7 @@ import { useProductos } from "../Hooks/useProductos";
 import { AdminProduct } from "./UI/AdminProduct";
 import { AddProductModal } from "./UI/AddProductModal";
 import { ViewProductModal } from "./UI/ViewProductModal";
+import { useMobile } from "../Hooks/useMobile";
 
 export const ProductosAdminComponent = () => {
 	const { productos, isLoading, error, obtenerProductos } = useProductos();
@@ -12,6 +13,8 @@ export const ProductosAdminComponent = () => {
 	const [viewProductModalOpen, setViewProductModalOpen] = useState(false);
 	const [productSelected, setProductSelected] = useState({});
 	console.log(productos);
+
+	const { isMobile } = useMobile();
 
 	useEffect(() => {
 		obtenerProductos();
@@ -35,7 +38,7 @@ export const ProductosAdminComponent = () => {
 	};
 
 	return (
-		<div className="admin-product-wrapper">
+		<div className={`admin-product-wrapper ${isMobile ? "mobile" : ""}`}>
 			<div className="admin-buttons-container">
 				<button
 					onClick={() => setAddProductModalOpen(true)}
@@ -51,7 +54,9 @@ export const ProductosAdminComponent = () => {
 					onChange={(e) => setFilter(e.target.value)}
 				/>
 			</div>
-			<article className="admin-product-container">
+			<article
+				className={`admin-product-container ${isMobile ? "mobile" : ""}`}
+			>
 				<div className="admin-product-header">
 					<div>Nombre</div>
 					<div>Precio</div>
@@ -62,6 +67,7 @@ export const ProductosAdminComponent = () => {
 					<AdminProduct
 						key={p.productoId}
 						product={p}
+						isMobile={isMobile}
 						onClick={() => handleProductClick(p)}
 					/>
 				))}

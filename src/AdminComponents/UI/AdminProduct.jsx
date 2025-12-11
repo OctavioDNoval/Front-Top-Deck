@@ -1,6 +1,9 @@
-export const AdminProduct = ({ product, onClick }) => {
+export const AdminProduct = ({ product, onClick, isMobile = false }) => {
 	return (
-		<div className="admin-product-card" onClick={onClick}>
+		<div
+			className={`admin-product-card ${isMobile ? "mobile" : ""}`}
+			onClick={onClick}
+		>
 			<p className="admin-product name">{product.nombre}</p>
 			<p className="admin-product price">{product.precio}</p>
 			<p className="admin-product category">{product.categoriaNombre}</p>

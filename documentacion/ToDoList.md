@@ -23,6 +23,7 @@
 ### Funcionalidades
 
 - [ ] Paginacion de productos (_ProductPage_)
+- [ ] Paginacion de Logs (_AdminLogs_)
 - [ ] Autoseleccion de la direccion principal en base al campo de la base de datos (_PedidoPage / DireccionCard_)
 - [ ] Modal para terminos de uso y condiciones (_ModalTerminosComponent_)
   - [ ] actualizacion manual?
